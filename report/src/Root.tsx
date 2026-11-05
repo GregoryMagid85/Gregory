@@ -5,6 +5,7 @@ import { Report, DURATION_S } from "./Report";
 import { FPS } from "./ui";
 import { Glass, GLASS_DURATION, GFPS } from "./glass/Glass";
 import { GlassV2, GLASS_V2_DURATION, GLASS_V2_RU_DURATION } from "./glass/GlassV2";
+import { GlassShort, shortDuration } from "./glass/GlassShort";
 
 const fonts = Promise.all([
   ...[500, 600, 700, 800, 900].map((w) => loadFont({ family: "Inter", url: staticFile(`fonts/inter-latin-${w}-normal.woff2`), weight: String(w) })),
@@ -57,6 +58,26 @@ export const RemotionRoot: React.FC = () => (
     fps={GFPS}
     width={1920}
     height={1080}
+    calculateMetadata={async () => { await fonts; return {}; }}
+  />
+  <Composition
+    id="GlassStoriesShortEN"
+    component={GlassShort}
+    defaultProps={{ lang: "en" as const }}
+    durationInFrames={shortDuration("en")}
+    fps={GFPS}
+    width={1080}
+    height={1920}
+    calculateMetadata={async () => { await fonts; return {}; }}
+  />
+  <Composition
+    id="GlassStoriesShortRU"
+    component={GlassShort}
+    defaultProps={{ lang: "ru" as const }}
+    durationInFrames={shortDuration("ru")}
+    fps={GFPS}
+    width={1080}
+    height={1920}
     calculateMetadata={async () => { await fonts; return {}; }}
   />
   <Composition

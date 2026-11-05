@@ -79,6 +79,7 @@ export const GlassV2: React.FC<{ lang?: Lang }> = ({ lang = "en" }) => {
         <AbsoluteFill style={{ opacity: ease(t, at("everyday") - 0.3, at("everyday") + 0.2) }}><FullClip name="goblets" from={at("everyday") - 0.3} /></AbsoluteFill>
         <AbsoluteFill style={{ opacity: ease(t, at("rare") - 0.4, at("rare") + 0.1) }}><FullClip name="candles" from={at("rare") - 0.4} /></AbsoluteFill>
         <AbsoluteFill style={{ background: shade }} />
+        <AbsoluteFill style={{ background: "linear-gradient(180deg, rgba(10,6,3,.78) 0%, rgba(10,6,3,.55) 32%, rgba(10,6,3,0) 52%)" }} />
         {[[tx.art, at("art,")], [tx.windows, at("windows,")], [tx.everyday, at("everyday")]].map(([l, tt], i) => (
           <div key={l as string} style={{ position: "absolute", left: 0, width: VW, top: Y(250 + i * 92), textAlign: "center", fontFamily: SERIF, fontWeight: 700, fontSize: 72, color: L.gold, textShadow: "0 3px 14px rgba(0,0,0,.8)", ...rise(t, (tt as number) - 0.1) }}>
             <span style={{ position: "relative" }}>{l as string}
