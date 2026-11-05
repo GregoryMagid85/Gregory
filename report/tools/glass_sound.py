@@ -246,7 +246,8 @@ for i, f in enumerate((0, 0.45, 1)): place(fx, at("then", 0) + 0.3 + f * 1.2, ti
 place(fx, at("century"), whoosh(0.7, 300, 3000), 0.5)                                # the 1st-century dot ignites
 place(fx, c["origin"], whoosh(1.6, 120, 700), 0.5)                                    # map zoom
 for w, f in (("syro-palestinian", 560), ("region.", 640)): place(fx, at(w) - 0.05, pop(f), 0.5)
-place(fx, at("clay"), thump(140, 90, 0.08, 0.3), 0.6); place(fx, at("laborious") - 0.5, sizzle(1.2), 0.35); place(fx, at("imagine.") - 0.3, paper(0.3), 0.4)
+for kt in (at("shape"), at("laborious") - 0.3, at("imagine.") - 0.6): place(fx, kt - 0.9, air_sweep(0.95), 0.6)   # infographic camera moves
+place(fx, at("laborious") - 0.3, sizzle(1.0), 0.25)
 place(fx, at("blow") - 0.2, breath(1.0), 0.7)
 place(fx, at("hollow", 2) - 0.2, shimmer(), 0.5)
 for i, w in enumerate(("faster,", "thinner,", "variety")): place(fx, at(w) - 0.2, pop(660 + 80 * i), 0.55)

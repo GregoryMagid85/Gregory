@@ -117,3 +117,31 @@ export const Studio: React.FC<{ clip?: string; from: number }> = ({ clip = "glor
     </AbsoluteFill>
   );
 };
+
+// ------------------------------------------------------------ guided camera over one infographic (1672x941)
+// keys: [time, focusX, focusY, zoom]; zoom 1 = the whole image fitted to the frame width.
+// Each move eases in during the 0.9 s before its key, then holds (zoom travels in log space).
+export const GuidedArt: React.FC<{ name: string; keys: [number, number, number, number][] }> = ({ name, keys }) => {
+  const t = useCurrentFrame() / GFPS;
+  const { width: VW, height: VH } = useVideoConfig();
+  const IW = 1672, IH = 941, fit = VW / IW;
+  let k = keys[0];
+  for (let i = 1; i < keys.length; i++) {
+    const [ti] = keys[i];
+    if (t >= ti) { k = keys[i]; continue; }
+    const m = ez(Math.min(1, Math.max(0, (t - (ti - 0.9)) / 0.9)));
+    const [, x0, y0, z0] = keys[i - 1], [, x1, y1, z1] = keys[i];
+    k = [t, x0 + (x1 - x0) * m, y0 + (y1 - y0) * m, z0 * Math.pow(z1 / z0, m)];
+    break;
+  }
+  const [, fx, fy, z] = k;
+  const s = fit * z * (1 + 0.012 * Math.sin(t * 0.6));
+  const cy = VH > VW ? 760 : VH / 2;
+  const src = staticFile(`glass/art/${name}.png`);
+  return (
+    <AbsoluteFill style={{ overflow: "hidden", background: "#120A05" }}>
+      <Img src={src} style={{ position: "absolute", left: -200, top: -200, width: VW + 400, height: VH + 400, objectFit: "cover", filter: "blur(40px) brightness(.45) saturate(1.2)" }} />
+      <Img src={src} style={{ position: "absolute", left: VW / 2 - fx * s, top: cy - fy * s, width: IW * s, height: IH * s, boxShadow: "0 0 60px rgba(0,0,0,.6)" }} />
+    </AbsoluteFill>
+  );
+};

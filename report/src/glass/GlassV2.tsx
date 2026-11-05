@@ -11,8 +11,7 @@ import { SERIF, HAND, MapBase, xy, IconStopwatch, IconFeather, IconVessels, Icon
 import { Embers, ChapterWipe, LightSweep, Slam, EPISODE } from "./fx";
 import { GFPS, HOOK, DURATION, spr, ease, rise, Clip, FullClip, Scene, Captions, makeTiming, Lang } from "./core";
 import { TXT } from "./i18n";
-import { CoreForming3D } from "./CoreForming3D";
-import { L, Ribbon, ParchCard, CardTitle, Kinetic, ArtPan, Studio } from "./look";
+import { L, Ribbon, ParchCard, CardTitle, Kinetic, ArtPan, Studio, GuidedArt } from "./look";
 
 export const GLASS_V2_DURATION = DURATION;
 const TIMING = { en: makeTiming("en"), ru: makeTiming("ru") };
@@ -155,20 +154,13 @@ export const GlassV2: React.FC<{ lang?: Lang }> = ({ lang = "en" }) => {
         <ParchCard t={t} t0={at("syro-palestinian") - 0.4} y={Y(360)} w={800} seed="or"><CardTitle size={70}>{tx.region}</CardTitle></ParchCard>
       </Scene>
 
-      {/* before glassblowing — the clay-core method */}
+      {/* before glassblowing — the clay-core method: guided camera over the infographic */}
       <Scene t={t} a={win("core")[0]} b={win("core")[1]} bg="none">
-        <Studio from={win("core")[0]} clip="pink_form" />
-        <Ribbon t={t} t0={win("core")[0] + 0.1}>{tx.before}</Ribbon>
-        <ParchCard t={t} t0={win("core")[0] + 0.3} y={Y(370)} h={810} seed="core">
-          <CardTitle size={72}>{tx.clayCore}</CardTitle>
-          <div style={{ marginTop: 4, display: "grid", placeItems: "center" }}><CoreForming3D p={Math.min(1, Math.max(0, (t - (at("clay") - 1.0)) / (at("imagine.") + 0.35 - (at("clay") - 1.0))))} t={t} width={800} height={470} /></div>
-          {[["1", tx.step1, at("clay")], ["2", tx.step2, at("laborious") - 0.5], ["3", tx.step3, at("imagine.") - 0.3]].map(([n, l, tt]) => (
-            <div key={n as string} style={{ display: "flex", gap: 20, alignItems: "center", marginTop: 14, marginLeft: 60, ...rise(t, tt as number) }}>
-              <div style={{ width: 54, height: 54, borderRadius: 40, background: L.ribbon, color: L.cream, display: "grid", placeItems: "center", fontFamily: SERIF, fontWeight: 700, fontSize: 32 }}>{n}</div>
-              <div style={{ fontFamily: SERIF, fontWeight: 700, fontSize: 46, color: L.ink }}>{l}</div>
-            </div>
-          ))}
-        </ParchCard>
+        {(() => {
+          const [a0] = win("core"), Z = land ? 2.0 : 2.7;
+          const k1 = at("shape"), k2 = at("laborious") - 0.3, k3 = at("imagine.") - 0.6;
+          return <GuidedArt name="claycore" keys={[[a0, 836, 470, 1], [k1, 390, 480, Z], [k2, 855, 480, Z], [k3, 1330, 470, Z]]} />;
+        })()}
       </Scene>
 
       {/* with the blowpipe — the Levant glassblower: gather, blow, early vessel */}
