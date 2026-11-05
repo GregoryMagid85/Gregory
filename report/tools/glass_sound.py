@@ -1,6 +1,6 @@
 """Full sound design for Glass Stories Ep.1 (vertical): era music, ambience, SFX on every move, final mix.
 
-    python3 tools/glass_sound.py public/glass/vo.wav out/glass_mix.wav
+    python3 tools/glass_sound.py public/glass/vo.wav out/glass_mix.wav [en|ru]
 
 Everything is synthesized here (no samples). Timings mirror src/glass/GlassV2.tsx: scene starts,
 art pans, cards, ribbons, kinetic words — all keyed to the narration (src/glass/words.ts).
@@ -25,6 +25,18 @@ WORDS = [(m[0], float(m[1]) + HOOK, float(m[2]) + HOOK) for m in re.findall(r'\[
 norm = lambda s: re.sub(r"[^a-z0-9']", "", s.lower())
 def at(w, n=0): return [s for t, s, e in WORDS if norm(t) == norm(w)][n]
 LAST = WORDS[-1][2]
+LANG = sys.argv[3] if len(sys.argv) > 3 else "en"
+if LANG == "ru":   # map English cue times onto the Russian take (same anchors as src/glass/core.tsx)
+    import json
+    ru = [(m[0], float(m[1]) + HOOK, float(m[2]) + HOOK) for m in re.findall(r'\["(.*?)",\s*([\d.]+),\s*([\d.]+)\]', open("src/glass/words_ru.ts").read())]
+    nru = lambda s: re.sub(r"[^\w']", "", s.lower())
+    pick = lambda WW, w, n: [s for t, s, e in WW if nru(t) == nru(w)][n]
+    pairs = [(0, 0), (HOOK, HOOK)] + [(pick(WORDS, a, na), pick(ru, b, nb)) for a, na, b, nb in json.load(open("src/glass/ru_anchors.json"))] + [(LAST, ru[-1][2])]
+    _at_en = at
+    def at(w, n=0):
+        x = _at_en(w, n); xs, ys = zip(*pairs)
+        return float(np.interp(x, xs, ys)) if x <= xs[-1] else x - xs[-1] + ys[-1]
+    LAST = ru[-1][2]
 DUR = float(np.ceil((LAST + 1.2 + OUTRO) * 10) / 10)
 c = dict(intro=HOOK - 0.5, meso=at("earliest") - 0.55, egypt=at("egypt.") - 0.35, then=at("then", 0) - 0.2, invented=at("glassblowing", 0) - 0.15,
          origin=at("technique") - 0.7, core=at("you", 0) - 0.15, gather=at("but", 1) - 0.2, blow=at("blow") - 0.35, hollow=at("suddenly") - 0.3,

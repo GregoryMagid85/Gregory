@@ -2,6 +2,8 @@
 import React from "react";
 import { AbsoluteFill, Easing, OffthreadVideo, Sequence, interpolate, spring, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
 import { WORDS } from "./words";
+import { WORDS_RU } from "./words_ru";
+import RU_ANCHORS from "./ru_anchors.json";
 import { P } from "./art";
 import { Embers } from "./fx";
 
@@ -12,7 +14,7 @@ export const W = WORDS.map((w) => ({ ...w, start: w.start + HOOK, end: w.end + H
 export const LAST = W[W.length - 1].end;
 export const DURATION = Math.ceil((LAST + 1.2 + OUTRO) * 10) / 10;
 
-const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9']/g, "");
+const norm = (s: string) => s.toLowerCase().replace(/[^\p{L}\p{N}']/gu, "");
 export const at = (w: string, n = 0) => {
   const hits = W.filter((x) => norm(x.text) === norm(w));
   if (!hits[n]) throw new Error(`cue not in narration: ${w}#${n}`);
@@ -26,6 +28,40 @@ export const cues = () => ({
   fascinating: at("but", 2) - 0.2, ingredient: at("course", 1) - 0.6, olga: at("olga", 0) - 0.6, insta: at("follow") - 0.4,
   comments: at("comments") - 1.0, hear: at("hear") - 0.8, outro: LAST + 1.2,
 });
+
+// ------------------------------------------------------------ language versions
+// English cue words drive every scene; for another language the English time is mapped onto that take
+// with a piecewise-linear warp between anchor words spoken at the same point (ru_anchors.json).
+type Wd = { text: string; start: number; end: number };
+const buildLines = (WW: Wd[]) => {
+  const out: Wd[][] = []; let cur: Wd[] = [];
+  WW.forEach((w, i) => {
+    cur.push(w);
+    const nx = WW[i + 1];
+    const chars = cur.reduce((s, x) => s + x.text.length + 1, 0);
+    const gap = nx ? nx.start - w.end : 99;
+    if (!nx || /[.!?]$/.test(w.text) || (/[,:;–]$/.test(w.text) && cur.length >= 2) || (gap > 0.35 && cur.length >= 2) || chars >= 20) { out.push(cur); cur = []; }
+  });
+  return out;
+};
+export type Lang = "en" | "ru";
+export const makeTiming = (lang: Lang) => {
+  const WL = lang === "ru" ? WORDS_RU.map((w) => ({ ...w, start: w.start + HOOK, end: w.end + HOOK })) : W;
+  const lastL = WL[WL.length - 1].end;
+  const pick = (WW: Wd[], w: string, n: number) => { const h = WW.filter((x) => norm(x.text) === norm(w)); if (!h[n]) throw new Error(`anchor not found: ${w}#${n}`); return h[n].start; };
+  const pairs: [number, number][] = lang === "ru"
+    ? [[0, 0], [HOOK, HOOK], ...(RU_ANCHORS as [string, number, string, number][]).map(([a, na, b, nb]) => [pick(W, a, na), pick(WL, b, nb)] as [number, number]), [LAST, lastL]]
+    : [[0, 0], [LAST, LAST]];
+  const warp = (x: number) => {
+    if (x <= pairs[0][0]) return x;
+    for (let i = 1; i < pairs.length; i++) if (x <= pairs[i][0]) { const [a0, b0] = pairs[i - 1], [a1, b1] = pairs[i]; return b0 + ((x - a0) * (b1 - b0)) / (a1 - a0); }
+    return x - pairs[pairs.length - 1][0] + pairs[pairs.length - 1][1];
+  };
+  return {
+    at: (w: string, n = 0) => warp(at(w, n)), LAST: lastL, DURATION: Math.ceil((lastL + 1.2 + OUTRO) * 10) / 10,
+    lines: lang === "en" ? LINES : buildLines(WL), vo: lang === "ru" ? "glass/vo_ru.wav" : "glass/vo.wav",
+  };
+};
 
 export const spr = (t: number, t0: number, damping = 20, stiffness = 110) =>
   t < t0 ? 0 : spring({ frame: (t - t0) * GFPS, fps: GFPS, config: { damping, stiffness, mass: 0.9 } });
@@ -106,15 +142,15 @@ const LINES = (() => {
     const nx = W[i + 1];
     const chars = cur.reduce((s, x) => s + x.text.length + 1, 0);
     const gap = nx ? nx.start - w.end : 99;
-    if (!nx || /[.!?]$/.test(w.text) || (/[,:;]$/.test(w.text) && cur.length >= 2) || (gap > 0.35 && cur.length >= 2) || chars >= 20) { out.push(cur); cur = []; }
+    if (!nx || /[.!?]$/.test(w.text) || (/[,:;–]$/.test(w.text) && cur.length >= 2) || (gap > 0.35 && cur.length >= 2) || chars >= 20) { out.push(cur); cur = []; }
   });
   return out;
 })();
-export const Captions: React.FC<{ t: number }> = ({ t }) => {
+export const Captions: React.FC<{ t: number; lines?: typeof LINES }> = ({ t, lines = LINES }) => {
   const { width, height } = useVideoConfig();
   const portrait = height > width;
-  const line = LINES.find((L, i) => {
-    const nx = LINES[i + 1];
+  const line = lines.find((L, i) => {
+    const nx = lines[i + 1];
     const a = L[0].start - 0.08, b = nx ? Math.min(nx[0].start - 0.08, L[L.length - 1].end + 0.9) : L[L.length - 1].end + 1.0;
     return t >= a && t < b;
   });
@@ -129,7 +165,7 @@ export const Captions: React.FC<{ t: number }> = ({ t }) => {
           const live = t >= w.start - 0.04 && t < w.end + 0.06;
           if (wk <= 0.01) return null; // only words already spoken: the box grows with the speech
           return (
-            <span key={i} style={{ fontFamily: "Inter", fontWeight: 800, fontSize: size, lineHeight: 1.15, color: live ? "#FFB060" : "#FF8A1F", opacity: wk > 0.01 ? Math.min(1, wk * 2) : 0.0, scale: `${0.85 + 0.15 * Math.min(1, wk) + (live ? 0.05 : 0)}`, display: "inline-block" }}>
+            <span key={i} style={{ fontFamily: "Inter, 'Inter Cyr'", fontWeight: 800, fontSize: size, lineHeight: 1.15, color: live ? "#FFB060" : "#FF8A1F", opacity: wk > 0.01 ? Math.min(1, wk * 2) : 0.0, scale: `${0.85 + 0.15 * Math.min(1, wk) + (live ? 0.05 : 0)}`, display: "inline-block" }}>
               {w.text}
             </span>
           );

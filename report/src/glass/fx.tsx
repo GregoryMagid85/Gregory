@@ -118,7 +118,7 @@ export const fxEase = ease;
 export const fxSpr = spr;
 
 // ------------------------------------------------------------ chapter sting: molten glass floods the frame, chapter title, reveal
-export const ChapterWipe: React.FC<{ t: number; t0: number; n: number; title: string; dur?: number; ox?: number; oy?: number }> = ({ t, t0, n, title, dur = 1.9, ox = 0.5, oy = 0.5 }) => {
+export const ChapterWipe: React.FC<{ t: number; t0: number; n: number; title: string; label?: string; dur?: number; ox?: number; oy?: number }> = ({ t, t0, n, title, label = "Chapter", dur = 1.9, ox = 0.5, oy = 0.5 }) => {
   const { width: VW, height: VH } = useVideoConfig();
   if (t < t0 || t > t0 + dur) return null;
   const p = (t - t0) / dur;
@@ -144,7 +144,7 @@ export const ChapterWipe: React.FC<{ t: number; t0: number; n: number; title: st
         </g>
       </svg>
       <div style={{ position: "absolute", left: 60, width: VW - 120, top: VH * 0.37, textAlign: "center", opacity: tk, scale: `${0.94 + 0.06 * tk + 0.03 * p}` }}>
-        <div style={{ fontFamily: SERIF, fontWeight: 700, fontSize: 34, letterSpacing: 10, color: "#5A2008", textTransform: "uppercase" }}>Chapter {n}</div>
+        <div style={{ fontFamily: SERIF, fontWeight: 700, fontSize: 34, letterSpacing: 10, color: "#5A2008", textTransform: "uppercase" }}>{label} {n}</div>
         <div style={{ fontFamily: SERIF, fontWeight: 700, fontSize: VW < VH ? 112 : 120, lineHeight: 1.02, color: "#3A1404", letterSpacing: -1, marginTop: 6 }}>{title}</div>
       </div>
     </AbsoluteFill>

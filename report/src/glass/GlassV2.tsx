@@ -8,18 +8,23 @@ import { AbsoluteFill, Sequence, interpolate, staticFile, useCurrentFrame } from
 import { Audio } from "@remotion/media";
 import { VO_LABEL } from "./words";
 import { SERIF, HAND, MapBase, xy, CoreForming, IconStopwatch, IconFeather, IconVessels, IconFurnace, IconBreath, IconGravity, Colosseum, Laurel, InstaGlyph, SpeechIcon } from "./art";
-import { Embers, ChapterWipe, LightSweep, Slam, SERIES, EPISODE, EP_TITLE } from "./fx";
-import { GFPS, HOOK, LAST, DURATION, at, spr, ease, rise, Clip, FullClip, Scene, Captions } from "./core";
+import { Embers, ChapterWipe, LightSweep, Slam, EPISODE } from "./fx";
+import { GFPS, HOOK, DURATION, spr, ease, rise, Clip, FullClip, Scene, Captions, makeTiming, Lang } from "./core";
+import { TXT } from "./i18n";
 import { L, Ribbon, ParchCard, CardTitle, Kinetic, ArtPan, Studio } from "./look";
 
 export const GLASS_V2_DURATION = DURATION;
+const TIMING = { en: makeTiming("en"), ru: makeTiming("ru") };
+export const GLASS_V2_RU_DURATION = TIMING.ru.DURATION;
 // Drop a real clip of Olga waving goodbye at public/glass/clips/olga_wave.mp4 and set this to true.
 const WAVE_CLIP = false;
 const VW = 1080;
 const shade = "linear-gradient(180deg, rgba(10,6,3,.72) 0%, rgba(10,6,3,.1) 30%, rgba(10,6,3,.1) 58%, rgba(10,6,3,.8) 100%)";
 
-export const GlassV2: React.FC = () => {
+export const GlassV2: React.FC<{ lang?: Lang }> = ({ lang = "en" }) => {
   const t = useCurrentFrame() / GFPS;
+  const tm = TIMING[lang], tx = TXT[lang];
+  const at = tm.at, LAST = tm.LAST, DURATION = tm.DURATION;
   // scene starts, all on narration words (mirrored in tools/glass_audio.py)
   const c = {
     intro: HOOK - 0.5, meso: at("earliest") - 0.55, egypt: at("egypt.") - 0.35, then: at("then", 0) - 0.2, invented: at("glassblowing", 0) - 0.15,
@@ -45,9 +50,9 @@ export const GlassV2: React.FC = () => {
             </AbsoluteFill>
             <AbsoluteFill style={{ background: "radial-gradient(900px 1300px at 50% 45%, rgba(0,0,0,0) 35%, rgba(0,0,0,.65))" }} />
             <LightSweep t={t} t0={0.75} dur={0.6} /><LightSweep t={t} t0={3.2} dur={0.6} />
-            <Slam t={t} t0={0.15} t1={1.45} text="One breath." size={150} y={820} />
-            <Slam t={t} t0={1.6} t1={2.95} text="One idea." size={150} y={820} />
-            <Slam t={t} t0={3.1} t1={4.5} text="2,000 years of glass." size={128} y={760} />
+            <Slam t={t} t0={0.15} t1={1.45} text={tx.hook1} size={150} y={820} />
+            <Slam t={t} t0={1.6} t1={2.95} text={tx.hook2} size={150} y={820} />
+            <Slam t={t} t0={3.1} t1={4.5} text={tx.hook3} size={128} y={760} />
           </AbsoluteFill>
         );
       })() : null}
@@ -56,12 +61,12 @@ export const GlassV2: React.FC = () => {
       <Scene t={t} a={HOOK - 2.9} b={HOOK - 0.35} bg="none">
         <Studio from={HOOK - 3} />
         <Embers t={t} n={70} seed="sting" strength={1.2} />
-        <Ribbon t={t} t0={HOOK - 2.6} top={520} size={38}>{SERIES}</Ribbon>
+        <Ribbon t={t} t0={HOOK - 2.6} top={520} size={38}>{tx.series}</Ribbon>
         <div style={{ position: "absolute", left: 60, width: VW - 120, top: 640, textAlign: "center", fontFamily: SERIF, fontWeight: 700, fontSize: 124, lineHeight: 1.0, color: L.cream, textShadow: "0 0 50px rgba(255,140,40,.55)",
-          clipPath: `inset(${50 - 50 * ease(t, HOOK - 2.3, HOOK - 1.3)}% 0 ${50 - 50 * ease(t, HOOK - 2.3, HOOK - 1.3)}% 0)` }}>{EP_TITLE}</div>
+          clipPath: `inset(${50 - 50 * ease(t, HOOK - 2.3, HOOK - 1.3)}% 0 ${50 - 50 * ease(t, HOOK - 2.3, HOOK - 1.3)}% 0)` }}>{tx.epTitle}</div>
         <div style={{ position: "absolute", left: 0, width: VW, top: 940, textAlign: "center", ...rise(t, HOOK - 1.3) }}>
-          <div style={{ fontFamily: SERIF, fontWeight: 700, fontSize: 40, letterSpacing: 8, color: L.gold }}>EPISODE {EPISODE}</div>
-          <div style={{ fontFamily: SERIF, fontStyle: "italic", fontSize: 44, color: L.cream, marginTop: 14 }}>with Olga Rozin</div>
+          <div style={{ fontFamily: SERIF, fontWeight: 700, fontSize: 40, letterSpacing: 8, color: L.gold }}>{tx.episode} {EPISODE}</div>
+          <div style={{ fontFamily: SERIF, fontStyle: "italic", fontSize: 44, color: L.cream, marginTop: 14 }}>{tx.withOlga}</div>
         </div>
       </Scene>
 
@@ -71,14 +76,14 @@ export const GlassV2: React.FC = () => {
         <AbsoluteFill style={{ opacity: ease(t, at("everyday") - 0.3, at("everyday") + 0.2) }}><FullClip name="goblets" from={at("everyday") - 0.3} /></AbsoluteFill>
         <AbsoluteFill style={{ opacity: ease(t, at("rare") - 0.4, at("rare") + 0.1) }}><FullClip name="candles" from={at("rare") - 0.4} /></AbsoluteFill>
         <AbsoluteFill style={{ background: shade }} />
-        {[["Art", at("art,")], ["Windows", at("windows,")], ["Everyday objects", at("everyday")]].map(([l, tt], i) => (
+        {[[tx.art, at("art,")], [tx.windows, at("windows,")], [tx.everyday, at("everyday")]].map(([l, tt], i) => (
           <div key={l as string} style={{ position: "absolute", left: 0, width: VW, top: 250 + i * 92, textAlign: "center", fontFamily: SERIF, fontWeight: 700, fontSize: 72, color: L.gold, textShadow: "0 3px 14px rgba(0,0,0,.8)", ...rise(t, (tt as number) - 0.1) }}>
             <span style={{ position: "relative" }}>{l as string}
               <span style={{ position: "absolute", left: -10, right: -10, top: "52%", height: 6, background: L.ribbon, borderRadius: 3, scale: `${ease(t, at("rare") - 0.4 + i * 0.12, at("rare") + i * 0.12)} 1`, transformOrigin: "left" }} />
             </span>
           </div>
         ))}
-        <Kinetic t={t} t0={at("rare") - 0.1} top={650} size={150}>A rare<br />luxury</Kinetic>
+        <Kinetic t={t} t0={at("rare") - 0.1} top={650} size={150}>{tx.rare1}<br />{tx.rare2}</Kinetic>
         <LightSweep t={t} t0={at("luxury.")} />
       </Scene>
 
@@ -89,11 +94,11 @@ export const GlassV2: React.FC = () => {
       {/* CH.2 — timeline card */}
       <Scene t={t} a={win("then")[0]} b={win("then")[1]} bg="none">
         <Studio from={win("then")[0]} />
-        <Ribbon t={t} t0={at("then", 0)}>Then…</Ribbon>
+        <Ribbon t={t} t0={at("then", 0)}>{tx.then}</Ribbon>
         <ParchCard t={t} t0={at("then", 0) + 0.1} y={380} h={760} seed="tl">
           {(() => {
             const x = 70, y0 = 30, y1 = 600, p = ease(t, at("then", 0) + 0.2, at("century") + 0.4);
-            const ticks: [number, string, string][] = [[0, "c. 2500 BCE", "first glass objects"], [0.45, "c. 1500 BCE", "core-formed vessels"], [1, "1st century BCE", "glassblowing!"]];
+            const ticks = tx.ticks;
             return (
               <div style={{ position: "relative", height: 650 }}>
                 <div style={{ position: "absolute", left: x - 2, top: y0, width: 5, height: (y1 - y0) * p, background: L.ink }} />
@@ -120,9 +125,9 @@ export const GlassV2: React.FC = () => {
         <FullClip name="glory_gather" from={win("invented")[0] - 0.4} />
         <AbsoluteFill style={{ opacity: ease(t, at("changed") - 0.5, at("changed") - 0.1) }}><FullClip name="red_bubble" from={at("changed") - 0.5} /></AbsoluteFill>
         <AbsoluteFill style={{ background: shade }} /><Embers t={t} n={40} seed="inv" />
-        <Kinetic t={t} t0={at("glassblowing", 0) - 0.1} top={300} size={136}>Glassblowing</Kinetic>
-        <Kinetic t={t} t0={at("invented.") - 0.15} top={450} size={80} italic color={L.gold}>was invented</Kinetic>
-        <Kinetic t={t} t0={at("changed") - 0.2} top={560} size={92}>…and changed everything</Kinetic>
+        <Kinetic t={t} t0={at("glassblowing", 0) - 0.1} top={300} size={lang === "ru" ? 120 : 136}>{tx.glassblowing}</Kinetic>
+        <Kinetic t={t} t0={at("invented.") - 0.15} top={450} size={80} italic color={L.gold}>{tx.invented}</Kinetic>
+        <Kinetic t={t} t0={at("changed") - 0.2} top={560} size={92}>{tx.changed}</Kinetic>
       </Scene>
 
       {/* where it began — parchment map */}
@@ -135,24 +140,24 @@ export const GlassV2: React.FC = () => {
             <MapBase w={1080} h={1920} zoom={z} cx={xy(35.2, 32.0)[0]} cy={xy(35.2, 32.0)[1]}>
               <ellipse cx={lx} cy={ly + 10} rx={30 * k} ry={68 * k} fill={L.ribbon} opacity={0.32} transform={`rotate(-12 ${lx} ${ly})`} />
               <circle cx={jx} cy={jy} r={4} fill={L.ink} opacity={kj} />
-              <g opacity={kj}><rect x={jx - 118} y={jy + 12} width={236} height={30} rx={6} fill={L.parch} opacity={0.95} />
-                <text x={jx} y={jy + 33} textAnchor="middle" fontFamily={SERIF} fontStyle="italic" fontSize={17} fill={L.ink}>Jerusalem · earliest evidence, c. 50 BCE</text></g>
+              <g opacity={kj}><rect x={jx - 128} y={jy + 12} width={256} height={30} rx={6} fill={L.parch} opacity={0.95} />
+                <text x={jx} y={jy + 33} textAnchor="middle" fontFamily={SERIF} fontStyle="italic" fontSize={17} fill={L.ink}>{tx.jerusalem}</text></g>
             </MapBase>
           );
         })()}
         <AbsoluteFill style={{ boxShadow: "inset 0 0 200px rgba(110,70,30,.55)" }} />
-        <Ribbon t={t} t0={win("origin")[0] + 0.1}>Where it began</Ribbon>
-        <ParchCard t={t} t0={at("syro-palestinian") - 0.4} y={360} w={800} seed="or"><CardTitle size={70}>The Syro-Palestinian region</CardTitle></ParchCard>
+        <Ribbon t={t} t0={win("origin")[0] + 0.1}>{tx.whereBegan}</Ribbon>
+        <ParchCard t={t} t0={at("syro-palestinian") - 0.4} y={360} w={800} seed="or"><CardTitle size={70}>{tx.region}</CardTitle></ParchCard>
       </Scene>
 
       {/* before glassblowing — the clay-core method */}
       <Scene t={t} a={win("core")[0]} b={win("core")[1]} bg="none">
         <Studio from={win("core")[0]} clip="pink_form" />
-        <Ribbon t={t} t0={win("core")[0] + 0.1}>Before glassblowing</Ribbon>
+        <Ribbon t={t} t0={win("core")[0] + 0.1}>{tx.before}</Ribbon>
         <ParchCard t={t} t0={win("core")[0] + 0.3} y={370} h={810} seed="core">
-          <CardTitle size={72}>The clay-core method</CardTitle>
+          <CardTitle size={72}>{tx.clayCore}</CardTitle>
           <div style={{ marginTop: 10, marginLeft: -40 }}><CoreForming p={ease(t, at("shape"), at("laborious") + 1.4)} w={880} /></div>
-          {[["1", "Clay core on a rod", at("clay")], ["2", "Hot glass wrapped around", at("laborious") - 0.5], ["3", "Core scraped out", at("imagine.") - 0.3]].map(([n, l, tt]) => (
+          {[["1", tx.step1, at("clay")], ["2", tx.step2, at("laborious") - 0.5], ["3", tx.step3, at("imagine.") - 0.3]].map(([n, l, tt]) => (
             <div key={n as string} style={{ display: "flex", gap: 20, alignItems: "center", marginTop: 14, marginLeft: 60, ...rise(t, tt as number) }}>
               <div style={{ width: 54, height: 54, borderRadius: 40, background: L.ribbon, color: L.cream, display: "grid", placeItems: "center", fontFamily: SERIF, fontWeight: 700, fontSize: 32 }}>{n}</div>
               <div style={{ fontFamily: SERIF, fontWeight: 700, fontSize: 46, color: L.ink }}>{l}</div>
@@ -168,12 +173,12 @@ export const GlassV2: React.FC = () => {
       <Scene t={t} a={win("blow")[0]} b={win("blow")[1]} bg="none">
         <FullClip name="olga_blow" from={win("blow")[0] - 0.2} trim={0.9} focusY="35%" />
         <AbsoluteFill style={{ background: shade }} />
-        <Kinetic t={t} t0={at("blow") - 0.15} top={320} size={150} italic>…and blow!</Kinetic>
+        <Kinetic t={t} t0={at("blow") - 0.15} top={320} size={150} italic>{tx.andBlow}</Kinetic>
       </Scene>
       <Scene t={t} a={win("hollow")[0]} b={win("hollow")[1]} bg="none">
         <FullClip name="clear_bubble" from={win("hollow")[0] - 0.2} />
         <AbsoluteFill style={{ background: shade }} />
-        <Kinetic t={t} t0={at("hollow", 2) - 0.2} top={300} size={136}>A hollow<br />glass form!</Kinetic>
+        <Kinetic t={t} t0={at("hollow", 2) - 0.2} top={300} size={136}>{tx.hollow1}<br />{tx.hollow2}</Kinetic>
       </Scene>
 
       {/* what it meant — Olga's pieces behind one card */}
@@ -182,9 +187,9 @@ export const GlassV2: React.FC = () => {
         <AbsoluteFill style={{ opacity: ease(t, at("thinner,") - 0.3, at("thinner,") + 0.2) }}><FullClip name="goblets" from={at("thinner,") - 0.3} /></AbsoluteFill>
         <AbsoluteFill style={{ opacity: ease(t, at("variety") - 0.3, at("variety") + 0.2) }}><FullClip name="blue_vessel" from={at("variety") - 0.3} /></AbsoluteFill>
         <AbsoluteFill style={{ background: "rgba(10,6,3,.35)" }} />
-        <Ribbon t={t} t0={win("meant")[0] + 0.1}>What it meant</Ribbon>
+        <Ribbon t={t} t0={win("meant")[0] + 0.1}>{tx.meant}</Ribbon>
         <ParchCard t={t} t0={at("faster,") - 0.5} y={380} w={860} seed="meant">
-          {[[<IconStopwatch key="s" s={110} />, "Faster", at("faster,")], [<IconFeather key="f" s={110} />, "Thinner & lighter", at("thinner,")], [<IconVessels key="v" s={140} />, "Endless shapes", at("variety")]].map(([ic, l, tt], i) => (
+          {[[<IconStopwatch key="s" s={110} />, tx.faster, at("faster,")], [<IconFeather key="f" s={110} />, tx.thinner, at("thinner,")], [<IconVessels key="v" s={140} />, tx.shapes, at("variety")]].map(([ic, l, tt], i) => (
             <div key={l as string} style={{ display: "flex", alignItems: "center", gap: 34, marginTop: i ? 26 : 0, ...rise(t, (tt as number) - 0.2) }}>
               <div style={{ width: 150, display: "grid", placeItems: "center" }}>{ic as React.ReactNode}</div>
               <div style={{ fontFamily: SERIF, fontWeight: 700, fontSize: 70, color: L.ink }}>{l as string}</div>
@@ -210,7 +215,7 @@ export const GlassV2: React.FC = () => {
                   <g key={n} opacity={Math.min(1, k * 1.5)}>
                     {n !== "Sidon" ? <path d={`M${src[0]} ${src[1]} Q${mx} ${my} ${x} ${y}`} fill="none" stroke={L.ribbon} strokeWidth={3} strokeDasharray="10 10" opacity={0.8} strokeDashoffset={-t * 30} /> : null}
                     <circle cx={x} cy={y} r={9 * (0.5 + 0.5 * k)} fill={L.ribbon} />
-                    <text x={x} y={y - 16} textAnchor="middle" fontFamily={SERIF} fontWeight={700} fontSize={32} fill={L.ink}>{n}</text>
+                    <text x={x} y={y - 16} textAnchor="middle" fontFamily={SERIF} fontWeight={700} fontSize={32} fill={L.ink}>{tx.city[n] ?? n}</text>
                   </g>
                 );
               })}
@@ -218,7 +223,7 @@ export const GlassV2: React.FC = () => {
           );
         })()}
         <AbsoluteFill style={{ boxShadow: "inset 0 0 200px rgba(110,70,30,.55)" }} />
-        <Ribbon t={t} t0={win("romemap")[0] + 0.1}>Across the empire</Ribbon>
+        <Ribbon t={t} t0={win("romemap")[0] + 0.1}>{tx.empire}</Ribbon>
         <div style={{ position: "absolute", left: 0, width: VW, top: 930, display: "flex", justifyContent: "center", alignItems: "flex-end", ...rise(t, at("roman", 0) - 0.5) }}>
           <Laurel s={120} /><Colosseum w={380} p={ease(t, at("roman", 0) - 0.5, at("roman", 0) + 1.5)} /><Laurel s={120} flip />
         </div>
@@ -231,8 +236,8 @@ export const GlassV2: React.FC = () => {
       <Scene t={t} a={win("steps")[0]} b={win("steps")[1]} bg="none">
         {(() => {
           const steps: [string, string, string, React.ReactNode, number][] = [
-            ["heat", "Heat", "glory_hole", <IconFurnace key="f" s={70} />, 0], ["introduce", "Air", "olga_blow", <IconBreath key="b" s={70} />, 1.2],
-            ["controlling", "Control", "swing", <IconGravity key="g" s={70} rot={Math.sin(t * 3) * 30} />, 0]];
+            ["heat", tx.heat, "glory_hole", <IconFurnace key="f" s={70} />, 0], ["introduce", tx.air, "olga_blow", <IconBreath key="b" s={70} />, 1.2],
+            ["controlling", tx.control, "swing", <IconGravity key="g" s={70} rot={Math.sin(t * 3) * 30} />, 0]];
           const idx = steps.reduce((acc, s2, k) => (t >= at(s2[0]) - 0.35 ? k : acc), 0);
           return (
             <>
@@ -240,7 +245,7 @@ export const GlassV2: React.FC = () => {
                 <AbsoluteFill key={cue} style={{ opacity: ease(t, at(cue) - 0.45, at(cue) - 0.1) }}><FullClip name={clip} from={at(cue) - 0.45} trim={trim} focusY={clip === "olga_blow" ? "35%" : "50%"} /></AbsoluteFill>
               ))}
               <AbsoluteFill style={{ background: shade }} />
-              <Ribbon t={t} t0={win("steps")[0] + 0.1}>Still the same principles</Ribbon>
+              <Ribbon t={t} t0={win("steps")[0] + 0.1}>{tx.principles}</Ribbon>
               <div style={{ position: "absolute", left: 0, width: VW, top: 380, display: "flex", justifyContent: "center", gap: 18 }}>
                 {steps.map(([cue, l, , ic], k) => {
                   const on = k === idx, done = k < idx, kk = spr(t, at(cue) - 0.35, 12, 200);
@@ -261,20 +266,20 @@ export const GlassV2: React.FC = () => {
       <Scene t={t} a={win("hands")[0]} b={win("hands")[1]} bg="none">
         <FullClip name="bench_hands" from={win("hands")[0] - 0.3} />
         <AbsoluteFill style={{ background: shade }} />
-        <Kinetic t={t} t0={at("ingredient.") - 0.4} top={300} size={72} italic color={L.gold}>One more ingredient…</Kinetic>
-        <Kinetic t={t} t0={at("hands") - 0.2} top={420} size={150}>The hands</Kinetic>
+        <Kinetic t={t} t0={at("ingredient.") - 0.4} top={300} size={72} italic color={L.gold}>{tx.ingredient}</Kinetic>
+        <Kinetic t={t} t0={at("hands") - 0.2} top={420} size={lang === "ru" ? 130 : 150}>{tx.hands}</Kinetic>
       </Scene>
 
       {/* Olga Rozin */}
       <Scene t={t} a={win("olga")[0]} b={win("olga")[1]} bg="none">
         <FullClip name="olga_blow" from={win("olga")[0] - 0.2} trim={1.8} rate={0.9} focusY="35%" />
         <AbsoluteFill style={{ background: shade }} />
-        <Kinetic t={t} t0={at("olga", 0) - 0.2} top={290} size={130}>Olga Rozin</Kinetic>
-        <Ribbon t={t} t0={at("artist.") - 0.3} top={440} size={36}>Glass artist</Ribbon>
+        <Kinetic t={t} t0={at("olga", 0) - 0.2} top={290} size={130}>{tx.olga}</Kinetic>
+        <Ribbon t={t} t0={at("artist.") - 0.3} top={440} size={36}>{tx.artist}</Ribbon>
       </Scene>
       <Scene t={t} a={win("montage")[0]} b={win("montage")[1]} bg="none">
         <ArtPan name="montage" t0={win("montage")[0]} t1={win("montage")[1] + 0.3} hold={0} endFocus={1250} endScale={1.25} />
-        <Ribbon t={t} t0={at("thousands", 1) - 0.4} top={1100}>Thousands of years</Ribbon>
+        <Ribbon t={t} t0={at("thousands", 1) - 0.4} top={1100}>{tx.thousands}</Ribbon>
       </Scene>
       <Scene t={t} a={win("history")[0]} b={win("history")[1]} bg="none">
         <FullClip name="rose_torch" from={win("history")[0] - 0.2} />
@@ -294,7 +299,7 @@ export const GlassV2: React.FC = () => {
           <div style={{ display: "flex", alignItems: "center", gap: 26, justifyContent: "center" }}>
             <InstaGlyph s={110} />
             <div>
-              <div style={{ fontFamily: SERIF, fontWeight: 600, fontSize: 44, color: L.inkSoft }}>Follow me on Instagram</div>
+              <div style={{ fontFamily: SERIF, fontWeight: 600, fontSize: 44, color: L.inkSoft }}>{tx.followIG}</div>
               <div style={{ fontFamily: SERIF, fontWeight: 700, fontSize: 84, color: L.ribbon, lineHeight: 1.0, ...rise(t, at("@olga_rozin") - 0.3) }}>@olga_rozin</div>
             </div>
           </div>
@@ -305,10 +310,10 @@ export const GlassV2: React.FC = () => {
       <Scene t={t} a={win("comments")[0]} b={win("comments")[1]} bg="none">
         <FullClip name="pink_form" from={win("comments")[0] - 0.2} />
         <AbsoluteFill style={{ background: "rgba(10,6,3,.4)" }} />
-        <Ribbon t={t} t0={win("comments")[0] + 0.1}>Tell me in the comments</Ribbon>
+        <Ribbon t={t} t0={win("comments")[0] + 0.1}>{tx.tellMe}</Ribbon>
         <ParchCard t={t} t0={at("would") - 0.3} y={400} w={880} seed="cm">
           <div style={{ display: "grid", placeItems: "center", marginBottom: 10 }}><SpeechIcon s={90} /></div>
-          <CardTitle size={88}><i>Want to learn how glass is made?</i></CardTitle>
+          <CardTitle size={lang === "ru" ? 80 : 88}><i>{tx.wantLearn}</i></CardTitle>
         </ParchCard>
       </Scene>
 
@@ -317,7 +322,7 @@ export const GlassV2: React.FC = () => {
         <FullClip name="tumbler" from={win("end")[0] - 0.3} rate={0.8} />
         <AbsoluteFill style={{ background: shade }} />
         <div style={{ position: "absolute", left: 80, top: 330, fontFamily: HAND, fontWeight: 600, fontSize: 132, lineHeight: 1.05, color: L.cream, rotate: "-4deg", textShadow: "0 4px 18px rgba(0,0,0,.7)", clipPath: `inset(0 ${100 - 100 * ease(t, at("hear") - 0.6, at("think", 1) + 0.6)}% 0 0)` }}>
-          I'd love to hear<br />what you think!
+          {tx.love1}<br />{tx.love2}
         </div>
       </Scene>
 
@@ -326,12 +331,12 @@ export const GlassV2: React.FC = () => {
         {WAVE_CLIP ? <FullClip name="olga_wave" from={win("outro")[0]} /> : <ArtPan name="modern" t0={win("outro")[0]} t1={win("outro")[0] + 7} hold={0} endFocus={560} endScale={2.2} />}
         <AbsoluteFill style={{ background: "linear-gradient(180deg, rgba(10,6,3,.55) 0%, rgba(10,6,3,0) 25%, rgba(10,6,3,0) 45%, rgba(10,6,3,.9) 72%)" }} />
         <Embers t={t} n={50} seed="out" strength={1.0} />
-        <div style={{ position: "absolute", left: 90, top: 250, fontFamily: HAND, fontWeight: 600, fontSize: 120, color: L.cream, rotate: "-6deg", textShadow: "0 4px 18px rgba(0,0,0,.75)", clipPath: `inset(0 ${100 - 100 * ease(t, win("outro")[0] + 0.3, win("outro")[0] + 1.3)}% 0 0)` }}>Bye for now!</div>
+        <div style={{ position: "absolute", left: 90, top: 250, fontFamily: HAND, fontWeight: 600, fontSize: 120, color: L.cream, rotate: "-6deg", textShadow: "0 4px 18px rgba(0,0,0,.75)", clipPath: `inset(0 ${100 - 100 * ease(t, win("outro")[0] + 0.3, win("outro")[0] + 1.3)}% 0 0)` }}>{tx.bye}</div>
         <ParchCard t={t} t0={win("outro")[0] + 0.9} y={1020} w={900} seed="out">
           <div style={{ textAlign: "center" }}>
-            <div style={{ fontFamily: SERIF, fontWeight: 700, fontSize: 30, letterSpacing: 8, color: L.ribbon, textTransform: "uppercase" }}>{SERIES} · Episode {EPISODE} ✓</div>
-            <div style={{ fontFamily: SERIF, fontStyle: "italic", fontSize: 40, color: L.inkSoft, marginTop: 10 }}>Next time?</div>
-            <div style={{ fontFamily: SERIF, fontWeight: 700, fontSize: 64, color: L.ink, lineHeight: 1.05 }}>How is glass made?</div>
+            <div style={{ fontFamily: SERIF, fontWeight: 700, fontSize: 30, letterSpacing: 8, color: L.ribbon, textTransform: "uppercase" }}>{tx.seriesEp}</div>
+            <div style={{ fontFamily: SERIF, fontStyle: "italic", fontSize: 40, color: L.inkSoft, marginTop: 10 }}>{tx.nextTime}</div>
+            <div style={{ fontFamily: SERIF, fontWeight: 700, fontSize: 64, color: L.ink, lineHeight: 1.05 }}>{tx.howMade}</div>
           </div>
         </ParchCard>
         <div style={{ position: "absolute", left: 0, width: VW, top: 1420, textAlign: "center", ...rise(t, win("outro")[0] + 1.6) }}>
@@ -342,7 +347,7 @@ export const GlassV2: React.FC = () => {
             return (
               <div style={{ display: "inline-flex", alignItems: "center", gap: 20, padding: "18px 40px 18px 22px", borderRadius: 80, background: press > 0.5 ? "rgba(20,12,6,.85)" : L.ribbon, border: `3px solid ${L.parch}`, scale: `${sc}`, boxShadow: `0 0 ${36 * tap}px rgba(255,140,40,.45)` }}>
                 <InstaGlyph s={72} />
-                <span style={{ fontFamily: SERIF, fontWeight: 700, fontSize: 56, color: L.cream }}>{press > 0.5 ? "Following ✓" : "Follow @olga_rozin"}</span>
+                <span style={{ fontFamily: SERIF, fontWeight: 700, fontSize: 56, color: L.cream }}>{press > 0.5 ? tx.following : tx.followBtn}</span>
               </div>
             );
           })()}
@@ -350,19 +355,19 @@ export const GlassV2: React.FC = () => {
       </Scene>
 
       {/* chapter stings */}
-      <ChapterWipe t={t} t0={HOOK - 0.7} n={1} title="A Rare Luxury" />
-      <ChapterWipe t={t} t0={c.then - 0.85} n={2} title="The Breakthrough" oy={0.4} />
-      <ChapterWipe t={t} t0={c.rome - 0.85} n={3} title="Rome Spreads the Craft" oy={0.45} />
-      <ChapterWipe t={t} t0={c.modern - 0.85} n={4} title="The Craft Today" oy={0.55} />
+      <ChapterWipe t={t} t0={HOOK - 0.7} n={1} title={tx.ch1} label={tx.chapter} />
+      <ChapterWipe t={t} t0={c.then - 0.85} n={2} title={tx.ch2} label={tx.chapter} oy={0.4} />
+      <ChapterWipe t={t} t0={c.rome - 0.85} n={3} title={tx.ch3} label={tx.chapter} oy={0.45} />
+      <ChapterWipe t={t} t0={c.modern - 0.85} n={4} title={tx.ch4} label={tx.chapter} oy={0.55} />
 
-      <Captions t={t} />
+      <Captions t={t} lines={tm.lines} />
 
       {VO_LABEL.startsWith("SCRATCH") ? (
         <div style={{ position: "absolute", left: 0, width: VW, top: 1560, textAlign: "center" }}>
           <span style={{ fontFamily: "Inter", fontWeight: 700, fontSize: 24, color: "rgba(255,255,255,.85)", background: "rgba(160,30,30,.8)", padding: "6px 14px", borderRadius: 8 }}>DRAFT · scratch voice, not Olga</span>
         </div>
       ) : null}
-      <Sequence from={Math.round(HOOK * GFPS)} layout="none"><Audio src={staticFile("glass/vo.wav")} /></Sequence>
+      <Sequence from={Math.round(HOOK * GFPS)} layout="none"><Audio src={staticFile(tm.vo)} /></Sequence>
     </AbsoluteFill>
   );
 };

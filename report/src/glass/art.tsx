@@ -9,7 +9,7 @@ export const P = {
   glow: "#F28A1E", ember: "#FFB347", sea: "#D7DDCF", land: "#DCC79F", landEdge: "#8E6E46",
   blue: "#1F4E8C", teal: "#2F8F8A", red: "#A8402E",
 };
-export const SERIF = "Cormorant Garamond", HAND = "Caveat";
+export const SERIF = "'Cormorant Garamond', 'Cormorant Cyr', serif", HAND = "Caveat, 'Caveat Cyr', cursive";
 
 // ------------------------------------------------------------ map (Natural Earth 1:50m land)
 const LAND = feature(land50 as never, (land50 as never as { objects: { land: never } }).objects.land) as never;
