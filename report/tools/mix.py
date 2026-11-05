@@ -1,6 +1,6 @@
 """Broadcast-style mix: narration on top, music bed ducked under the voice.
 
-    python3 tools/mix.py public/audio/vo.mp3 public/audio/music.mp3 80 out/mix.wav
+    python3 tools/mix.py public/audio/vo.mp3 public/audio/music.mp3 80 out/mix.wav [out/sfx.wav]
 
 1. Voice: high-pass 90 Hz, gentle compression, set to -16 LUFS (the reference level).
 2. Music: set so that in pauses it sits ~15 LU under the voice (-31 LUFS) and while the
@@ -9,12 +9,16 @@
    the voice's own envelope with a 0.25 s look-ahead, 0.15 s attack, 0.7 s release, and
    only lifts in pauses longer than 0.9 s, so it never pumps between words.
    A deep 2.5 kHz dip in the music leaves room for speech intelligibility.
-3. Fade music in/out, sum, true-peak limit to -1 dBTP.
+3. Optional SFX bus (4th input): effects peak ~20 dB under the voice peaks and dip 4 dB
+   more while the narrator speaks, band-limited 180 Hz-7 kHz so nothing is sharp.
+4. Fade music in/out, sum, true-peak limit to -1 dBTP.
 """
 import subprocess, sys, re
 import numpy as np
 
 VO, MUSIC, DUR, OUT = sys.argv[1], sys.argv[2], float(sys.argv[3]), sys.argv[4]
+SFX = sys.argv[5] if len(sys.argv) > 5 else None
+SFX_PEAK_DB, SFX_DUCK_DB = -22.0, -4.0   # each effect peaks ~20 dB under the voice peaks; -4 dB more while speaking
 SR = 48000
 VOICE_LUFS, BED_GAP_LU, DUCK_DB = -16.0, -15.0, -12.0
 
@@ -71,8 +75,15 @@ t = np.arange(len(mu)) / SR
 gain *= np.clip(t / 1.0, 0, 1) * np.clip((DUR - t) / 3.0, 0, 1)
 mu *= gain[:, None]
 
+# --- sound effects: soft, placed on screen events (tools/sfx.py), dipped a little under speech
+fx = np.zeros_like(vo)
+if SFX:
+    fx = decode(SFX, "highpass=f=180,lowpass=f=7000") * 10 ** (SFX_PEAK_DB / 20)
+    fxg = 10 ** (np.interp(np.arange(len(fx)) / hop, np.arange(len(g)), g * (SFX_DUCK_DB / DUCK_DB)) / 20)
+    fx *= fxg[:, None]
+
 # --- sum + true-peak limit
-mix = vo + mu
+mix = vo + mu + fx
 raw = ff(["-f", "f32le", "-ar", str(SR), "-ac", "2", "-i", "-",
           "-af", "aresample=192000,alimiter=limit=0.89:attack=2:release=80:level=0,aresample=48000",
           "-c:a", "pcm_s24le", OUT], inp=mix.astype(np.float32).tobytes())
