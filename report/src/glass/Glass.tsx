@@ -9,20 +9,25 @@ import {
   P, SERIF, HAND, MapBase, xy, CoreVessel, CoreForming, Blowpipe, IconStopwatch, IconFeather, IconVessels, IconFurnace, IconBreath,
   IconGravity, Colosseum, Laurel, InstaGlyph, SpeechIcon,
 } from "./art";
+import { Embers, ChapterWipe, LightSweep, SeriesBug, Slam, SERIES, EPISODE, EP_TITLE } from "./fx";
 
 export const GFPS = 30;
-const LAST = WORDS[WORDS.length - 1].end;
-export const GLASS_DURATION = Math.ceil((LAST + 3.2) * 10) / 10;
+// the cold-open hook + series title sting play before the narration starts
+export const HOOK = 7.4;
+const W = WORDS.map((w) => ({ ...w, start: w.start + HOOK, end: w.end + HOOK }));
+const LAST = W[W.length - 1].end;
+const OUTRO = 7.5;
+export const GLASS_DURATION = Math.ceil((LAST + 1.2 + OUTRO) * 10) / 10;
 
 // ------------------------------------------------------------ narration cues
 const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9']/g, "");
 const at = (w: string, n = 0) => {
-  const hits = WORDS.filter((x) => norm(x.text) === norm(w));
+  const hits = W.filter((x) => norm(x.text) === norm(w));
   if (!hits[n]) throw new Error(`cue not in narration: ${w}#${n}`);
   return hits[n].start;
 };
 const endOfSentence = (t0: number) => {
-  const w = WORDS.find((x) => x.start >= t0 - 0.01 && /[.!?]$/.test(x.text));
+  const w = W.find((x) => x.start >= t0 - 0.01 && /[.!?]$/.test(x.text));
   return w ? w.end : t0 + 2;
 };
 
@@ -66,7 +71,7 @@ const Clip: React.FC<{ name: string; from: number; trim?: number; rate?: number;
 const Frame: React.FC<{ x: number; y: number; w: number; h: number; t: number; t0: number; children: React.ReactNode; rot?: number }> = ({ x, y, w, h, t, t0, children, rot = 0 }) => {
   const k = spr(t, t0, 22, 100);
   return (
-    <div style={{ position: "absolute", left: x, top: y, width: w, height: h, padding: 12, background: "#FBF6EC", boxShadow: "0 18px 40px rgba(60,40,20,.35), 0 2px 6px rgba(60,40,20,.25)", rotate: `${rot}deg`, opacity: Math.min(1, k * 1.5), translate: `0px ${(1 - k) * 40}px`, scale: `${0.96 + 0.04 * k}` }}>
+    <div style={{ position: "absolute", left: x, top: y, width: w, height: h, padding: 12, background: "#FBF6EC", boxShadow: "0 18px 40px rgba(60,40,20,.35), 0 2px 6px rgba(60,40,20,.25)", rotate: `${rot + Math.sin(t * 0.7 + x) * 0.6}deg`, opacity: Math.min(1, k * 1.5), translate: `0px ${(1 - k) * 40 + Math.sin(t * 0.9 + y) * 4}px`, scale: `${0.96 + 0.04 * k}` }}>
       <div style={{ position: "relative", width: "100%", height: "100%", overflow: "hidden", background: "#000" }}>{children}</div>
     </div>
   );
@@ -77,7 +82,9 @@ const Cinema: React.FC<{ name: string; from: number; trim?: number; rate?: numbe
   return (
     <>
       <div style={{ position: "absolute", inset: -60, filter: "blur(38px) brightness(.55) saturate(1.2)" }}><Clip name={name} from={from} trim={trim} rate={rate} /></div>
-      <div style={{ position: "absolute", left, top: 0, width: cw, height: 1080, boxShadow: "0 0 80px rgba(0,0,0,.6)" }}><Clip name={name} from={from} trim={trim} rate={rate} /></div>
+      <div style={{ position: "absolute", left, top: 0, width: cw, height: 1080, boxShadow: "0 0 80px rgba(0,0,0,.6)", overflow: "hidden" }}>
+        <div style={{ position: "absolute", inset: 0, scale: `${1 + 0.06 * Math.min(1, Math.max(0, (useCurrentFrame() / GFPS - from) / 6))}` }}><Clip name={name} from={from} trim={trim} rate={rate} /></div>
+      </div>
     </>
   );
 };
@@ -92,7 +99,7 @@ const Parchment: React.FC = () => (
     <AbsoluteFill style={{ boxShadow: "inset 0 0 220px rgba(110,80,40,.35)" }} />
   </AbsoluteFill>
 );
-const Dark: React.FC = () => <AbsoluteFill style={{ background: "radial-gradient(1200px 800px at 60% 50%, #2A1B10, #0E0805)" }} />;
+const Dark: React.FC = () => <AbsoluteFill style={{ background: "radial-gradient(1200px 800px at 60% 50%, #2A1B10, #0E0805)" }}><Embers t={useCurrentFrame() / GFPS} n={30} seed="dk" strength={0.7} /></AbsoluteFill>;
 
 // ------------------------------------------------------------ scene shell: cross-dissolve with a slow push
 const Scene: React.FC<{ t: number; a: number; b: number; children: React.ReactNode; bg?: "paper" | "dark" | "none" }> = ({ t, a, b, children, bg = "paper" }) => {
@@ -116,7 +123,7 @@ const Tag: React.FC<{ children: React.ReactNode; style?: React.CSSProperties }> 
 
 // ================================================================== scenes
 const C = () => ({
-  intro: at("before"), earliest: at("earliest") - 0.55, problem: at("but", 0) - 0.2, making: at("making"), then: at("then", 0) - 0.2,
+   earliest: at("earliest") - 0.55, problem: at("but", 0) - 0.2, making: at("making"), then: at("then", 0) - 0.2,
   invented: at("glassblowing", 0) - 0.15, changed: at("changed") - 0.75, origin: at("technique") - 0.7, core: at("you", 0) - 0.15,
   invention: at("but", 1) - 0.2, blow: at("blow") - 0.5, suddenly: at("suddenly") - 0.4, meant: at("think") - 0.5, romans: at("romans") - 0.3,
   adopted: at("adopted"), fascinating: at("but", 2) - 0.2, more: at("more", 0), heat: at("heat") - 0.3, air: at("introduce") - 0.3,
@@ -132,29 +139,63 @@ export const Glass: React.FC = () => {
   void nextAfter;
   const win = (a: number, b: number) => [a, b] as const;
   const S = {
-    intro: win(0, c.earliest), map: win(c.earliest, c.problem), problem: win(c.problem, c.then), bce: win(c.then, c.invented),
+    intro: win(HOOK - 0.5, c.earliest), map: win(c.earliest, c.problem), problem: win(c.problem, c.then), bce: win(c.then, c.invented),
     invented: win(c.invented, c.changed), changed: win(c.changed, c.origin), origin: win(c.origin, c.core), core: win(c.core, c.invention),
     gather: win(c.invention, c.blow), blow: win(c.blow, c.suddenly), hollow: win(c.suddenly, c.meant), meant: win(c.meant, c.romans),
     romans: win(c.romans, c.fascinating), principles: win(c.fascinating, c.ingredient), hands: win(c.ingredient, c.olga),
-    olga: win(c.olga, c.insta), insta: win(c.insta, c.comments), comments: win(c.comments, c.hear), end: win(c.hear, GLASS_DURATION + 1),
+    olga: win(c.olga, c.insta), insta: win(c.insta, c.comments), comments: win(c.comments, c.hear), end: win(c.hear, LAST + 1.2), outro: win(LAST + 1.2, GLASS_DURATION + 1),
   };
 
   return (
     <AbsoluteFill style={{ background: "#0E0805" }}>
-      {/* 1 — intro: finished pieces + title */}
+      {/* 0a — cold-open hook: fast cuts of Olga's studio, kinetic words */}
+      {t < HOOK - 2.6 ? (() => {
+        const cuts: [string, number, number][] = [["glory_hole", 0, 0.4], ["red_bubble", 0.8, 0.2], ["torch", 1.6, 0.9], ["clear_bubble", 2.45, 0.4], ["rose_torch", 3.3, 0.9], ["twist", 4.1, 0.2]];
+        const i = cuts.reduce((acc, c2, k) => (t >= c2[1] ? k : acc), 0);
+        const [name, start, trim] = cuts[i];
+        const punch = 1.14 - 0.14 * spr(t, start, 14, 220);
+        return (
+          <AbsoluteFill style={{ background: "#000" }}>
+            <AbsoluteFill style={{ scale: `${punch}` }}><Cinema name={name} from={start} trim={trim} rate={1.25} /></AbsoluteFill>
+            <AbsoluteFill style={{ background: "radial-gradient(900px 700px at 50% 45%, rgba(0,0,0,0) 30%, rgba(0,0,0,.6)), linear-gradient(180deg, rgba(0,0,0,0) 55%, rgba(0,0,0,.8) 100%)" }} />
+            <LightSweep t={t} t0={0.75} dur={0.6} /><LightSweep t={t} t0={2.4} dur={0.6} />
+            <Slam t={t} t0={0.15} t1={1.45} text="One breath." />
+            <Slam t={t} t0={1.6} t1={2.85} text="One idea." />
+            <Slam t={t} t0={3.0} t1={4.5} text="2,000 years of glass." size={120} />
+          </AbsoluteFill>
+        );
+      })() : null}
+
+      {/* 0b — series title sting */}
+      <Scene t={t} a={HOOK - 2.9} b={HOOK - 0.35} bg="dark">
+        <Embers t={t} n={70} seed="st" strength={1.2} />
+        <div style={{ position: "absolute", left: 0, width: 1920, top: 250, textAlign: "center", fontFamily: SERIF, fontWeight: 700, fontSize: 34, letterSpacing: interpolate(ease(t, HOOK - 2.6, HOOK - 1.2), [0, 1], [30, 14]), textTransform: "uppercase", color: P.glow, opacity: ease(t, HOOK - 2.6, HOOK - 2.1) }}>
+          {SERIES} · with Olga Rozin
+        </div>
+        <div style={{ position: "absolute", left: 0, width: 1920, top: 330, textAlign: "center", fontFamily: SERIF, fontWeight: 700, fontSize: 132, lineHeight: 1.0, color: "#FFF1D6", textShadow: "0 0 50px rgba(255,140,40,.55)",
+          clipPath: `inset(0 ${50 - 50 * ease(t, HOOK - 2.3, HOOK - 1.3)}% 0 ${50 - 50 * ease(t, HOOK - 2.3, HOOK - 1.3)}%)` }}>
+          {EP_TITLE}
+        </div>
+        <div style={{ position: "absolute", left: 960 - 380, top: 500, width: 760, height: 3, background: `linear-gradient(90deg, transparent, ${P.glow}, transparent)`, scale: `${ease(t, HOOK - 1.6, HOOK - 0.9)} 1`, boxShadow: `0 0 18px ${P.glow}` }} />
+        <div style={{ position: "absolute", left: 0, width: 1920, top: 540, textAlign: "center", ...rise(t, HOOK - 1.3) }}>
+          <span style={{ fontFamily: SERIF, fontWeight: 700, fontSize: 38, color: "#1A0F08", background: P.glow, padding: "8px 26px", borderRadius: 40, letterSpacing: 4 }}>EPISODE {EPISODE}</span>
+        </div>
+      </Scene>
+
+      {/* 1 — intro: finished pieces, the luxury of glass */}
       <Scene t={t} a={S.intro[0]} b={S.intro[1]} bg="dark">
-        <div style={{ position: "absolute", left: 120, top: 90, width: 520, height: 900, ...rise(t, 0.05, 20) }}>
+        <div style={{ position: "absolute", left: 120, top: 90, width: 520, height: 900, ...rise(t, HOOK - 0.3, 20) }}>
           <div style={{ position: "relative", width: "100%", height: "100%", overflow: "hidden", borderRadius: 4, boxShadow: "0 30px 80px rgba(0,0,0,.6)" }}>
-            <Clip name="tumbler" from={0} />
-            <div style={{ position: "absolute", inset: 0, opacity: ease(t, 3.3, 3.8) }}><Clip name="goblets" from={3.3} /></div>
-            <div style={{ position: "absolute", inset: 0, opacity: ease(t, 5.8, 6.3) }}><Clip name="candles" from={5.8} /></div>
+            <Clip name="tumbler" from={HOOK - 0.4} />
+            <div style={{ position: "absolute", inset: 0, opacity: ease(t, HOOK + 2.6, HOOK + 3.1) }}><Clip name="goblets" from={HOOK + 2.6} /></div>
+            <div style={{ position: "absolute", inset: 0, opacity: ease(t, HOOK + 5.0, HOOK + 5.5) }}><Clip name="candles" from={HOOK + 5.0} /></div>
           </div>
         </div>
-        <H style={{ left: 760, top: 150, fontSize: 112, fontWeight: 700, color: "#F3E6CC", lineHeight: 1.0, ...rise(t, 0.1) }}>The Invention<br />of Glassblowing</H>
-        <H style={{ left: 766, top: 400, fontSize: 40, fontStyle: "italic", fontWeight: 500, color: "#D9B98A", ...rise(t, 0.4) }}>A turning point in the history of glass</H>
-        <div style={{ position: "absolute", left: 766, top: 480, width: 560, height: 2, background: "#D9B98A", opacity: 0.6, scale: `${ease(t, 0.4, 1.4)} 1`, transformOrigin: "left" }} />
-        <Say t={t} t0={at("before")} text="Before glass became art, windows, or everyday objects, it was a rare luxury." em={["luxury"]}
-          style={{ position: "absolute", left: 766, top: 560, width: 1000, fontSize: 60, fontWeight: 600, color: "#F3E6CC" }} />
+        {[["Art", at("art,")], ["Windows", at("windows,")], ["Everyday objects", at("everyday")]].map(([l, tt], i) => (
+          <div key={l as string} style={{ position: "absolute", left: 770 + i * 330, top: 200, fontFamily: SERIF, fontWeight: 700, fontSize: 46, color: "#D9B98A", textDecoration: t > at("rare") ? "line-through" : undefined, textDecorationColor: P.glow, ...rise(t, (tt as number) - 0.1) }}>{l as string}</div>
+        ))}
+        <Say t={t} t0={at("it", 0)} text="…it was a rare luxury." em={["luxury."]} style={{ position: "absolute", left: 766, top: 380, width: 1050, fontSize: 120, fontWeight: 700, color: "#F3E6CC" }} />
+        <LightSweep t={t} t0={at("luxury.")} />
       </Scene>
 
       {/* 2 — earliest glass: map of Egypt and the Middle East */}
@@ -423,11 +464,54 @@ export const Glass: React.FC = () => {
         <H style={{ left: 166, top: 760, fontSize: 40, fontStyle: "italic", color: "#D9B98A", ...rise(t, LAST + 0.4) }}>@olga_rozin</H>
       </Scene>
 
+      {/* 20 — series outro */}
+      <Scene t={t} a={S.outro[0]} b={S.outro[1]} bg="dark">
+        <Embers t={t} n={60} seed="out" strength={1.1} />
+        <div style={{ position: "absolute", left: 0, width: 1920, top: 140, textAlign: "center", fontFamily: SERIF, fontWeight: 700, fontSize: 34, letterSpacing: 14, textTransform: "uppercase", color: P.glow, ...rise(t, S.outro[0] + 0.1) }}>{SERIES}</div>
+        <div style={{ position: "absolute", left: 0, width: 1920, top: 196, display: "flex", justifyContent: "center", alignItems: "center", gap: 34, ...rise(t, S.outro[0] + 0.25) }}>
+          <span style={{ fontFamily: SERIF, fontWeight: 700, fontSize: 80, color: "#FFF1D6" }}>Episode {EPISODE} · {EP_TITLE}</span>
+          <div style={{ width: 96, height: 96, borderRadius: 60, border: `5px solid ${P.glow}`, display: "grid", placeItems: "center", rotate: "-12deg", opacity: Math.min(1, spr(t, S.outro[0] + 0.9) * 1.5), scale: `${2 - spr(t, S.outro[0] + 0.9, 12, 220)}` }}>
+            <svg width="54" height="54" viewBox="0 0 24 24"><path d="M4.5 12.5l5 5L19.5 7" fill="none" stroke={P.glow} strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
+          </div>
+        </div>
+        {/* next-episode tease, answered by the comments */}
+        <div style={{ position: "absolute", left: 300, top: 400, width: 600, height: 520, borderRadius: 18, overflow: "hidden", boxShadow: "0 30px 70px rgba(0,0,0,.6)", border: `2px solid ${P.glow}66`, ...rise(t, S.outro[0] + 1.0, 40) }}>
+          <Clip name="red_bubble" from={S.outro[0] + 0.6} />
+          <AbsoluteFill style={{ background: "linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,.85))" }} />
+          <div style={{ position: "absolute", left: 30, bottom: 26, right: 30 }}>
+            <div style={{ fontFamily: SERIF, fontWeight: 700, fontSize: 26, letterSpacing: 5, color: P.glow, textTransform: "uppercase" }}>Next time?</div>
+            <div style={{ fontFamily: SERIF, fontWeight: 700, fontSize: 52, color: "#FFF1D6", lineHeight: 1.05 }}>How is glass made?</div>
+            <div style={{ fontFamily: SERIF, fontStyle: "italic", fontSize: 30, color: "#D9B98A", marginTop: 6 }}>Tell me in the comments</div>
+          </div>
+        </div>
+        <div style={{ position: "absolute", left: 1000, top: 470, ...rise(t, S.outro[0] + 1.4) }}>
+          <div style={{ fontFamily: SERIF, fontSize: 44, fontStyle: "italic", color: "#D9B98A" }}>Follow for more Glass Stories</div>
+          {(() => {
+            const press = spr(t, S.outro[0] + 2.8, 10, 260), tap = Math.min(1, spr(t, S.outro[0] + 2.6) * 1.5);
+            const scale = 1 - 0.08 * Math.max(0, Math.sin(Math.min(1, (t - (S.outro[0] + 2.6)) / 0.35) * Math.PI));
+            return (
+              <div style={{ marginTop: 30, display: "inline-flex", alignItems: "center", gap: 22, padding: "22px 44px 22px 26px", borderRadius: 80, background: press > 0.5 ? "#2A1B10" : P.glow, border: `3px solid ${P.glow}`, scale: `${scale}`, boxShadow: `0 0 ${40 * tap}px rgba(255,140,40,.5)` }}>
+                <InstaGlyph s={84} />
+                <span style={{ fontFamily: SERIF, fontWeight: 700, fontSize: 64, color: press > 0.5 ? P.glow : "#1A0F08" }}>{press > 0.5 ? "Following ✓" : "@olga_rozin"}</span>
+              </div>
+            );
+          })()}
+          <div style={{ marginTop: 28, fontFamily: SERIF, fontWeight: 600, fontSize: 40, color: "#F3E6CC", opacity: ease(t, S.outro[0] + 3.3, S.outro[0] + 3.9) }}>@olga_rozin on Instagram</div>
+        </div>
+      </Scene>
+
+      {/* chapter stings (molten glass floods the frame between acts) */}
+      <ChapterWipe t={t} t0={HOOK - 0.7} n={1} title="A Rare Luxury" />
+      <ChapterWipe t={t} t0={c.then - 0.85} n={2} title="The Breakthrough" ox={0.3} />
+      <ChapterWipe t={t} t0={c.romans - 0.85} n={3} title="Rome Spreads the Craft" ox={0.7} oy={0.4} />
+      <ChapterWipe t={t} t0={c.fascinating - 0.85} n={4} title="The Craft Today" ox={0.5} oy={0.7} />
+      <SeriesBug t={t} t0={HOOK + 1.4} t1={S.outro[0]} />
+
       {/* draft watermark while the scratch voice is in use */}
       {VO_LABEL.startsWith("SCRATCH") ? (
-        <div style={{ position: "absolute", right: 24, top: 18, fontFamily: "Inter", fontWeight: 700, fontSize: 20, color: "rgba(255,255,255,.75)", background: "rgba(160,30,30,.75)", padding: "6px 14px", borderRadius: 8 }}>DRAFT · scratch voice, not Olga</div>
+        <div style={{ position: "absolute", right: 24, bottom: 18, fontFamily: "Inter", fontWeight: 700, fontSize: 20, color: "rgba(255,255,255,.75)", background: "rgba(160,30,30,.75)", padding: "6px 14px", borderRadius: 8 }}>DRAFT · scratch voice, not Olga</div>
       ) : null}
-      <Audio src={staticFile("glass/vo.wav")} />
+      <Sequence from={Math.round(HOOK * GFPS)} layout="none"><Audio src={staticFile("glass/vo.wav")} /></Sequence>
     </AbsoluteFill>
   );
 };
