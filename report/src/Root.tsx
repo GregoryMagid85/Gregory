@@ -4,7 +4,7 @@ import { loadFont } from "@remotion/fonts";
 import { Report, DURATION_S } from "./Report";
 import { FPS } from "./ui";
 import { Glass, GLASS_DURATION, GFPS } from "./glass/Glass";
-import { GlassV, GLASS_V_DURATION } from "./glass/GlassV";
+import { GlassV2, GLASS_V2_DURATION } from "./glass/GlassV2";
 
 const fonts = Promise.all([
   ...[500, 600, 700, 800, 900].map((w) => loadFont({ family: "Inter", url: staticFile(`fonts/inter-latin-${w}-normal.woff2`), weight: String(w) })),
@@ -18,8 +18,8 @@ export const RemotionRoot: React.FC = () => (
   <>
   <Composition
     id="GlassStoriesVertical"
-    component={GlassV}
-    durationInFrames={Math.round(GLASS_V_DURATION * GFPS)}
+    component={GlassV2}
+    durationInFrames={Math.round(GLASS_V2_DURATION * GFPS)}
     fps={GFPS}
     width={1080}
     height={1920}

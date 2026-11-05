@@ -9,6 +9,10 @@ for t, s, e in w:
         out[-1][0] += t if t.startswith(",") else t; out[-1][2] = e; continue
     if out and out[-1][0] == "Syro" and t.startswith("Palestinian"):
         out[-1][0] += "-" + t; out[-1][2] = e; continue
+    if t.lower() in ("underscore", "rosin") and out and out[-1][0].lower().startswith(("atolga", "@olga", "olga")) and len(out) > 1 and out[-2][0].lower() == "at":
+        out[-1][0] = "@olga_rozin"; out[-1][2] = e; continue
+    if t.lower().startswith("atolga"): t = "@olga"
+    if t.rstrip(",.!?") == "Rosin": t = t.replace("Rosin", "Rozin")
     out.append([t, s, e])
 rows = ",\n".join(json.dumps(x) for x in out)
 open("src/glass/words.ts", "w").write(f"""// Narration word timings ({label}), transcribed with Whisper. Regenerate with tools/glass_words.py.

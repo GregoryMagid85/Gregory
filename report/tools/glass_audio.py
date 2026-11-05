@@ -22,13 +22,13 @@ norm = lambda s: re.sub(r"[^a-z0-9']", "", s.lower())
 def at(w, n=0): return [s for t, s, e in WORDS if norm(t) == norm(w)][n]
 LAST = WORDS[-1][2]
 DUR = np.ceil((LAST + 1.2 + OUTRO) * 10) / 10
-OUTRO_T = LAST + 1.2
-cues = dict(earliest=at("earliest") - 0.55, problem=at("but", 0) - 0.2, then=at("then", 0) - 0.2, invented=at("glassblowing", 0) - 0.15,
-            changed=at("changed") - 0.75, origin=at("technique") - 0.7, core=at("you", 0) - 0.15, invention=at("but", 1) - 0.2,
-            blow=at("blow") - 0.5, suddenly=at("suddenly") - 0.4, meant=at("think") - 0.5, romans=at("romans") - 0.3,
-            fascinating=at("but", 2) - 0.2, ingredient=at("course", 1) - 0.6, olga=at("olga", 0) - 0.6, insta=at("follow") - 0.4,
-            comments=at("comments") - 1.0, hear=at("hear") - 0.8)
-WIPES = [HOOK - 0.7, cues["then"] - 0.85, cues["romans"] - 0.85, cues["fascinating"] - 0.85]
+OUTRO_T = LAST + 1.0
+cues = dict(meso=at("earliest") - 0.55, egypt=at("egypt.") - 0.35, then=at("then", 0) - 0.2, invented=at("glassblowing", 0) - 0.15,
+            origin=at("technique") - 0.7, core=at("you", 0) - 0.15, gather=at("but", 1) - 0.2, blow=at("blow") - 0.35, hollow=at("suddenly") - 0.3,
+            meant=at("think") - 0.4, rome=at("romans") - 0.3, romemap=at("adopted") - 0.3, modern=at("but", 2) - 0.2, steps=at("heat") - 0.35,
+            hands=at("course", 1) - 0.6, olga=at("olga", 0) - 0.5, montage=at("connected") - 0.6, history=at("history") - 0.8, insta=at("follow") - 0.4,
+            comments=at("comments") - 0.9, end=at("hear") - 0.8)  # mirror of GlassV2.tsx scene starts
+WIPES = [HOOK - 0.7, cues["then"] - 0.85, cues["rome"] - 0.85, cues["modern"] - 0.85]
 HOOK_CUTS = [0, 0.8, 1.6, 2.45, 3.3, 4.1]
 N = int(DUR * SR)
 T = np.arange(N) / SR
@@ -110,14 +110,13 @@ sfx = np.zeros(N)
 for w in WIPES:                                                  # molten flood: whoosh + sizzle
     place(sfx, w, whoosh(0.9), 0.8); place(sfx, w + 0.2, sizzle(1.4), 0.25); place(low, w + 0.5, thump(70, 40, 0.4), 0.5)
 for name, c in cues.items():
-    if name not in ("then", "romans", "fascinating"): place(sfx, c - 0.25, whoosh(0.5), 0.5)
-for w, f in (("egypt.", 620), ("middle", 700), ("syro-palestinian", 560)): place(sfx, at(w) - 0.05, pop(f), 0.6)
-for i, w in enumerate(("faster.", "thinner,", "variety")): place(sfx, at(w) - 0.2, pop(660 + 80 * i), 0.6)
-for i in range(5): place(sfx, at("variety") + 0.15 * i, pop(520 + 30 * i), 0.35)
-for i, d in enumerate([0, 0.25, 0.5, 0.65, 0.85]): place(sfx, at("adopted") + 0.6 + d * 4.5, pop(600 + 40 * i), 0.5)
+    if name not in ("then", "rome", "modern"): place(sfx, c - 0.25, whoosh(0.5), 0.5)
+for w, f in (("syro-palestinian", 560), ("region.", 640)): place(sfx, at(w) - 0.05, pop(f), 0.6)
+for i, w in enumerate(("faster,", "thinner,", "variety")): place(sfx, at(w) - 0.2, pop(660 + 80 * i), 0.6)
+for i, d in enumerate([0, 0.2, 0.45, 0.6, 0.8]): place(sfx, at("adopted") + 0.4 + d * 4.0, pop(600 + 40 * i), 0.5)
 for w in ("heat", "introduce", "controlling"): place(sfx, at(w) - 0.3, pop(560), 0.6)
 place(sfx, at("olga", 0) - 0.3, chime(880), 0.5)
-place(sfx, OUTRO_T + 0.9, chime(1174.7), 0.6); place(sfx, OUTRO_T + 2.8, pop(800), 0.8); place(sfx, OUTRO_T + 2.85, chime(1568), 0.5)
+place(sfx, OUTRO_T + 0.9, chime(1174.7), 0.6); place(sfx, OUTRO_T + 2.9, pop(800), 0.8); place(sfx, OUTRO_T + 2.95, chime(1568), 0.5)
 for c in HOOK_CUTS[1:-1]: place(sfx, c - 0.18, whoosh(0.35), 0.6)
 
 # ------------------------------------------------------------------ mix
