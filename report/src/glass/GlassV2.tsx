@@ -7,10 +7,11 @@ import React from "react";
 import { AbsoluteFill, Sequence, interpolate, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
 import { Audio } from "@remotion/media";
 import { VO_LABEL } from "./words";
-import { SERIF, HAND, MapBase, xy, CoreForming, IconStopwatch, IconFeather, IconVessels, IconFurnace, IconBreath, IconGravity, Colosseum, Laurel, InstaGlyph, SpeechIcon } from "./art";
+import { SERIF, HAND, MapBase, xy, IconStopwatch, IconFeather, IconVessels, IconFurnace, IconBreath, IconGravity, Colosseum, Laurel, InstaGlyph, SpeechIcon } from "./art";
 import { Embers, ChapterWipe, LightSweep, Slam, EPISODE } from "./fx";
 import { GFPS, HOOK, DURATION, spr, ease, rise, Clip, FullClip, Scene, Captions, makeTiming, Lang } from "./core";
 import { TXT } from "./i18n";
+import { CoreForming3D } from "./CoreForming3D";
 import { L, Ribbon, ParchCard, CardTitle, Kinetic, ArtPan, Studio } from "./look";
 
 export const GLASS_V2_DURATION = DURATION;
@@ -160,7 +161,7 @@ export const GlassV2: React.FC<{ lang?: Lang }> = ({ lang = "en" }) => {
         <Ribbon t={t} t0={win("core")[0] + 0.1}>{tx.before}</Ribbon>
         <ParchCard t={t} t0={win("core")[0] + 0.3} y={Y(370)} h={810} seed="core">
           <CardTitle size={72}>{tx.clayCore}</CardTitle>
-          <div style={{ marginTop: 10, marginLeft: -40 }}><CoreForming p={ease(t, at("shape"), at("laborious") + 1.4)} w={880} /></div>
+          <div style={{ marginTop: 4, display: "grid", placeItems: "center" }}><CoreForming3D p={Math.min(1, Math.max(0, (t - (at("clay") - 1.0)) / (at("imagine.") + 0.35 - (at("clay") - 1.0))))} t={t} width={800} height={470} /></div>
           {[["1", tx.step1, at("clay")], ["2", tx.step2, at("laborious") - 0.5], ["3", tx.step3, at("imagine.") - 0.3]].map(([n, l, tt]) => (
             <div key={n as string} style={{ display: "flex", gap: 20, alignItems: "center", marginTop: 14, marginLeft: 60, ...rise(t, tt as number) }}>
               <div style={{ width: 54, height: 54, borderRadius: 40, background: L.ribbon, color: L.cream, display: "grid", placeItems: "center", fontFamily: SERIF, fontWeight: 700, fontSize: 32 }}>{n}</div>
