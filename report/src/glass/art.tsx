@@ -21,12 +21,12 @@ export const proj = geoMercator().fitExtent([[0, 0], [MAP_W, MAP_H]], {
 const LAND_D = geoPath(proj)(LAND) ?? "";
 export const xy = (lon: number, lat: number) => proj([lon, lat]) as [number, number];
 
-export const MapBase: React.FC<{ children?: React.ReactNode; zoom?: number; cx?: number; cy?: number }> = ({ children, zoom = 1, cx = MAP_W / 2, cy = MAP_H / 2 }) => (
-  <svg width={MAP_W} height={MAP_H} viewBox={`0 0 ${MAP_W} ${MAP_H}`} style={{ position: "absolute", inset: 0 }}>
+export const MapBase: React.FC<{ children?: React.ReactNode; zoom?: number; cx?: number; cy?: number; w?: number; h?: number }> = ({ children, zoom = 1, cx = MAP_W / 2, cy = MAP_H / 2, w = MAP_W, h = MAP_H }) => (
+  <svg width={w} height={h} viewBox={`0 0 ${w} ${h}`} style={{ position: "absolute", inset: 0 }}>
     <defs>
       <filter id="rough"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="3" /><feColorMatrix values="0 0 0 0 0.35  0 0 0 0 0.25  0 0 0 0 0.12  0 0 0 0.18 0" /><feComposite in2="SourceGraphic" operator="in" /></filter>
     </defs>
-    <g transform={`translate(${MAP_W / 2} ${MAP_H / 2}) scale(${zoom}) translate(${-cx} ${-cy})`}>
+    <g transform={`translate(${w / 2} ${h / 2}) scale(${zoom}) translate(${-cx} ${-cy})`}>
       <rect x={-4000} y={-4000} width={10000} height={10000} fill={P.sea} />
       <path d={LAND_D} fill={P.land} stroke={P.landEdge} strokeWidth={2.2 / zoom} />
       <path d={LAND_D} fill="#000" filter="url(#rough)" />
