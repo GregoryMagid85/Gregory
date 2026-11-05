@@ -1,0 +1,8 @@
+node_modules/
+.fonttmp/
+update/assets/clips/
+update/audio/*.wav
+update/audio/vo/
+update/out/*
+!update/out/final.mp4
+!update/out/poster.png

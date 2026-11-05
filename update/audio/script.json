@@ -1,0 +1,9 @@
+[
+ ["hook", 0.6, ["Hey team!", "Big news this week:", "Winnie just evolved!", "Watch this.", "Stage four...", "Poof!", "Stage five!", "Wings, tail, the whole package!", "And right away he tells you:", "I'm hungry, feed me!"]],
+ ["journey", 0.2, ["Here's the full growth journey:", "the hatchling in its egg,", "the baby,", "the kid,", "and now, the winged Stage five."]],
+ ["care", 0.2, ["Every stage runs on three needs:", "food,", "cleaning,", "and play.", "Drag the apple,", "scrub with the sponge,", "toss the ball,", "and the rings fill right back up!"]],
+ ["rive", 0.1, ["It's all built in Rive,", "so every reaction is live and interactive."]],
+ ["lab", 0.2, ["New this week: the Rive Lab!", "Switch stages in one tap,", "and test every animation right on the phone."]],
+ ["outfit", 0.2, ["And Stage five gets dressed up!", "Five slots:", "hat,", "glasses,", "scarf,", "pants,", "and shirt.", "Toggle each one,", "tune the scale,", "and stack them into a full outfit!"]],
+ ["next", 0.2, ["Next up:", "lock in the item positions,", "hit Share values,", "and ship it.", "Awesome work, team!", "See you next update!"]]
+]
