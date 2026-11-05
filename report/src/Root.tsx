@@ -81,6 +81,26 @@ export const RemotionRoot: React.FC = () => (
     calculateMetadata={async () => { await fonts; return {}; }}
   />
   <Composition
+    id="GlassStoriesShortHEN"
+    component={GlassShort}
+    defaultProps={{ lang: "en" as const }}
+    durationInFrames={shortDuration("en")}
+    fps={GFPS}
+    width={1920}
+    height={1080}
+    calculateMetadata={async () => { await fonts; return {}; }}
+  />
+  <Composition
+    id="GlassStoriesShortHRU"
+    component={GlassShort}
+    defaultProps={{ lang: "ru" as const }}
+    durationInFrames={shortDuration("ru")}
+    fps={GFPS}
+    width={1920}
+    height={1080}
+    calculateMetadata={async () => { await fonts; return {}; }}
+  />
+  <Composition
     id="GlassHistory"
     component={Glass}
     durationInFrames={Math.round(GLASS_DURATION * GFPS)}
