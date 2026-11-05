@@ -3,11 +3,12 @@
     python3 tools/mix.py public/audio/vo.mp3 public/audio/music.mp3 80 out/mix.wav
 
 1. Voice: high-pass 90 Hz, gentle compression, set to -16 LUFS (the reference level).
-2. Music: set so that in pauses it sits ~9 LU under the voice (-25 LUFS) and while the
-   narrator speaks it drops a further 12 dB (~21 LU under the voice). Ducking is driven by
+2. Music: set so that in pauses it sits ~15 LU under the voice (-31 LUFS) and while the
+   narrator speaks it drops a further 12 dB (~27 LU under the voice). It is also softened
+   (6.5 kHz low-pass, light compression) so its transients don't pull attention. Ducking is driven by
    the voice's own envelope with a 0.25 s look-ahead, 0.15 s attack, 0.7 s release, and
    only lifts in pauses longer than 0.9 s, so it never pumps between words.
-   A 1.5-4 kHz dip in the music leaves room for speech intelligibility.
+   A deep 2.5 kHz dip in the music leaves room for speech intelligibility.
 3. Fade music in/out, sum, true-peak limit to -1 dBTP.
 """
 import subprocess, sys, re
@@ -15,7 +16,7 @@ import numpy as np
 
 VO, MUSIC, DUR, OUT = sys.argv[1], sys.argv[2], float(sys.argv[3]), sys.argv[4]
 SR = 48000
-VOICE_LUFS, BED_GAP_LU, DUCK_DB = -16.0, -9.0, -12.0
+VOICE_LUFS, BED_GAP_LU, DUCK_DB = -16.0, -15.0, -12.0
 
 
 def ff(args, inp=None):
@@ -40,7 +41,7 @@ vo = decode(VO, "highpass=f=90,acompressor=threshold=-22dB:ratio=3:attack=8:rele
 vo *= 10 ** ((VOICE_LUFS - lufs(vo)) / 20)
 
 # --- music bed (with a presence dip so consonants cut through)
-mu = decode(MUSIC, "equalizer=f=2500:t=q:w=1.2:g=-4,equalizer=f=250:t=q:w=1:g=-2")
+mu = decode(MUSIC, "equalizer=f=2500:t=q:w=1.4:g=-7,equalizer=f=250:t=q:w=1:g=-3,lowpass=f=6500,acompressor=threshold=-24dB:ratio=3:attack=20:release=250")
 mu *= 10 ** ((VOICE_LUFS + BED_GAP_LU - lufs(mu)) / 20)
 
 # --- speech mask from the voice envelope (10 ms hops)
