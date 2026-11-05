@@ -86,6 +86,20 @@ export const Clip: React.FC<{ name: string; from: number; trim?: number; rate?: 
 // full-frame clip with a slow push-in (Ken Burns)
 export const FullClip: React.FC<{ name: string; from: number; trim?: number; rate?: number; dim?: number; focusY?: string }> = ({ name, from, trim, rate, dim = 0, focusY = "50%" }) => {
   const t = useCurrentFrame() / GFPS;
+  const { width, height } = useVideoConfig();
+  if (width > height) {
+    // landscape: the vertical clip sits in a centred column over a blurred, darkened copy of itself
+    const cw = Math.round(height * 9 / 16);
+    return (
+      <AbsoluteFill style={{ overflow: "hidden", background: "#000" }}>
+        <AbsoluteFill style={{ filter: "blur(36px) brightness(.5) saturate(1.2)", scale: "1.2" }}><Clip name={name} from={from} trim={trim} rate={rate} /></AbsoluteFill>
+        <div style={{ position: "absolute", left: (width - cw) / 2, top: 0, width: cw, height, overflow: "hidden", boxShadow: "0 0 80px rgba(0,0,0,.6)" }}>
+          <AbsoluteFill style={{ scale: `${1 + 0.07 * Math.min(1, Math.max(0, (t - from) / 6))}` }}><Clip name={name} from={from} trim={trim} rate={rate} style={{ objectPosition: `50% ${focusY}` }} /></AbsoluteFill>
+        </div>
+        {dim ? <AbsoluteFill style={{ background: `rgba(10,6,3,${dim})` }} /> : null}
+      </AbsoluteFill>
+    );
+  }
   return (
     <AbsoluteFill style={{ overflow: "hidden", background: "#000" }}>
       <AbsoluteFill style={{ scale: `${1 + 0.07 * Math.min(1, Math.max(0, (t - from) / 6))}` }}>

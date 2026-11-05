@@ -40,6 +40,26 @@ export const RemotionRoot: React.FC = () => (
     calculateMetadata={async () => { await fonts; return {}; }}
   />
   <Composition
+    id="GlassStoriesHorizontal"
+    component={GlassV2}
+    defaultProps={{ lang: "en" as const }}
+    durationInFrames={Math.round(GLASS_V2_DURATION * GFPS)}
+    fps={GFPS}
+    width={1920}
+    height={1080}
+    calculateMetadata={async () => { await fonts; return {}; }}
+  />
+  <Composition
+    id="GlassStoriesHorizontalRU"
+    component={GlassV2}
+    defaultProps={{ lang: "ru" as const }}
+    durationInFrames={Math.round(GLASS_V2_RU_DURATION * GFPS)}
+    fps={GFPS}
+    width={1920}
+    height={1080}
+    calculateMetadata={async () => { await fonts; return {}; }}
+  />
+  <Composition
     id="GlassHistory"
     component={Glass}
     durationInFrames={Math.round(GLASS_DURATION * GFPS)}

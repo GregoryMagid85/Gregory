@@ -13,8 +13,9 @@ export const L = {
 const ez = Easing.bezier(0.45, 0, 0.2, 1);
 
 // ------------------------------------------------------------ red ribbon label (notched ends)
-export const Ribbon: React.FC<{ t: number; t0: number; children: React.ReactNode; top?: number; size?: number }> = ({ t, t0, children, top = 250, size = 40 }) => {
-  const { width } = useVideoConfig();
+export const Ribbon: React.FC<{ t: number; t0: number; children: React.ReactNode; top?: number; size?: number }> = ({ t, t0, children, top: topIn, size = 40 }) => {
+  const { width, height } = useVideoConfig();
+  const top = topIn ?? (width > height ? 110 : 250);
   const k = spr(t, t0, 16, 170);
   if (k <= 0.001) return null;
   return (
@@ -41,11 +42,12 @@ const torn = (seed: string, n = 40) => {
   return `polygon(${pts.join(",")})`;
 };
 export const ParchCard: React.FC<{ t: number; t0: number; x?: number; y: number; w?: number; h?: number; children: React.ReactNode; seed?: string; rot?: number }> = ({ t, t0, x, y, w = 920, h, children, seed = "pc", rot = -0.6 }) => {
-  const { width } = useVideoConfig();
+  const { width, height } = useVideoConfig();
   const k = spr(t, t0, 18, 130);
   if (k <= 0.001) return null;
+  const sc = width > height ? 0.72 : 1;
   return (
-    <div style={{ position: "absolute", left: x ?? (width - w) / 2, top: y, width: w, height: h, opacity: Math.min(1, k * 1.5), translate: `0px ${(1 - k) * 60}px`, rotate: `${rot}deg`, filter: "drop-shadow(0 22px 40px rgba(0,0,0,.55))" }}>
+    <div style={{ position: "absolute", left: x ?? (width - w) / 2, top: y, width: w, height: h, opacity: Math.min(1, k * 1.5), translate: `0px ${(1 - k) * 60}px`, rotate: `${rot}deg`, scale: `${sc}`, transformOrigin: "50% 0%", filter: "drop-shadow(0 22px 40px rgba(0,0,0,.55))" }}>
       <div style={{ position: "relative", clipPath: torn(seed), background: `radial-gradient(120% 90% at 40% 35%, ${L.parch}, ${L.parch2})`, padding: "54px 58px", height: h ? "100%" : undefined, boxSizing: "border-box" }}>
         <svg width="100%" height="100%" style={{ position: "absolute", inset: 0, opacity: 0.55, pointerEvents: "none" }}>
           <filter id={`pg${seed}`}><feTurbulence type="fractalNoise" baseFrequency="0.6" numOctaves="3" seed="4" /><feColorMatrix values="0 0 0 0 0.45  0 0 0 0 0.3  0 0 0 0 0.12  0 0 0 0.25 0" /></filter>
@@ -82,19 +84,23 @@ export const ART: Record<string, { face: number; card: number | null }> = {
 };
 export const ArtPan: React.FC<{ name: string; t0: number; t1: number; hold?: number; endFocus?: number; endScale?: number }> = ({ name, t0, t1, hold = 0.3, endFocus, endScale }) => {
   const t = useCurrentFrame() / GFPS;
-  const { width: VW } = useVideoConfig();
+  const { width: VW, height: VH } = useVideoConfig();
+  const land = VW > VH;
   const IW = 1672, IH = 941, a = ART[name];
   const p = interpolate(t, [t0, t1], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   const m = ez(Math.max(0, (p - hold) / (1 - hold)));             // hold on the face, then travel
-  const sA = 1920 / IH, sB = endScale ?? (a.card ? 1030 / IH : 1.55);
+  // vertical: fill the height on the face, end with the card between y 170-1200 (above the captions)
+  // horizontal: start ~1.9x on the face, end on the whole image (it is already 16:9)
+  const sA = land ? (VH / IH) * 1.9 : 1920 / IH;
+  const sB = land ? (endScale ? (VH / IH) * (endScale / 1.6) : Math.min(VW / IW, VH / IH) * 0.94) : endScale ?? (a.card ? 1030 / IH : 1.55);
   const s = sA * Math.pow(sB / sA, m) * (1 + 0.04 * (1 - m) * p);  // log-space zoom out (+ a slow push during the hold)
-  const fx = interpolate(m, [0, 1], [a.face, endFocus ?? a.card ?? 1250]);
-  const sy = interpolate(m, [0, 1], [960, a.card ? 685 : 820]);    // card ends between y 170 and 1200, above the captions
+  const fx = interpolate(m, [0, 1], [a.face, land && !endFocus ? IW / 2 : endFocus ?? a.card ?? 1250]);
+  const sy = land ? interpolate(m, [0, 1], [VH * 0.5, VH * 0.47]) : interpolate(m, [0, 1], [960, a.card ? 685 : 820]);
   const left = VW / 2 - fx * s, top = sy - (IH / 2) * s;
   const src = staticFile(`glass/art/${name}.png`);
   return (
     <AbsoluteFill style={{ overflow: "hidden", background: "#120A05" }}>
-      <Img src={src} style={{ position: "absolute", left: -200, top: -200, width: VW + 400, height: 2320, objectFit: "cover", filter: "blur(40px) brightness(.45) saturate(1.2)" }} />
+      <Img src={src} style={{ position: "absolute", left: -200, top: -200, width: VW + 400, height: VH + 400, objectFit: "cover", filter: "blur(40px) brightness(.45) saturate(1.2)" }} />
       <Img src={src} style={{ position: "absolute", left, top, width: IW * s, height: IH * s, boxShadow: m > 0.4 ? "0 0 60px rgba(0,0,0,.6)" : undefined }} />
     </AbsoluteFill>
   );
