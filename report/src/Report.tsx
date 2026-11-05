@@ -17,11 +17,11 @@ const at = (w: string, n = 0) => {
 
 // scene windows (seconds) — each starts on the sentence that introduces it
 const S = {
-  intro: [0, 5.15], d1: [5.15, 9.4], d2: [9.4, 13.0], d3: [13.0, 17.2], todo: [17.2, 19.45],
-  t1: [19.45, 25.45], t2: [25.45, 31.85], t3: [31.85, 37.45], t4: [37.45, 42.3], t5: [42.3, 46.25],
-  t6: [46.25, 53.2], t7: [53.2, 61.75], next: [61.75, 72.65], end: [72.65, 77],
+  intro: [0, 3.1], d1: [3.1, 7.4], d2: [7.4, 11.75], d3: [11.75, 15.55], todo: [15.55, 18.35],
+  t1: [18.35, 24.95], t2: [24.95, 31.35], t3: [31.35, 37.4], t4: [37.4, 43.2], t5: [43.2, 47.8],
+  t6: [47.8, 54.25], t7: [54.25, 65.8], next: [65.8, 77.2], end: [77.2, 81],
 } as const;
-export const DURATION_S = 76.5;
+export const DURATION_S = 80;
 
 // ------------------------------------------------------------------ helpers
 const Clip: React.FC<{ src: string; from: number; trim?: number; rate?: number; style?: React.CSSProperties; dur?: number }> = ({ src, from, trim = 0, rate = 1, style, dur }) => (
@@ -41,7 +41,7 @@ const WindowBar: React.FC<{ title: string; color?: string }> = ({ title, color =
 
 // ================================================================== INTRO
 const Intro: React.FC<{ t: number }> = ({ t }) => {
-  const tDone = at("first,");
+  const tDone = at("week,");
   const stats: [string, string, string, number][] = [
     ["3", "Completed", C.done, 0.9], ["7", "Still to do", C.todo, 1.05], ["1", "Next step", C.accent, 1.2],
   ];
@@ -50,7 +50,7 @@ const Intro: React.FC<{ t: number }> = ({ t }) => {
       <div style={{ position: "absolute", left: 120, top: 210, ...rise(t, 0.1) }}>
         <Pill color={C.accent}>Gregory · Rive character rigs</Pill>
       </div>
-      <Label size={150} weight={900} style={{ left: 112, top: 280, letterSpacing: -5, ...rise(t, 0.2, 60) }}>Daily Update</Label>
+      <Label size={150} weight={900} style={{ left: 112, top: 280, letterSpacing: -5, ...rise(t, 0.0, 60) }}>Daily Update</Label>
       <Label size={40} weight={500} color={C.dim} style={{ left: 120, top: 475, ...rise(t, 0.4) }}>Week of Nov 5, 2026 · Hatched rig, wardrobe slots & bindings</Label>
       {stats.map(([n, l, col, d], i) => {
         const hi = i === 0 ? spr(t, tDone - 0.1, 14, 160) : 0;
@@ -118,7 +118,7 @@ const Done2: React.FC<{ t: number }> = ({ t }) => {
 // ================================================================== DONE 3 — slot & binding setup investigated
 const Done3: React.FC<{ t: number }> = ({ t }) => {
   const [a] = S.d3;
-  const tSlots = at("slots", 0), tBind = at("bindings", 0);
+  const tSlots = at("slot", 1), tBind = at("binding", 0);
   // rows in rig3_inputs.png (395x320 src, shown x2): wear* rows y≈72..190, *Fit rows 196..320
   const hiSlots = ease(t, tSlots - 0.3, tSlots + 0.2), hiBind = ease(t, tBind - 0.2, tBind + 0.3);
   const sc = 2;
@@ -151,7 +151,7 @@ const TodoOverview: React.FC<{ t: number }> = ({ t }) => {
   return (
     <>
       <div style={{ position: "absolute", left: 120, top: 190, ...rise(t, a) }}><Pill color={C.todo} solid><Q size={26} color="#0D1224" />Still to do · 7</Pill></div>
-      <Label size={96} weight={900} style={{ left: 116, top: 270, letterSpacing: -3, ...rise(t, a + 0.1, 50) }}>What's still on my list</Label>
+      <Label size={96} weight={900} style={{ left: 116, top: 270, letterSpacing: -3, ...rise(t, a + 0.1, 50) }}>Still to resolve</Label>
       {TODO_ITEMS.map(([s, k], i) => {
         const col = k === "bug" ? C.bug : C.todo;
         const x = i < 4 ? 120 : 980, y = 440 + (i % 4) * 105;
@@ -169,7 +169,7 @@ const TodoOverview: React.FC<{ t: number }> = ({ t }) => {
 // ================================================================== T1 — slots don't load .riv into bound artboards
 const T1: React.FC<{ t: number }> = ({ t }) => {
   const [a] = S.t1;
-  const tLoad = at("load"), tBound = at("bound"), tWhy = at("why.");
+  const tLoad = at("load"), tBound = at("bound"), tWhy = at("artboards.") + 0.5;
   const X0 = 880, Y0 = 230, ROW = 120;
   return (
     <>
@@ -213,7 +213,7 @@ const T1: React.FC<{ t: number }> = ({ t }) => {
 // ================================================================== T2 — Rive Lab APK vs regular APK
 const T2: React.FC<{ t: number }> = ({ t }) => {
   const [a] = S.t2;
-  const tLab = at("rive lab"), tReg = at("regular"), tDiff = at("difference");
+  const tLab = at("lab"), tReg = at("regular"), tDiff = at("difference");
   const scan = ((t - tDiff) % 1.6) / 1.6;
   return (
     <>
@@ -243,7 +243,7 @@ const T2: React.FC<{ t: number }> = ({ t }) => {
 // ================================================================== T3 — runtime loading/binding the cause?
 const T3: React.FC<{ t: number }> = ({ t }) => {
   const [a] = S.t3;
-  const tRun = at("runtime"), tBind = at("binding"), tCaused = at("caused");
+  const tRun = at("runtime"), tBind = at("binding", 1), tCaused = at("caused");
   const nodes: [string, React.ReactNode, string][] = [
     [".riv asset", <FileRiv key="f" size={70} />, C.rive],
     ["Runtime load", <Gear key="g" size={84} color={C.text} />, C.todo],
@@ -281,11 +281,11 @@ const T3: React.FC<{ t: number }> = ({ t }) => {
 // ================================================================== T4 — add remaining slots after loading is understood
 const T4: React.FC<{ t: number }> = ({ t }) => {
   const [a] = S.t4;
-  const tUnd = at("understood,"), tAdd = at("add"), tRem = at("remaining");
+  const tUnd = at("understand"), tAdd = at("add"), tRem = at("remaining");
   const gate = spr(t, tUnd - 0.1, 14, 160);
   return (
     <>
-      <ItemHeader t={t} a={a} kind="todo" label="To do · 4 / 7" title="Add the remaining slots & bindings" sub="Only after the loading process is understood." w={700} />
+      <ItemHeader t={t} a={a} kind="todo" label="To do · 4 / 7" title="Add the remaining slots & bindings" sub="Only after I understand how the loading process works." w={700} />
       <Card glow={gate > 0.1 ? C.todo : undefined} style={{ left: 900, top: 200, width: 360, height: 300, ...popIn(t, a + 0.25) }}>
         <div style={{ position: "absolute", left: 0, right: 0, top: 40, display: "grid", placeItems: "center" }}><Lock size={110} color={C.todo} open={0} /></div>
         <div style={{ position: "absolute", left: 20, right: 20, top: 180, textAlign: "center", fontFamily: F.ui, fontWeight: 700, fontSize: 30, color: C.text, lineHeight: 1.25 }}>Gate: loading process understood</div>
@@ -339,7 +339,7 @@ const T5: React.FC<{ t: number }> = ({ t }) => {
 // ================================================================== T6 — T-shirt upper shadow render order
 const T6: React.FC<{ t: number }> = ({ t }) => {
   const [a] = S.t6;
-  const tShirt = at("t-shirt"), tWrong = at("wrong"), tFix = at("fix.");
+  const tShirt = at("shadow"), tWrong = at("issue."), tFix = at("correctly", 0);
   const swap = ease(t, tFix - 0.1, tFix + 0.7);
   const layers: [string, string][] = [["Upper shadow", C.bug], ["T-shirt", C.rive], ["Body", C.dim]];
   // current (wrong) order: shirt on top of shadow? -> show index slots; swap shadow/shirt on "fix"
@@ -350,8 +350,8 @@ const T6: React.FC<{ t: number }> = ({ t }) => {
   };
   return (
     <>
-      <ItemHeader t={t} a={a} kind="bug" label="Bug · 6 / 7" title="Upper shadow draws in the wrong order" sub="Only when the T-shirt is worn." w={660} />
-      <Card style={{ left: 820, top: 170, width: 420, height: 680, ...popIn(t, tShirt - 0.2) }}>
+      <ItemHeader t={t} a={a} kind="bug" label="Bug · 6 / 7" title="Upper shadow render order" sub="A minor visual issue: the shadow must render correctly when the T-shirt is worn." w={660} />
+      <Card style={{ left: 820, top: 170, width: 420, height: 680, ...popIn(t, Math.min(tShirt - 0.2, a + 0.3)) }}>
         <Img src={staticFile("img/outfit_shirt.png")} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "50% 40%" }} />
         <div style={{ position: "absolute", left: 16, top: 16 }}><Pill color={C.rive} solid size={20}>T-shirt worn</Pill></div>
               </Card>
@@ -448,7 +448,7 @@ const Next: React.FC<{ t: number }> = ({ t }) => {
 // ================================================================== END
 const End: React.FC<{ t: number }> = ({ t }) => {
   const [a] = S.end;
-  const tThanks = at("thanks");
+  const tThanks = a + 0.4;
   return (
     <>
       <Label size={130} weight={900} style={{ left: 0, width: 1920, textAlign: "center", top: 250, letterSpacing: -4, ...rise(t, tThanks - 0.4, 60) }}>Thanks, team!</Label>

@@ -3,7 +3,7 @@
 # usage (from report/): tools/mix_and_mux.sh [vo.mp3]   -> out/WeeklyReport.mp4
 set -euo pipefail
 VO=${1:-public/audio/vo.mp3}
-DUR=76.5
+DUR=80
 ffmpeg -v error -y -i "$VO" -i public/audio/music.mp3 -filter_complex "
  [0:a]aresample=48000,aformat=channel_layouts=stereo,apad=whole_dur=$DUR,atrim=0:$DUR,volume=1.0[vo];
  [1:a]aresample=48000,aformat=channel_layouts=stereo,atrim=0:$DUR,volume=0.32,afade=t=in:st=0:d=1,afade=t=out:st=$(echo "$DUR-3" | bc):d=3[mu];
