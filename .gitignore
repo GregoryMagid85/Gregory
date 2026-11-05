@@ -13,3 +13,4 @@ report/public/audio/vo.mp3
 report/glass_vo/*.wav
 report/glass_vo/*.f32
 report/public/glass/vo.wav
+report/public/glass/vo_*.wav
