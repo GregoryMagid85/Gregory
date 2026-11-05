@@ -6,3 +6,7 @@ update/audio/vo/
 update/out/*
 !update/out/final.mp4
 !update/out/poster.png
+report/node_modules/
+report/out/*
+!report/out/WeeklyReport*.mp4
+report/public/audio/vo.mp3
