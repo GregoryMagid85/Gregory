@@ -26,6 +26,32 @@ Apply these on every video request unless the person says otherwise in that chat
 - Strong **hook** in the first 3-5 s (fast cuts + kinetic words), a **title sting**, chapter transitions,
   and a branded **outro** (goodbye from the presenter, follow CTA, "next episode" tease).
 
+## Signature techniques (use all of them, every video - "go all out")
+- **Kinetic typography** (טיפוגרפיה קינטית): key words animate in on the spoken word - slams, per-letter
+  reveals, scale/blur pops, words that move with the camera. Not just static titles.
+- **Technical sketch** (שרטוט טכני): blueprint/grid-paper drawings that draw themselves line by line -
+  measurements, arrows, labels, exploded views - for any process or tool being explained.
+- **3D elements** (אלמנטים בתלת ממד): real 3D objects or 2.5D parallax layers with depth, lighting and
+  shadows (registry 3D blocks / three.js); rotate or orbit the object while explaining it.
+- **Continuous camera movement** (תנועת מצלמה רציפה): a "one-shot" feel - the camera travels from one
+  idea to the next on one big canvas instead of hard cutting; scenes connect through the move.
+- **Cinematic finish** (גימור קולנועי): grade, light wraps, vignette, film grain, depth of field, atmospheric
+  particles, rich backgrounds - never a flat empty background (apply through `media-treatment`).
+- **Match cuts**: a shape, motion or composition carries across the cut (e.g. ancient glassblower's breath
+  -> Olga blowing today; a circle -> a bubble).
+- **Beat-synced**: cuts, pops and kinetic words land on the music's beat grid (and on narration words).
+- **Go all out**: full effort on every scene - no placeholder visuals, no repeated layouts, something new
+  every 2-4 seconds.
+
+## How to brief and start a video
+When he asks for a video, make sure these five are set (ask once for what's missing, offer defaults):
+1. **Style** (motion graphics / cinematic / explainer hybrid).
+2. **Message, goal and audience**.
+3. **Techniques** above (default: all of them).
+4. **Audio**: narration (his ElevenLabs voice or a supplied recording; Azure Speech is an alternative TTS),
+   music, SFX.
+5. **Script first**: write the script (and storyboard) for his approval before building or rendering.
+
 ## Captions
 - Every spoken word captioned, appearing **word by word**, **orange text on a black rounded box**, timed from
   the narration's word timestamps. Never cover faces or the key visual; keep inside title-safe and clear of
