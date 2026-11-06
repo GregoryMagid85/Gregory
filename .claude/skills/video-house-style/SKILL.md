@@ -86,6 +86,16 @@ always with the same opener and end card so episodes read as one show. Template:
   "GLASS STORIES · EPISODE n" + title in cream with furnace glow. End card: Olga + OR + next-episode tease.
 - English first; other languages only when he asks.
 
+## Layout & kinetic type (non-negotiable)
+- One grid for every shot: 120 px side margins, 100 px top, the bottom band (y > 840) is for captions only.
+  Each shot is its own clean framing: a cut or punch-in never shows fragments of a neighbouring shot.
+- A few layouts reused everywhere: footage right + text column; its mirror; object centred (title above, note
+  below); plate / map with a cartouche; type-only. Footage windows always the same size and mount.
+- A strict type scale (display / title / secondary / label / kicker) and one alignment per layout.
+- Kinetic typography: words land on the narration word they name; mask-rise for statements, slam for claims,
+  typed-on for notes; the stressed word in the accent colour with a hit. Several entrance styles, chosen by meaning.
+- Review frames for alignment, collisions with captions, clipped words and contrast before showing the preview.
+
 ## Formats
 - Deliver 9:16 (TikTok/Reels/Shorts) and 16:9 (YouTube) from one project; full episode plus a ~60 s cut
   (he asked for the 60 s cuts in 16:9). Name files by series, episode, format and language.

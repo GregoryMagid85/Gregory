@@ -3,6 +3,16 @@
 1920×1080, 30 fps, 138.1 s. Olga's own English narration; her studio reels; the series era art and clay-core
 infographic; the OR monogram.
 
+## v4 (feedback: "nothing is aligned", best design practice, kinetic typography)
+- Grid: 120 px side margins, 100 px top, nothing but captions below y 840; one footage-window size (500 x 890).
+- Every shot is a Shot on its own 1920 x 1080 cell; elements are placed in screen px and converted to world, so
+  all shots share margins and a cut can never show a neighbour. Framings clear their own elements on the next cut.
+- Layouts: A footage right + text column, B mirror, C object centred with title above and note below, D plate
+  (1280 x 720) or map with a cartouche, type-only (the 2,000+ counter).
+- Type scale: display 150 / title 96 / secondary 64 / label 40 / kicker 30 (tracked caps, bronze on paper, gold on dark).
+- Kinetic typography engine: every word lands on the narration word it names; rise (mask) for statements, slam for
+  claims, typed-on for notes; the stressed word is rubricated and gets a hit.
+
 ## v3 (feedback: drawings too simple / not visible, more 3D, use Olga's own footage, many clean cuts)
 - Editing is now cut-based: every station change is a hard cut on the spoken word, then a slow push-in
   (1.4 %/s); punch-in cuts inside stations (rare luxury, Mesopotamia, Egypt, slow, gather, faster, thinner,
