@@ -276,9 +276,9 @@ s.disp("OF GLASS.", 120, 420, 150, 3.25, hot=(1,), out=4.45)
 s.key(0, 960, 540, 1.0)
 # the OR monogram on black, chrome shine pass, then the episode title
 s.raw(f'<div id="hook-black" style="position:absolute;left:0;top:0;width:1920px;height:1080px;background:radial-gradient(ellipse at 50% 60%,#2A1206,{C["dark"]} 70%);opacity:0"></div>'
-      f'<img id="hook-logo" src="assets/art/olga_logo.png" style="position:absolute;left:660px;top:100px;width:600px;height:400px;border-radius:8px;box-shadow:0 0 0 3px {C['gold']},0 0 0 9px #0E0703,0 24px 60px rgba(0,0,0,.6);opacity:0" alt="">'
-      f'<div id="hook-shine" style="position:absolute;left:660px;top:100px;width:600px;height:400px;border-radius:8px;opacity:0;mix-blend-mode:overlay;'
-      f'background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.95) 50%,transparent 65%) no-repeat"></div>'
+      f'<img id="hook-logo" src="assets/art/olga_logo_alpha.png" style="position:absolute;left:660px;top:92px;width:600px;height:418px;opacity:0" alt="">'
+      f'<div id="hook-shine" style="position:absolute;left:660px;top:92px;width:600px;height:418px;opacity:0;mix-blend-mode:screen;'
+      f'background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.9) 50%,transparent 65%) no-repeat;-webkit-mask:url(assets/art/olga_logo_alpha.png) center/100% 100% no-repeat;mask:url(assets/art/olga_logo_alpha.png) center/100% 100% no-repeat"></div>'
       f'<div id="hook-t1" class="lab" style="left:0;width:1920px;text-align:center;top:620px;font-size:34px;font-style:normal;letter-spacing:.32em;color:{C["gold"]};opacity:0">GLASS STORIES · EPISODE {EP["n"]}</div>'
       f'<div id="hook-t2" class="disp" style="left:0;width:1920px;text-align:center;top:690px;font-size:100px;color:{C["cream"]};text-shadow:0 0 30px rgba(255,122,18,.55),0 0 80px rgba(255,90,0,.3);opacity:0">{EP["title"]}</div>',
       'tl.fromTo("#hook-black",{opacity:0},{opacity:1,duration:0.25,ease:"power2.in"},4.3);'
@@ -548,8 +548,8 @@ SCENES.append((s.cid, s.a, s.b, s.file(9000, 1080, wipe_in=True, wipe_out=True))
 a, b = T("i'm") - 0.3, T("i'd", 1) - 0.25
 s = Scene("olga", a, b)
 s.video("olga_hytta", 1180, 0, 608, 1080, a + 0.02, T("connected") - 0.4, media=0.8, rate=0.9, pos="50% 30%", appear=0.05)
-s.raw(f'<div id="olga-plq" style="position:absolute;left:130px;top:130px;width:600px;height:400px;overflow:hidden;border-radius:8px;box-shadow:0 0 0 3px {C["gold"]},0 0 0 9px #0E0703,0 24px 60px rgba(0,0,0,.6);opacity:0">'
-      '<img id="olga-logo" src="assets/art/olga_logo.png" alt="" style="position:absolute;left:0;top:0;width:600px;height:400px"></div>',
+s.raw('<div id="olga-plq" style="position:absolute;left:140px;top:110px;width:580px;height:404px;opacity:0">'
+      '<img id="olga-logo" src="assets/art/olga_logo_alpha.png" alt="" style="position:absolute;left:0;top:0;width:580px;height:404px;filter:drop-shadow(6px 10px 10px rgba(50,24,6,.45))"></div>',
       f'tl.fromTo("#olga-plq",{{opacity:0,rotationY:80,transformPerspective:1600}},{{opacity:1,rotationY:0,duration:1.0,ease:"expo.out"}},{s.L(T("olga") - 0.3)});')
 s.disp("Olga Rozin", 160, 600, 150, T("olga"))
 s.lab("Glass artist", 168, 770, T("artist."), size=44, color=C["hot"])
@@ -588,8 +588,8 @@ s.video("olga_fashion", 170, 50, 690, 980, a, b, media=1.7, pos="50% 35%", appea
 s.lab("Olga in her glass costume · Glass Fashion Show", 175, 1036, a + 0.6, size=30, color=C["gold"])
 s.disp("I'd love to hear", 990, 240, 100, T("i'd", 1), italic=True, color=C["cream"])
 s.disp("what you think!", 990, 360, 100, T("think!", 1), italic=True, hot=(1,), color=C["cream"])
-s.raw(f'<img id="outro-logo" src="assets/art/olga_logo.png" alt="" style="position:absolute;left:1240px;top:500px;width:420px;height:280px;border-radius:8px;box-shadow:0 0 0 3px {C["gold"]},0 0 0 9px #0E0703,0 24px 60px rgba(0,0,0,.6);opacity:0">'
-      '<div id="outro-shine" style="position:absolute;left:1240px;top:500px;width:420px;height:280px;border-radius:8px;opacity:0;mix-blend-mode:overlay;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.95) 50%,transparent 65%) no-repeat"></div>',
+s.raw('<img id="outro-logo" src="assets/art/olga_logo_alpha.png" alt="" style="position:absolute;left:1240px;top:496px;width:420px;height:293px;opacity:0">'
+      '<div id="outro-shine" style="position:absolute;left:1240px;top:496px;width:420px;height:293px;opacity:0;mix-blend-mode:screen;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.9) 50%,transparent 65%) no-repeat;-webkit-mask:url(assets/art/olga_logo_alpha.png) center/100% 100% no-repeat;mask:url(assets/art/olga_logo_alpha.png) center/100% 100% no-repeat"></div>',
       f'tl.fromTo("#outro-logo",{{opacity:0,scale:1.1,filter:"blur(10px)"}},{{opacity:1,scale:1,filter:"blur(0px)",duration:0.9,ease:"expo.out"}},{s.L(LAST + 0.5)});'
       f'tl.fromTo("#outro-shine",{{opacity:0,backgroundPosition:"-420px 0"}},{{opacity:1,backgroundPosition:"420px 0",duration:1.0,ease:"power2.inOut"}},{s.L(LAST + 1.4)});'
       f'tl.fromTo("#outro-shine",{{backgroundPosition:"-420px 0"}},{{immediateRender:false,backgroundPosition:"420px 0",duration:1.2,ease:"power2.inOut"}},{s.L(LAST + 4.6)});')
