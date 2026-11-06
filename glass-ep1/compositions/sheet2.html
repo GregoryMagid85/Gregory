@@ -1,5 +1,9 @@
 <template>
-<style>@font-face{font-family:'Cormorant Garamond';font-weight:700;src:url('assets/fonts/cormorant-garamond-latin-700-normal.woff2') format('woff2');}
+<style>@font-face{font-family:'Suez One';font-weight:400;src:url('assets/fonts/suez-one-latin-400-normal.woff2') format('woff2');}
+@font-face{font-family:'Frank Ruhl Libre';font-weight:400;src:url('assets/fonts/frank-ruhl-libre-latin-400-normal.woff2') format('woff2');}
+@font-face{font-family:'Frank Ruhl Libre';font-weight:500;src:url('assets/fonts/frank-ruhl-libre-latin-500-normal.woff2') format('woff2');}
+@font-face{font-family:'Frank Ruhl Libre';font-weight:700;src:url('assets/fonts/frank-ruhl-libre-latin-700-normal.woff2') format('woff2');}
+@font-face{font-family:'Cormorant Garamond';font-weight:700;src:url('assets/fonts/cormorant-garamond-latin-700-normal.woff2') format('woff2');}
 @font-face{font-family:'Cormorant Garamond';font-weight:600;src:url('assets/fonts/cormorant-garamond-latin-600-normal.woff2') format('woff2');}
 @font-face{font-family:'Cormorant Garamond';font-style:italic;font-weight:500;src:url('assets/fonts/cormorant-garamond-latin-500-italic.woff2') format('woff2');}
 @font-face{font-family:'IM Fell English';font-weight:400;src:url('assets/fonts/im-fell-english-latin-400-normal.woff2') format('woff2');}
@@ -9,16 +13,16 @@
 #root .paper{position:absolute;background-color:#E6D3A8;background-image:url('assets/art/papyrus.jpg');background-size:1024px 1024px;}
 #root .vign{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 46%,transparent 52%,rgba(92,48,14,.28) 78%,rgba(34,15,4,.78) 100%)}
 #root .noise{position:absolute;inset:0;pointer-events:none;opacity:.10;mix-blend-mode:multiply;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' seed='4'/></filter><rect width='300' height='300' filter='url(%23n)'/></svg>")}
-#root .disp{position:absolute;font-family:'Cormorant Garamond',serif;font-weight:700;color:#1C1007;line-height:1.0;letter-spacing:-0.01em;white-space:nowrap;text-shadow:0 2px 0 rgba(246,234,206,.6)}
-#root .lab{position:absolute;font-family:'IM Fell English',serif;font-style:italic;color:#1C1007;font-size:34px;white-space:nowrap;text-shadow:0 0 6px rgba(246,234,206,.95),0 0 14px rgba(246,234,206,.7)}
+#root .disp{position:absolute;font-family:'Suez One',serif;font-weight:400;color:#1C1007;line-height:1.08;letter-spacing:0;white-space:nowrap;text-shadow:0 2px 0 rgba(246,234,206,.6)}
+#root .lab{position:absolute;font-family:'Frank Ruhl Libre',serif;font-weight:500;color:#1C1007;font-size:34px;white-space:nowrap;text-shadow:0 0 6px rgba(246,234,206,.95),0 0 14px rgba(246,234,206,.7)}
 #root .hot{color:#8E2216}
 #root .ondark .hot{color:#FF7A12;text-shadow:0 0 24px rgba(255,122,18,.5)}
 #root .win{position:absolute;overflow:hidden;background:#000;box-shadow:0 0 0 12px #F4E8CC,0 0 0 14px #8A6A44,0 26px 50px rgba(50,24,6,.5)}
 #root .win video{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover}
 #root .plate{position:absolute;overflow:hidden;box-shadow:0 0 0 14px #F4E8CC,0 0 0 16px #8A6A44,0 30px 60px rgba(50,24,6,.5)}
-#root .rib{position:absolute;padding:14px 46px 16px 40px;background:linear-gradient(180deg,#B3301F,#8E2116);color:#F4E8CC;font-family:'Cormorant Garamond',serif;font-weight:700;font-size:54px;line-height:1;white-space:nowrap;
+#root .rib{position:absolute;padding:14px 46px 16px 40px;background:linear-gradient(180deg,#B3301F,#8E2116);color:#F4E8CC;font-family:'Suez One',serif;font-weight:400;font-size:48px;line-height:1;white-space:nowrap;
   clip-path:polygon(0 0,100% 0,calc(100% - 26px) 50%,100% 100%,0 100%);box-shadow:0 10px 24px rgba(50,20,5,.4)}
-#root .rib small{display:block;font-family:'IM Fell English',serif;font-style:italic;font-weight:400;font-size:30px;margin-top:6px;color:#F6DFAF}
+#root .rib small{display:block;font-family:'Frank Ruhl Libre',serif;font-weight:500;font-size:30px;margin-top:6px;color:#F6DFAF}
 #root .ember{position:absolute;width:6px;height:6px;border-radius:50%;background:radial-gradient(circle,#FFE6A8,#FF8A1F 55%,rgba(255,90,0,0) 72%)}
 #root .wipe{position:absolute;left:0;top:0;width:3000px;height:1080px;transform:translateX(1920px);
   background:linear-gradient(90deg,rgba(255,210,122,0) 0px,#FFD27A 120px,#FF7A12 220px,#9E2A05 300px,#2A0D03 420px,#140602 1500px,#2A0D03 2580px,#9E2A05 2700px,#FF7A12 2780px,#FFD27A 2880px,rgba(255,210,122,0) 3000px)}
@@ -34,7 +38,7 @@
 #root .obj .otint{position:absolute;border-radius:50%;mix-blend-mode:multiply;background:radial-gradient(circle,rgba(255,150,40,1) 0%,rgba(255,110,25,.95) 32%,rgba(255,110,25,0) 48%)}
 #root .cutw{position:absolute;left:0;top:0;width:1920px;height:1080px;background-color:#E6D3A8;background-image:url('assets/art/papyrus.jpg');background-size:1024px 1024px;}
 #root .cutw .win{top:50px;width:540px;height:980px}
-#root .cutw .cw{position:absolute;font-family:'Cormorant Garamond',serif;font-weight:700;color:#1C1007;line-height:1.02;white-space:nowrap}
+#root .cutw .cw{position:absolute;font-family:'Suez One',serif;font-weight:400;color:#1C1007;line-height:1.05;white-space:nowrap}
 #root .hotf{fill:#8E2216}
 
 #sheet2-world{width:9600px;height:2000px}
@@ -50,11 +54,11 @@
     <div id="sheet2-o6" class="obj" style="left:6325px;top:55px;width:1150px;height:1150px;opacity:0"><div class="osh"></div><div class="ohalo" style="left:51.0%;top:22.0%;width:44%;height:44%"></div><div class="osp" style="background-image:url(assets/obj/blowpipe.webp)"></div><div class="otint" style="left:59.36%;top:30.36%;width:27.28%;height:27.28%"></div></div>
     <div id="sheet2-l7" class="lab" style="left:6380px;top:860px;font-size:50px;">hollow iron blowpipe</div>
     <div id="sheet2-l8" class="lab" style="left:7050px;top:390px;font-size:50px;color:#8E2216;">a gather of molten glass</div>
-    <div id="sheet2-d9" class="disp" style="left:6300px;top:160px;font-size:130px;font-style:italic;font-weight:500;"><span class="w" style="display:inline-block;margin-right:.24em">gather…</span></div>
+    <div id="sheet2-d9" class="disp" style="left:6300px;top:160px;font-size:127px;font-family:'Frank Ruhl Libre',serif;font-weight:500;"><span class="w" style="display:inline-block;margin-right:.24em">gather…</span></div>
     <div id="sheet2-p10" class="plate" style="left:8100px;top:240px;width:1150px;height:647px;rotate:0deg;opacity:0"><div class="pi"><img src="assets/art/levant.png" alt=""></div></div>
     <div id="sheet2-rib11" class="rib" style="left:8060px;top:190px">The Levant<small>c. 50 BCE · the first blowpipe</small></div>
   </div>
-  <div id="sheet2-cut4" class="cutw" style="opacity:0"><div class="win" style="left:140px"><video id="sheet2-cut4m" class="clip" data-start="4.78" data-duration="1.74" data-media-start="2.5" data-playback-rate="1.0" muted playsinline src="assets/clips/olga_hytta.mp4" style="object-position:50% 40%"></video></div><div class="cw" id="sheet2-cut4w0" style="left:800px;top:330px;font-size:110px;font-style:italic;font-weight:500;">You see,</div><div class="cw" id="sheet2-cut4w1" style="left:800px;top:460px;font-size:120px;">before glassblowing…</div></div><div id="sheet2-cut5" class="cutw" style="opacity:0"><div class="win" style="left:1240px"><video id="sheet2-cut5m" class="clip" data-start="11.06" data-duration="2.61" data-media-start="5.5" data-playback-rate="1.0" muted playsinline src="assets/clips/olga_glory.mp4" style="object-position:50% 40%"></video></div><div class="cw" id="sheet2-cut5w0" style="left:140px;top:300px;font-size:110px;font-style:italic;font-weight:500;">A rather</div><div class="cw" id="sheet2-cut5w1" style="left:140px;top:420px;font-size:170px;color:#8E2216;">laborious</div><div class="cw" id="sheet2-cut5w2" style="left:140px;top:600px;font-size:120px;">process.</div></div><div id="sheet2-wi" class="wipe" style="transform:translateX(-540px)"></div>
+  <div id="sheet2-cut4" class="cutw" style="opacity:0"><div class="win" style="left:140px"><video id="sheet2-cut4m" class="clip" data-start="4.78" data-duration="1.74" data-media-start="2.5" data-playback-rate="1.0" muted playsinline src="assets/clips/olga_hytta.mp4" style="object-position:50% 40%"></video></div><div class="cw" id="sheet2-cut4w0" style="left:800px;top:330px;font-size:108px;font-family:'Frank Ruhl Libre',serif;font-weight:500;">You see,</div><div class="cw" id="sheet2-cut4w1" style="left:800px;top:460px;font-size:101px;">before glassblowing…</div></div><div id="sheet2-cut5" class="cutw" style="opacity:0"><div class="win" style="left:1240px"><video id="sheet2-cut5m" class="clip" data-start="11.06" data-duration="2.61" data-media-start="5.5" data-playback-rate="1.0" muted playsinline src="assets/clips/olga_glory.mp4" style="object-position:50% 40%"></video></div><div class="cw" id="sheet2-cut5w0" style="left:140px;top:300px;font-size:108px;font-family:'Frank Ruhl Libre',serif;font-weight:500;">A rather</div><div class="cw" id="sheet2-cut5w1" style="left:140px;top:420px;font-size:143px;color:#8E2216;">laborious</div><div class="cw" id="sheet2-cut5w2" style="left:140px;top:600px;font-size:101px;">process.</div></div><div id="sheet2-wi" class="wipe" style="transform:translateX(-540px)"></div>
   <div class="vign"></div><div class="noise"></div>
 </div>
 <script>

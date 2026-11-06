@@ -76,7 +76,8 @@ always with the same opener and end card so episodes read as one show. Template:
 `EP = dict(n=..., title=...)` drives the sting and end card). Look - "The Glassmaker's Codex":
 - Premium and historic, never a cheap slideshow: aged papyrus world (`assets/art/papyrus.jpg`) with burnt
   vignette, iron-gall sepia ink, red rubric for the key word, gold for series titles.
-- Type: Cormorant Garamond (display) + IM Fell English italic (annotations); captions stay orange-on-black.
+- Type: Suez One (display - Latin drawn like Hebrew block letters: ancient, Hebrew-like, still readable) +
+  Frank Ruhl Libre (secondary lines, labels, ribbons); captions stay orange-on-black Inter.
 - His GPT era portraits (Olga as Mesopotamian / Egyptian / Levantine / Roman / modern glassblower) are the
   heroes: mounted as cream-bordered leaves that flip in in 3D, red ribbon cartouche (place + date), pan +
   zoom-out, with relevant ink sketches around them (beads, vessels, maps, compass rose, wax-seal pins).

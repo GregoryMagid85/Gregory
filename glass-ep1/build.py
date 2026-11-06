@@ -23,7 +23,11 @@ def T(word, n=0):
 C = dict(ink="#1C1007", ink2="#4E331C", paper="#E6D3A8", land="#D6BC86", red="#8E2216", hot="#8E2216", gold="#B98A35", cream="#F4E8CC",
          molten="#FF7A12", molten2="#FFD27A", dark="#0E0703")
 EP = dict(n=1, title="The Invention of Glassblowing")     # series opener + end card read from here
-FONT = """@font-face{font-family:'Cormorant Garamond';font-weight:700;src:url('assets/fonts/cormorant-garamond-latin-700-normal.woff2') format('woff2');}
+FONT = """@font-face{font-family:'Suez One';font-weight:400;src:url('assets/fonts/suez-one-latin-400-normal.woff2') format('woff2');}
+@font-face{font-family:'Frank Ruhl Libre';font-weight:400;src:url('assets/fonts/frank-ruhl-libre-latin-400-normal.woff2') format('woff2');}
+@font-face{font-family:'Frank Ruhl Libre';font-weight:500;src:url('assets/fonts/frank-ruhl-libre-latin-500-normal.woff2') format('woff2');}
+@font-face{font-family:'Frank Ruhl Libre';font-weight:700;src:url('assets/fonts/frank-ruhl-libre-latin-700-normal.woff2') format('woff2');}
+@font-face{font-family:'Cormorant Garamond';font-weight:700;src:url('assets/fonts/cormorant-garamond-latin-700-normal.woff2') format('woff2');}
 @font-face{font-family:'Cormorant Garamond';font-weight:600;src:url('assets/fonts/cormorant-garamond-latin-600-normal.woff2') format('woff2');}
 @font-face{font-family:'Cormorant Garamond';font-style:italic;font-weight:500;src:url('assets/fonts/cormorant-garamond-latin-500-italic.woff2') format('woff2');}
 @font-face{font-family:'IM Fell English';font-weight:400;src:url('assets/fonts/im-fell-english-latin-400-normal.woff2') format('woff2');}
@@ -35,16 +39,16 @@ BASE_CSS = f"""
 #root .paper{{position:absolute;{PAPER}}}
 #root .vign{{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 46%,transparent 52%,rgba(92,48,14,.28) 78%,rgba(34,15,4,.78) 100%)}}
 #root .noise{{position:absolute;inset:0;pointer-events:none;opacity:.10;mix-blend-mode:multiply;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' seed='4'/></filter><rect width='300' height='300' filter='url(%23n)'/></svg>")}}
-#root .disp{{position:absolute;font-family:'Cormorant Garamond',serif;font-weight:700;color:{C['ink']};line-height:1.0;letter-spacing:-0.01em;white-space:nowrap;text-shadow:0 2px 0 rgba(246,234,206,.6)}}
-#root .lab{{position:absolute;font-family:'IM Fell English',serif;font-style:italic;color:{C['ink']};font-size:34px;white-space:nowrap;text-shadow:0 0 6px rgba(246,234,206,.95),0 0 14px rgba(246,234,206,.7)}}
+#root .disp{{position:absolute;font-family:'Suez One',serif;font-weight:400;color:{C['ink']};line-height:1.08;letter-spacing:0;white-space:nowrap;text-shadow:0 2px 0 rgba(246,234,206,.6)}}
+#root .lab{{position:absolute;font-family:'Frank Ruhl Libre',serif;font-weight:500;color:{C['ink']};font-size:34px;white-space:nowrap;text-shadow:0 0 6px rgba(246,234,206,.95),0 0 14px rgba(246,234,206,.7)}}
 #root .hot{{color:{C['hot']}}}
 #root .ondark .hot{{color:{C['molten']};text-shadow:0 0 24px rgba(255,122,18,.5)}}
 #root .win{{position:absolute;overflow:hidden;background:#000;box-shadow:0 0 0 12px {C['cream']},0 0 0 14px #8A6A44,0 26px 50px rgba(50,24,6,.5)}}
 #root .win video{{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover}}
 #root .plate{{position:absolute;overflow:hidden;box-shadow:0 0 0 14px {C['cream']},0 0 0 16px #8A6A44,0 30px 60px rgba(50,24,6,.5)}}
-#root .rib{{position:absolute;padding:14px 46px 16px 40px;background:linear-gradient(180deg,#B3301F,#8E2116);color:{C['cream']};font-family:'Cormorant Garamond',serif;font-weight:700;font-size:54px;line-height:1;white-space:nowrap;
+#root .rib{{position:absolute;padding:14px 46px 16px 40px;background:linear-gradient(180deg,#B3301F,#8E2116);color:{C['cream']};font-family:'Suez One',serif;font-weight:400;font-size:48px;line-height:1;white-space:nowrap;
   clip-path:polygon(0 0,100% 0,calc(100% - 26px) 50%,100% 100%,0 100%);box-shadow:0 10px 24px rgba(50,20,5,.4)}}
-#root .rib small{{display:block;font-family:'IM Fell English',serif;font-style:italic;font-weight:400;font-size:30px;margin-top:6px;color:#F6DFAF}}
+#root .rib small{{display:block;font-family:'Frank Ruhl Libre',serif;font-weight:500;font-size:30px;margin-top:6px;color:#F6DFAF}}
 #root .ember{{position:absolute;width:6px;height:6px;border-radius:50%;background:radial-gradient(circle,#FFE6A8,#FF8A1F 55%,rgba(255,90,0,0) 72%)}}
 #root .wipe{{position:absolute;left:0;top:0;width:3000px;height:1080px;transform:translateX(1920px);
   background:linear-gradient(90deg,rgba(255,210,122,0) 0px,#FFD27A 120px,#FF7A12 220px,#9E2A05 300px,#2A0D03 420px,#140602 1500px,#2A0D03 2580px,#9E2A05 2700px,#FF7A12 2780px,#FFD27A 2880px,rgba(255,210,122,0) 3000px)}}
@@ -60,7 +64,7 @@ BASE_CSS = f"""
 #root .obj .otint{{position:absolute;border-radius:50%;mix-blend-mode:multiply;background:radial-gradient(circle,rgba(255,150,40,1) 0%,rgba(255,110,25,.95) 32%,rgba(255,110,25,0) 48%)}}
 #root .cutw{{position:absolute;left:0;top:0;width:1920px;height:1080px;{PAPER}}}
 #root .cutw .win{{top:50px;width:540px;height:980px}}
-#root .cutw .cw{{position:absolute;font-family:'Cormorant Garamond',serif;font-weight:700;color:{C['ink']};line-height:1.02;white-space:nowrap}}
+#root .cutw .cw{{position:absolute;font-family:'Suez One',serif;font-weight:400;color:{C['ink']};line-height:1.05;white-space:nowrap}}
 #root .hotf{{fill:{C['hot']}}}
 """
 
@@ -81,7 +85,8 @@ class Scene:
     def disp(self, text, x, y, size, t, hot=(), italic=False, align="left", color=None, per_word=True, out=None):
         i = self.id("d"); words = text.split(" ")
         spans = "".join(f'<span class="w{(" hot" if k in hot else "")}" style="display:inline-block;margin-right:.24em">{html.escape(w)}</span>' for k, w in enumerate(words))
-        style = f"left:{x}px;top:{y}px;font-size:{size}px;" + ("font-style:italic;font-weight:500;" if italic else "") + (f"color:{color};" if color else "")
+        size = round(size * (0.98 if italic else 0.86))
+        style = f"left:{x}px;top:{y}px;font-size:{size}px;" + ("font-family:'Frank Ruhl Libre',serif;font-weight:500;" if italic else "") + (f"color:{color};" if color else "")
         if align == "center": style = style.replace(f"left:{x}px;", f"left:{x - 960}px;width:1920px;") + "text-align:center;"
         self.html.append(f'<div id="{i}" class="disp{" ondark" if color == C["cream"] else ""}" style="{style}">{spans}</div>')
         self.js.append(f'tl.fromTo("#{i} .w",{{opacity:0,filter:"blur(8px)"}},{{opacity:1,filter:"blur(0px)",duration:0.2,ease:"expo.out",stagger:0.08}},{self.L(t)});')
@@ -172,7 +177,7 @@ class Scene:
         i = self.id("cut"); EV.append((round(t0, 3), "cut")); EV.append((round(t1, 3), "cut"))
         X = 1240 if side == "right" else 140
         tx = 140 if side == "right" else 800
-        ws = "".join(f'<div class="cw" id="{i}w{k}" style="left:{tx}px;top:{y}px;font-size:{sz}px;{"color:" + C["hot"] + ";" if hot else ""}{"font-style:italic;font-weight:500;" if it else ""}">{html.escape(w)}</div>'
+        ws = "".join(f'<div class="cw" id="{i}w{k}" style="left:{tx}px;top:{y}px;font-size:{round(sz * (0.98 if it else 0.84))}px;{"color:" + C["hot"] + ";" if hot else ""}{"font-family:'Frank Ruhl Libre',serif;font-weight:500;" if it else ""}">{html.escape(w)}</div>'
                      for k, (w, y, sz, hot, it) in enumerate(words))
         self.over.append(f'<div id="{i}" class="cutw" style="opacity:0"><div class="win" style="left:{X}px"><video id="{i}m" class="clip" data-start="{self.L(t0)}" data-duration="{round(t1 - t0, 3)}" '
                          f'data-media-start="{media}" data-playback-rate="{rate}" muted playsinline src="assets/clips/{name}.mp4" style="object-position:{pos}"></video></div>{ws}</div>')
@@ -275,7 +280,7 @@ s.raw(f'<div id="hook-black" style="position:absolute;left:0;top:0;width:1920px;
       f'<div id="hook-shine" style="position:absolute;left:660px;top:120px;width:600px;height:400px;opacity:0;mix-blend-mode:screen;'
       f'background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.9) 50%,transparent 65%);-webkit-mask:url(assets/art/olga_logo_cut.png) center/contain no-repeat;mask:url(assets/art/olga_logo_cut.png) center/contain no-repeat"></div>'
       f'<div id="hook-t1" class="lab" style="left:0;width:1920px;text-align:center;top:620px;font-size:34px;font-style:normal;letter-spacing:.32em;color:{C["gold"]};opacity:0">GLASS STORIES · EPISODE {EP["n"]}</div>'
-      f'<div id="hook-t2" class="disp" style="left:0;width:1920px;text-align:center;top:680px;font-size:112px;color:{C["cream"]};text-shadow:0 0 30px rgba(255,122,18,.55),0 0 80px rgba(255,90,0,.3);opacity:0">{EP["title"]}</div>',
+      f'<div id="hook-t2" class="disp" style="left:0;width:1920px;text-align:center;top:690px;font-size:100px;color:{C["cream"]};text-shadow:0 0 30px rgba(255,122,18,.55),0 0 80px rgba(255,90,0,.3);opacity:0">{EP["title"]}</div>',
       'tl.fromTo("#hook-black",{opacity:0},{opacity:1,duration:0.25,ease:"power2.in"},4.3);'
       'tl.fromTo("#hook-logo",{opacity:0,scale:1.15,filter:"blur(10px)"},{opacity:1,scale:1,filter:"blur(0px)",duration:0.9,ease:"expo.out"},4.55);'
       'tl.fromTo("#hook-shine",{opacity:0,backgroundPosition:"-600px 0"},{opacity:1,backgroundPosition:"600px 0",duration:1.0,ease:"power2.inOut"},5.0);'
@@ -581,8 +586,8 @@ a, b = T("i'd", 1) - 0.25, DUR
 s = Scene("outro", a, b)
 s.video("olga_fashion", 170, 50, 690, 980, a, b, media=1.7, pos="50% 35%", appear=0.05)
 s.lab("Olga in her glass costume · Glass Fashion Show", 175, 1036, a + 0.6, size=30, color=C["gold"])
-s.disp("I'd love to hear", 1080, 240, 110, T("i'd", 1), italic=True, color=C["cream"])
-s.disp("what you think!", 1080, 360, 110, T("think!", 1), italic=True, hot=(1,), color=C["cream"])
+s.disp("I'd love to hear", 990, 240, 100, T("i'd", 1), italic=True, color=C["cream"])
+s.disp("what you think!", 990, 360, 100, T("think!", 1), italic=True, hot=(1,), color=C["cream"])
 s.raw('<img id="outro-logo" src="assets/art/olga_logo_cut.png" alt="" style="position:absolute;left:1240px;top:520px;width:420px;opacity:0">'
       '<div id="outro-shine" style="position:absolute;left:1240px;top:520px;width:420px;height:280px;opacity:0;mix-blend-mode:screen;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.9) 50%,transparent 65%);'
       '-webkit-mask:url(assets/art/olga_logo_cut.png) center/contain no-repeat;mask:url(assets/art/olga_logo_cut.png) center/contain no-repeat"></div>',
