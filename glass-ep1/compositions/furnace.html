@@ -43,11 +43,11 @@
 
 #furnace-world{width:1920px;height:1080px}
 </style>
-<div id="root" data-composition-id="furnace" data-width="1920" data-height="1080" data-duration="3.58" style="">
+<div id="root" data-composition-id="furnace" data-width="1920" data-height="1080" data-duration="3.34" style="">
   <div id="furnace-world" class="world">
     <div id="furnace-flood" style="position:absolute;left:0;top:0;width:1920px;height:1080px;background:radial-gradient(circle at 50% 50%,#FFD27A,#FF7A12 55%,#B5450A)"></div>
-    <div id="furnace-v1" class="win" style="left:1160px;top:0px;width:608px;height:1080px;clip-path:inset(50% 50% 50% 50%)"><video id="furnace-v1m" class="clip" data-start="0.0" data-duration="2.53" data-media-start="0.0" data-playback-rate="1.0" muted playsinline src="assets/clips/glory_gather.mp4" style="object-position:50% 50%"></video></div>
-    <div id="furnace-v2" class="win" style="left:1160px;top:0px;width:608px;height:1080px;clip-path:inset(50% 50% 50% 50%)"><video id="furnace-v2m" class="clip" data-start="1.73" data-duration="2.45" data-media-start="3.5" data-playback-rate="1.0" muted playsinline src="assets/clips/olga_glory.mp4" style="object-position:50% 50%"></video></div>
+    <div id="furnace-v1" class="win" style="left:1160px;top:0px;width:608px;height:1080px;clip-path:inset(50% 50% 50% 50%)"><video id="furnace-v1m" class="clip" data-start="0.0" data-duration="2.73" data-media-start="0.0" data-playback-rate="1.0" muted playsinline src="assets/clips/glory_gather.mp4" style="object-position:50% 50%"></video></div>
+    <div id="furnace-v2" class="win" style="left:1160px;top:0px;width:608px;height:1080px;clip-path:inset(50% 50% 50% 50%)"><video id="furnace-v2m" class="clip" data-start="1.93" data-duration="2.01" data-media-start="3.5" data-playback-rate="1.0" muted playsinline src="assets/clips/olga_glory.mp4" style="object-position:50% 50%"></video></div>
     <div id="furnace-d3" class="disp" style="left:120px;top:330px;font-size:146px;"><span class="w hot" style="display:inline-block;margin-right:.24em">Glassblowing</span></div>
     <div id="furnace-d4" class="disp" style="left:130px;top:520px;font-size:94px;font-family:'Frank Ruhl Libre',serif;font-weight:500;"><span class="w" style="display:inline-block;margin-right:.24em">was</span><span class="w" style="display:inline-block;margin-right:.24em">invented.</span></div>
     <div id="furnace-d5" class="disp" style="left:130px;top:700px;font-size:72px;"><span class="w" style="display:inline-block;margin-right:.24em">And</span><span class="w" style="display:inline-block;margin-right:.24em">that</span><span class="w" style="display:inline-block;margin-right:.24em">changed</span></div>
@@ -116,51 +116,51 @@
     world.style.transform = "translate(" + (960 - cx * s).toFixed(2) + "px," + (540 - cy * s).toFixed(2) + "px) scale(" + s.toFixed(5) + ")";
     if (window.__render_furnace) window.__render_furnace(t);
   }
-  tl.to(clock, { t: 3.58, duration: 3.58, ease: "none", onUpdate: () => render(clock.t) }, 0);
+  tl.to(clock, { t: 3.34, duration: 3.34, ease: "none", onUpdate: () => render(clock.t) }, 0);
   render(0);
   
     tl.fromTo("#furnace-flood",{opacity:1},{opacity:0,duration:0.45,ease:"power2.in"},0.25);
   tl.fromTo("#furnace-v1",{clipPath:"inset(50% 50% 50% 50%)"},{clipPath:"inset(0% 0% 0% 0%)",duration:0.4,ease:"expo.out"},0.0);
-  tl.fromTo("#furnace-v2",{clipPath:"inset(50% 50% 50% 50%)"},{clipPath:"inset(0% 0% 0% 0%)",duration:0.15,ease:"expo.out"},1.73);
+  tl.fromTo("#furnace-v2",{clipPath:"inset(50% 50% 50% 50%)"},{clipPath:"inset(0% 0% 0% 0%)",duration:0.15,ease:"expo.out"},1.93);
   tl.fromTo("#furnace-d3 .w",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.2,ease:"expo.out",stagger:0.08},0.05);
-  tl.fromTo("#furnace-d4 .w",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.2,ease:"expo.out",stagger:0.08},0.81);
-  tl.fromTo("#furnace-d5 .w",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.2,ease:"expo.out",stagger:0.08},1.63);
-  tl.fromTo("#furnace-d6 .w",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.2,ease:"expo.out",stagger:0.08},2.71);
-  tl.fromTo("#furnace-em7",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.59},{opacity:0.7,duration:1.46},{opacity:0,duration:0.88}],x:20,y:-466,duration:2.93,ease:"none"},0.256);
-  tl.fromTo("#furnace-em8",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.64},{opacity:0.7,duration:1.61},{opacity:0,duration:0.96}],x:-42,y:-323,duration:3.22,ease:"none"},0.218);
+  tl.fromTo("#furnace-d4 .w",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.2,ease:"expo.out",stagger:0.08},0.85);
+  tl.fromTo("#furnace-d5 .w",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.2,ease:"expo.out",stagger:0.08},1.83);
+  tl.fromTo("#furnace-d6 .w",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.2,ease:"expo.out",stagger:0.08},2.91);
+  tl.fromTo("#furnace-em7",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.59},{opacity:0.7,duration:1.46},{opacity:0,duration:0.88}],x:20,y:-466,duration:2.93,ease:"none"},0.226);
+  tl.fromTo("#furnace-em8",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.64},{opacity:0.7,duration:1.61},{opacity:0,duration:0.96}],x:-42,y:-323,duration:3.22,ease:"none"},0.211);
   tl.fromTo("#furnace-em9",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.77},{opacity:0.7,duration:1.92},{opacity:0,duration:1.15}],x:6,y:-624,duration:3.85,ease:"none"},0.214);
-  tl.fromTo("#furnace-em10",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.38},{opacity:0.7,duration:0.96},{opacity:0,duration:0.58}],x:48,y:-681,duration:1.92,ease:"none"},0.807);
-  tl.fromTo("#furnace-em11",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.58},{opacity:0.7,duration:1.44},{opacity:0,duration:0.86}],x:-55,y:-679,duration:2.88,ease:"none"},0.3);
+  tl.fromTo("#furnace-em10",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.38},{opacity:0.7,duration:0.96},{opacity:0,duration:0.58}],x:48,y:-681,duration:1.92,ease:"none"},0.707);
+  tl.fromTo("#furnace-em11",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.58},{opacity:0.7,duration:1.44},{opacity:0,duration:0.86}],x:-55,y:-679,duration:2.88,ease:"none"},0.253);
   tl.fromTo("#furnace-em12",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.70},{opacity:0.7,duration:1.76},{opacity:0,duration:1.06}],x:9,y:-660,duration:3.52,ease:"none"},0.29);
   tl.fromTo("#furnace-em13",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.79},{opacity:0.7,duration:1.98},{opacity:0,duration:1.19}],x:-24,y:-759,duration:3.97,ease:"none"},0.285);
-  tl.fromTo("#furnace-em14",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.50},{opacity:0.7,duration:1.24},{opacity:0,duration:0.74}],x:14,y:-745,duration:2.48,ease:"none"},0.389);
-  tl.fromTo("#furnace-em15",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.41},{opacity:0.7,duration:1.02},{opacity:0,duration:0.61}],x:55,y:-312,duration:2.04,ease:"none"},0.508);
-  tl.fromTo("#furnace-em16",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.36},{opacity:0.7,duration:0.91},{opacity:0,duration:0.55}],x:-38,y:-646,duration:1.82,ease:"none"},1.516);
-  tl.fromTo("#furnace-em17",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.47},{opacity:0.7,duration:1.18},{opacity:0,duration:0.71}],x:12,y:-349,duration:2.35,ease:"none"},0.964);
-  tl.fromTo("#furnace-em18",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.42},{opacity:0.7,duration:1.04},{opacity:0,duration:0.62}],x:14,y:-649,duration:2.08,ease:"none"},1.381);
+  tl.fromTo("#furnace-em14",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.50},{opacity:0.7,duration:1.24},{opacity:0,duration:0.74}],x:14,y:-745,duration:2.48,ease:"none"},0.339);
+  tl.fromTo("#furnace-em15",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.41},{opacity:0.7,duration:1.02},{opacity:0,duration:0.61}],x:55,y:-312,duration:2.04,ease:"none"},0.453);
+  tl.fromTo("#furnace-em16",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.36},{opacity:0.7,duration:0.91},{opacity:0,duration:0.55}],x:-38,y:-646,duration:1.82,ease:"none"},1.314);
+  tl.fromTo("#furnace-em17",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.47},{opacity:0.7,duration:1.18},{opacity:0,duration:0.71}],x:12,y:-349,duration:2.35,ease:"none"},0.786);
+  tl.fromTo("#furnace-em18",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.42},{opacity:0.7,duration:1.04},{opacity:0,duration:0.62}],x:14,y:-649,duration:2.08,ease:"none"},1.163);
   tl.fromTo("#furnace-em19",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.74},{opacity:0.7,duration:1.86},{opacity:0,duration:1.12}],x:35,y:-388,duration:3.72,ease:"none"},0.214);
-  tl.fromTo("#furnace-em20",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.56},{opacity:0.7,duration:1.41},{opacity:0,duration:0.84}],x:5,y:-317,duration:2.81,ease:"none"},0.354);
-  tl.fromTo("#furnace-em21",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.58},{opacity:0.7,duration:1.46},{opacity:0,duration:0.87}],x:-58,y:-707,duration:2.91,ease:"none"},0.213);
-  tl.fromTo("#furnace-em22",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.52},{opacity:0.7,duration:1.29},{opacity:0,duration:0.77}],x:17,y:-558,duration:2.58,ease:"none"},0.828);
-  tl.fromTo("#furnace-em23",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.48},{opacity:0.7,duration:1.20},{opacity:0,duration:0.72}],x:14,y:-660,duration:2.40,ease:"none"},0.377);
-  tl.fromTo("#furnace-em24",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.52},{opacity:0.7,duration:1.31},{opacity:0,duration:0.78}],x:-52,y:-320,duration:2.61,ease:"none"},0.788);
-  tl.fromTo("#furnace-em25",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.44},{opacity:0.7,duration:1.11},{opacity:0,duration:0.66}],x:22,y:-395,duration:2.21,ease:"none"},0.498);
-  tl.fromTo("#furnace-em26",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.65},{opacity:0.7,duration:1.63},{opacity:0,duration:0.98}],x:76,y:-508,duration:3.25,ease:"none"},0.25);
-  tl.fromTo("#furnace-em27",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.50},{opacity:0.7,duration:1.24},{opacity:0,duration:0.75}],x:-41,y:-645,duration:2.49,ease:"none"},0.436);
-  tl.fromTo("#furnace-em28",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.64},{opacity:0.7,duration:1.60},{opacity:0,duration:0.96}],x:-62,y:-498,duration:3.20,ease:"none"},0.246);
-  tl.fromTo("#furnace-em29",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.44},{opacity:0.7,duration:1.10},{opacity:0,duration:0.66}],x:-6,y:-410,duration:2.19,ease:"none"},1.375);
+  tl.fromTo("#furnace-em20",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.56},{opacity:0.7,duration:1.41},{opacity:0,duration:0.84}],x:5,y:-317,duration:2.81,ease:"none"},0.289);
+  tl.fromTo("#furnace-em21",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.58},{opacity:0.7,duration:1.46},{opacity:0,duration:0.87}],x:-58,y:-707,duration:2.91,ease:"none"},0.206);
+  tl.fromTo("#furnace-em22",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.52},{opacity:0.7,duration:1.29},{opacity:0,duration:0.77}],x:17,y:-558,duration:2.58,ease:"none"},0.64);
+  tl.fromTo("#furnace-em23",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.48},{opacity:0.7,duration:1.20},{opacity:0,duration:0.72}],x:14,y:-660,duration:2.40,ease:"none"},0.333);
+  tl.fromTo("#furnace-em24",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.52},{opacity:0.7,duration:1.31},{opacity:0,duration:0.78}],x:-52,y:-320,duration:2.61,ease:"none"},0.605);
+  tl.fromTo("#furnace-em25",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.44},{opacity:0.7,duration:1.11},{opacity:0,duration:0.66}],x:22,y:-395,duration:2.21,ease:"none"},0.437);
+  tl.fromTo("#furnace-em26",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.65},{opacity:0.7,duration:1.63},{opacity:0,duration:0.98}],x:76,y:-508,duration:3.25,ease:"none"},0.24);
+  tl.fromTo("#furnace-em27",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.50},{opacity:0.7,duration:1.24},{opacity:0,duration:0.75}],x:-41,y:-645,duration:2.49,ease:"none"},0.373);
+  tl.fromTo("#furnace-em28",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.64},{opacity:0.7,duration:1.60},{opacity:0,duration:0.96}],x:-62,y:-498,duration:3.20,ease:"none"},0.226);
+  tl.fromTo("#furnace-em29",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.44},{opacity:0.7,duration:1.10},{opacity:0,duration:0.66}],x:-6,y:-410,duration:2.19,ease:"none"},1.138);
   tl.fromTo("#furnace-em30",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.68},{opacity:0.7,duration:1.70},{opacity:0,duration:1.02}],x:50,y:-326,duration:3.40,ease:"none"},0.275);
-  tl.fromTo("#furnace-em31",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.54},{opacity:0.7,duration:1.35},{opacity:0,duration:0.81}],x:21,y:-672,duration:2.70,ease:"none"},0.718);
+  tl.fromTo("#furnace-em31",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.54},{opacity:0.7,duration:1.35},{opacity:0,duration:0.81}],x:21,y:-672,duration:2.70,ease:"none"},0.535);
   tl.fromTo("#furnace-em32",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.73},{opacity:0.7,duration:1.83},{opacity:0,duration:1.10}],x:-74,y:-686,duration:3.66,ease:"none"},0.229);
-  tl.fromTo("#furnace-em33",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.41},{opacity:0.7,duration:1.02},{opacity:0,duration:0.61}],x:-26,y:-747,duration:2.04,ease:"none"},0.602);
-  tl.fromTo("#furnace-em34",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.58},{opacity:0.7,duration:1.45},{opacity:0,duration:0.87}],x:27,y:-698,duration:2.90,ease:"none"},0.247);
-  tl.fromTo("#furnace-em35",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.51},{opacity:0.7,duration:1.28},{opacity:0,duration:0.77}],x:38,y:-365,duration:2.57,ease:"none"},0.515);
+  tl.fromTo("#furnace-em33",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.41},{opacity:0.7,duration:1.02},{opacity:0,duration:0.61}],x:-26,y:-747,duration:2.04,ease:"none"},0.53);
+  tl.fromTo("#furnace-em34",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.58},{opacity:0.7,duration:1.45},{opacity:0,duration:0.87}],x:27,y:-698,duration:2.90,ease:"none"},0.224);
+  tl.fromTo("#furnace-em35",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.51},{opacity:0.7,duration:1.28},{opacity:0,duration:0.77}],x:38,y:-365,duration:2.57,ease:"none"},0.422);
   tl.fromTo("#furnace-em36",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.77},{opacity:0.7,duration:1.91},{opacity:0,duration:1.15}],x:-55,y:-513,duration:3.83,ease:"none"},0.285);
-  tl.fromTo("#furnace-em37",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.63},{opacity:0.7,duration:1.57},{opacity:0,duration:0.94}],x:37,y:-678,duration:3.14,ease:"none"},0.296);
-  tl.fromTo("#furnace-em38",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.63},{opacity:0.7,duration:1.56},{opacity:0,duration:0.94}],x:-24,y:-508,duration:3.13,ease:"none"},0.424);
-  tl.fromTo("#furnace-em39",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.54},{opacity:0.7,duration:1.35},{opacity:0,duration:0.81}],x:-6,y:-782,duration:2.70,ease:"none"},0.289);
-  tl.fromTo("#furnace-em40",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.48},{opacity:0.7,duration:1.21},{opacity:0,duration:0.73}],x:-14,y:-700,duration:2.42,ease:"none"},0.469);
-  tl.fromTo("#furnace-wo",{x:1920},{x:-540,duration:0.45,ease:"power2.out"},3.11);
+  tl.fromTo("#furnace-em37",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.63},{opacity:0.7,duration:1.57},{opacity:0,duration:0.94}],x:37,y:-678,duration:3.14,ease:"none"},0.239);
+  tl.fromTo("#furnace-em38",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.63},{opacity:0.7,duration:1.56},{opacity:0,duration:0.94}],x:-24,y:-508,duration:3.13,ease:"none"},0.288);
+  tl.fromTo("#furnace-em39",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.54},{opacity:0.7,duration:1.35},{opacity:0,duration:0.81}],x:-6,y:-782,duration:2.70,ease:"none"},0.258);
+  tl.fromTo("#furnace-em40",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.48},{opacity:0.7,duration:1.21},{opacity:0,duration:0.73}],x:-14,y:-700,duration:2.42,ease:"none"},0.402);
+  tl.fromTo("#furnace-wo",{x:1920},{x:-540,duration:0.45,ease:"power2.out"},2.87);
   window.__timelines = window.__timelines || {};
   window.__timelines["furnace"] = tl;
 })();

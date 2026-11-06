@@ -379,10 +379,10 @@ s.raw(f'<svg id="sheet2-map" style="left:0px;top:0px" width="{MAP["W"]}" height=
       f'<path class="stk" d="{MAP["d"]}" style="stroke-width:2;fill:{C['land']}"/></svg>')
 lx, ly = P["levant"]
 s.raw(f'<svg id="sheet2-reg" style="left:{lx - 60}px;top:{ly - 140}px" width="120" height="300"><path d="M50 10 C80 40 90 120 80 170 C70 220 50 260 30 290 C20 250 15 200 22 150 C30 100 30 50 50 10 Z" fill="url(#hatch)" stroke="{C["hot"]}" stroke-width="3" class="reg"/></svg>',
-      f'tl.fromTo("#sheet2-reg",{{opacity:0,scale:0.4,transformOrigin:"50% 50%"}},{{opacity:1,scale:1,duration:0.6,ease:"expo.out"}},{s.L(T("syro-palestinian") - 0.2)});')
+      f'tl.fromTo("#sheet2-reg",{{opacity:0,scale:0.4,transformOrigin:"50% 50%"}},{{opacity:1,scale:1,duration:0.6,ease:"expo.out"}},{s.L(T("israel") - 0.2)});')
 jx, jy = P["jerusalem"]
-s.pin(jx, jy, T("syro-palestinian") + 0.3, k=0.3)
-s.lab("Jerusalem · earliest evidence, c. 50 BCE", jx + 16, jy - 8, T("syro-palestinian") + 0.4, size=12, color=C["ink"])
+s.pin(jx, jy, T("israel") + 0.3, k=0.3)
+s.lab("Jerusalem · earliest evidence, c. 50 BCE", jx + 16, jy - 8, T("israel") + 0.4, size=12, color=C["ink"])
 s.lab("Ancient Israel", lx + 45, ly - 120, T("most"), size=13, color=C["hot"])
 s.key(a, 1500, 950, 0.5)
 s.key(T("technique") + 0.6, lx - 10, ly + 30, 3.0)
