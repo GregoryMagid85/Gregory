@@ -1,0 +1,119 @@
+<!doctype html>
+<!-- Glass Stories 3D object studio: renders one object's turntable frame on a transparent background.
+     Driven by tools3d/render_objects.js (Playwright): window.setup(name) then window.frame(k, N). -->
+<html><head><meta charset="utf-8"><style>html,body{margin:0;background:transparent}</style></head>
+<body><canvas id="c" width="640" height="640"></canvas>
+<script type="module">
+import * as THREE from "../assets/vendor/three.module.js";
+const canvas = document.getElementById("c");
+const r = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, preserveDrawingBuffer: true, premultipliedAlpha: false });
+r.setPixelRatio(1); r.setSize(640, 640, false); r.setClearColor(0x000000, 0); r.outputColorSpace = THREE.SRGBColorSpace;
+r.toneMapping = THREE.ACESFilmicToneMapping; r.toneMappingExposure = 1.05;
+const scene = new THREE.Scene();
+// warm workshop light for reflections: a big soft key, a window strip, a furnace-orange kicker
+const pm = new THREE.PMREMGenerator(r); const studio = new THREE.Scene(); studio.background = new THREE.Color(0.08, 0.06, 0.045);
+const box = (w, h, x, y, z, c) => { const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ color: c, side: THREE.DoubleSide })); m.position.set(x, y, z); m.lookAt(0, 0, 0); studio.add(m); };
+box(8, 4, -3, 6, 4, new THREE.Color(3.2, 3.0, 2.7)); box(1.5, 10, 7, 0, 2, new THREE.Color(2.4, 2.4, 2.5)); box(3, 3, -6, -1, -4, new THREE.Color(3.5, 1.4, 0.3)); box(10, 1, 0, -5, 3, new THREE.Color(0.6, 0.5, 0.4));
+scene.environment = pm.fromScene(studio, 0.03).texture;
+const key = new THREE.DirectionalLight(0xfff1dc, 2.4); key.position.set(-4, 6, 6); scene.add(key);
+const rim = new THREE.DirectionalLight(0xffa860, 1.4); rim.position.set(5, 2, -5); scene.add(rim);
+scene.add(new THREE.AmbientLight(0xffe8cc, 0.35));
+const cam = new THREE.PerspectiveCamera(28, 1, 0.1, 100); cam.position.set(0, 1.6, 9); cam.lookAt(0, 0, 0);
+const root = new THREE.Group(); scene.add(root);
+
+// ---------------------------------------------------------------- helpers
+const tex = (w, h, draw) => { const c = document.createElement("canvas"); c.width = w; c.height = h; draw(c.getContext("2d"), w, h); const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.wrapS = t.wrapT = THREE.RepeatWrapping; t.anisotropy = 8; return t; };
+let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+const lathe = (pts, seg = 96) => new THREE.LatheGeometry(pts.map(([x, y]) => new THREE.Vector2(x, y)), seg);
+const smooth = (pts, n = 80) => { const c = new THREE.SplineCurve(pts.map(([x, y]) => new THREE.Vector2(x, y))); return c.getPoints(n).map((p) => [Math.max(0.001, p.x), p.y]); };
+const glass = (color, o = {}) => new THREE.MeshPhysicalMaterial({ color, transparent: true, opacity: o.opacity ?? 0.42, roughness: o.rough ?? 0.04, metalness: 0, clearcoat: 1, clearcoatRoughness: 0.03,
+  envMapIntensity: o.env ?? 2.2, ior: 1.5, specularIntensity: 1, side: THREE.DoubleSide, depthWrite: false, iridescence: o.irid ?? 0, iridescenceIOR: 1.6 });
+const steel = () => new THREE.MeshStandardMaterial({ color: 0x9a9ea4, metalness: 1, roughness: 0.32, envMapIntensity: 1.4 });
+const wood = () => new THREE.MeshStandardMaterial({ map: tex(256, 256, (g, w, h) => { g.fillStyle = "#6b4426"; g.fillRect(0, 0, w, h); for (let i = 0; i < 70; i++) { g.strokeStyle = `rgba(${40 + rnd() * 40},${22 + rnd() * 20},10,.5)`; g.lineWidth = 1 + rnd() * 3; g.beginPath(); const y = rnd() * h; g.moveTo(0, y); g.bezierCurveTo(w * .3, y + rnd() * 10 - 5, w * .6, y + rnd() * 10 - 5, w, y + rnd() * 6 - 3); g.stroke(); } }), roughness: 0.6, metalness: 0 });
+const glow = (size, color) => { const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: tex(128, 128, (g) => { const gr = g.createRadialGradient(64, 64, 0, 64, 64, 64); gr.addColorStop(0, color); gr.addColorStop(0.35, "rgba(255,120,20,.35)"); gr.addColorStop(1, "rgba(255,80,0,0)"); g.fillStyle = gr; g.fillRect(0, 0, 128, 128); }), blending: THREE.AdditiveBlending, depthWrite: false, transparent: true })); s.scale.set(size, size, 1); return s; };
+const hot = () => new THREE.MeshStandardMaterial({ color: 0xff6a10, emissive: 0xff4a00, emissiveIntensity: 2.6, roughness: 0.3,
+  emissiveMap: tex(256, 128, (g, w, h) => { const gr = g.createLinearGradient(0, 0, w, 0); gr.addColorStop(0, "#ffe9a0"); gr.addColorStop(0.5, "#ff8a1f"); gr.addColorStop(1, "#ffd27a"); g.fillStyle = gr; g.fillRect(0, 0, w, h); for (let i = 0; i < 9; i++) { g.strokeStyle = "rgba(190,50,0,.55)"; g.lineWidth = 6; g.beginPath(); g.moveTo(i * 30, 0); g.bezierCurveTo(i * 30 + 40, h * .3, i * 30 - 30, h * .7, i * 30 + 20, h); g.stroke(); } }) });
+// core-formed decoration: opaque cobalt with dragged yellow / white / turquoise zigzag trails
+const coreTex = () => tex(1024, 512, (g, w, h) => {
+  g.fillStyle = "#13238a"; g.fillRect(0, 0, w, h);
+  const band = (v, col, amp, n) => { g.strokeStyle = col; g.lineWidth = 16; g.lineJoin = "round"; g.beginPath(); for (let i = 0; i <= n * 2; i++) { const x = (i / (n * 2)) * w; const y = v * h + (i % 2 ? amp : -amp); i ? g.lineTo(x, y) : g.moveTo(x, y); } g.stroke(); };
+  [[0.30, "#f2c230", 34, 10], [0.42, "#f4f1e6", 30, 10], [0.54, "#f2c230", 34, 10], [0.66, "#3cc2c8", 28, 10]].forEach(([v, c, a, n]) => band(v, c, a, n));
+  g.fillStyle = "#f2c230"; g.fillRect(0, 0.17 * h, w, 12); g.fillRect(0, 0.78 * h, w, 12);
+});
+
+// ---------------------------------------------------------------- the objects
+const B = {
+  amphoriskos() {
+    const prof = smooth([[0.001, -1.55], [0.18, -1.5], [0.12, -1.38], [0.45, -1.1], [0.78, -0.4], [0.72, 0.35], [0.38, 0.75], [0.2, 0.95], [0.19, 1.3], [0.3, 1.42], [0.001, 1.42]]);
+    const m = new THREE.Mesh(lathe(prof), new THREE.MeshPhysicalMaterial({ map: coreTex(), roughness: 0.28, clearcoat: 1, clearcoatRoughness: 0.08, envMapIntensity: 1.2 }));
+    root.add(m);
+    for (const s of [-1, 1]) { const h = new THREE.Mesh(new THREE.TorusGeometry(0.28, 0.055, 16, 48, Math.PI * 1.1), new THREE.MeshPhysicalMaterial({ color: 0x2bb3bd, roughness: 0.2, clearcoat: 1 })); h.position.set(s * 0.36, 0.95, 0); h.rotation.set(0, 0, s > 0 ? -0.6 : Math.PI + 0.6); root.add(h); }
+    root.scale.setScalar(0.95);
+  },
+  claycore() {
+    const prof = smooth([[0.001, -1.05], [0.45, -0.85], [0.72, -0.3], [0.74, 0.3], [0.5, 0.85], [0.001, 1.05]]);
+    const clay = new THREE.MeshStandardMaterial({ map: tex(512, 256, (g, w, h) => { g.fillStyle = "#b07a45"; g.fillRect(0, 0, w, h); for (let i = 0; i < 2600; i++) { const v = 90 + rnd() * 90; g.fillStyle = `rgba(${v + 60},${v + 20},${v - 30},.35)`; g.fillRect(rnd() * w, rnd() * h, 2 + rnd() * 5, 2 + rnd() * 5); } }), roughness: 0.95 });
+    const core = new THREE.Mesh(lathe(prof), clay); core.rotation.z = Math.PI / 2; root.add(core);
+    const rod = new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.07, 4.6, 24), steel()); rod.rotation.z = Math.PI / 2; root.add(rod);
+    // a molten cobalt trail being wound around the core
+    const pts = []; for (let i = 0; i <= 220; i++) { const u = i / 220; const x = -0.85 + 1.5 * u; const rr = 0.74 * Math.sqrt(Math.max(0.05, 1 - (x / 1.05) ** 2)) + 0.03; const a = u * Math.PI * 2 * 4.2; pts.push(new THREE.Vector3(x, Math.cos(a) * rr, Math.sin(a) * rr)); }
+    root.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts), 400, 0.075, 12), new THREE.MeshPhysicalMaterial({ color: 0x1a32b5, roughness: 0.15, clearcoat: 1 })));
+    const tip = new THREE.Mesh(new THREE.SphereGeometry(0.12, 24, 16), hot()); tip.position.copy(pts[pts.length - 1]); root.add(tip);
+    root.userData.axis = "x"; root.rotation.y = 0.35; root.scale.setScalar(1.15);
+  },
+  beads() {
+    const cols = [0x1530a8, 0x2bb3bd, 0xe8b530, 0x8a2a14, 0x1530a8];
+    const curve = new THREE.CatmullRomCurve3([[-2.0, 0.6, 0], [-1.0, -0.2, 0.3], [0, -0.45, 0.4], [1.0, -0.2, 0.3], [2.0, 0.6, 0]].map((p) => new THREE.Vector3(...p)));
+    root.add(new THREE.Mesh(new THREE.TubeGeometry(curve, 120, 0.025, 8), new THREE.MeshStandardMaterial({ color: 0x5a3a1e, roughness: 0.9 })));
+    cols.forEach((c, i) => {
+      const p = curve.getPoint(0.12 + i * 0.19); const b = new THREE.Mesh(new THREE.SphereGeometry(0.36, 48, 32), new THREE.MeshPhysicalMaterial({ color: c, roughness: 0.2, clearcoat: 1 }));
+      b.scale.set(1, 0.82, 1); b.position.copy(p); root.add(b); root.userData.rock = true;
+      for (let k = 0; k < 6; k++) { const a = k / 6 * Math.PI * 2; const e = new THREE.Mesh(new THREE.SphereGeometry(0.085, 16, 12), new THREE.MeshPhysicalMaterial({ color: i % 2 ? 0x13238a : 0xf4f1e6, roughness: 0.2, clearcoat: 1 })); e.position.set(p.x + Math.cos(a) * 0.33, p.y, p.z + Math.sin(a) * 0.33); e.scale.set(1, 0.6, 1); root.add(e); }
+    });
+    root.scale.setScalar(0.95);
+  },
+  blowpipe() {
+    const pipe = new THREE.Mesh(new THREE.CylinderGeometry(0.075, 0.075, 5.2, 32), steel()); pipe.rotation.z = Math.PI / 2; pipe.position.x = -0.9; root.add(pipe);
+    const mouth = new THREE.Mesh(new THREE.CylinderGeometry(0.13, 0.11, 0.35, 32), new THREE.MeshStandardMaterial({ color: 0x3a2a1c, roughness: 0.5 })); mouth.rotation.z = Math.PI / 2; mouth.position.x = -3.45; root.add(mouth);
+    const grip = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.12, 1.2, 24), wood()); grip.rotation.z = Math.PI / 2; grip.position.x = -2.6; root.add(grip);
+    const g = new THREE.Mesh(new THREE.SphereGeometry(0.62, 64, 48), hot()); g.scale.set(1.2, 0.95, 0.95); g.position.x = 2.2; root.add(g);
+    const gl = glow(3.2, "rgba(255,210,122,.9)"); gl.position.x = 2.2; root.add(gl);
+    root.userData.axis = "x"; root.rotation.set(0, 0.25, 0.08); root.position.set(-0.45, 0.1, 0); root.scale.setScalar(0.74);
+  },
+  flask() {
+    const prof = smooth([[0.001, -1.5], [0.5, -1.48], [0.85, -1.1], [0.95, -0.5], [0.7, 0.05], [0.24, 0.4], [0.17, 0.9], [0.16, 1.4], [0.26, 1.5], [0.2, 1.56]]);
+    root.add(new THREE.Mesh(lathe(prof), glass(0x8fd4b2, { opacity: 0.5, irid: 0.7 })));
+    root.add(new THREE.Mesh(lathe(prof.map(([x, y]) => [Math.max(0.001, x - 0.05), y])), glass(0xc8f0dc, { opacity: 0.18 })));
+  },
+  hourglass() {
+    const bulb = smooth([[0.06, 0.02], [0.45, 0.25], [0.72, 0.75], [0.6, 1.2], [0.001, 1.32]]);
+    for (const s of [1, -1]) { const m = new THREE.Mesh(lathe(bulb), glass(0xe8f2ff, { opacity: 0.32 })); m.scale.y = s; root.add(m); }
+    const sand = new THREE.MeshStandardMaterial({ color: 0xd9a95a, roughness: 0.9 });
+    const top = new THREE.Mesh(new THREE.ConeGeometry(0.5, 0.55, 48), sand); top.position.y = 0.55; top.rotation.x = Math.PI; root.add(top);
+    const bot = new THREE.Mesh(new THREE.ConeGeometry(0.62, 0.5, 48), sand); bot.position.y = -1.05; root.add(bot);
+    const stream = new THREE.Mesh(new THREE.CylinderGeometry(0.018, 0.018, 0.9, 8), sand); stream.position.y = -0.4; root.add(stream);
+    for (const y of [1.42, -1.42]) { const d = new THREE.Mesh(new THREE.CylinderGeometry(1.0, 1.0, 0.18, 48), wood()); d.position.y = y; root.add(d); }
+    for (let k = 0; k < 3; k++) { const a = k / 3 * Math.PI * 2; const p = new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.07, 2.7, 16), wood()); p.position.set(Math.cos(a) * 0.82, 0, Math.sin(a) * 0.82); root.add(p); }
+    root.scale.setScalar(0.92);
+  },
+  vessels() {
+    const goblet = smooth([[0.001, -1.45], [0.6, -1.42], [0.12, -1.3], [0.08, -0.6], [0.16, -0.45], [0.06, -0.3], [0.45, 0.05], [0.62, 0.7], [0.6, 1.3]]);
+    const bowl = smooth([[0.001, -1.45], [0.35, -1.42], [0.8, -1.1], [1.0, -0.6], [1.05, -0.35]]);
+    const bottle = smooth([[0.001, -1.45], [0.45, -1.43], [0.55, -0.6], [0.5, 0.1], [0.18, 0.55], [0.15, 1.15], [0.22, 1.22]]);
+    [[goblet, 0xc87a2a, -1.55], [bottle, 0x1e46c8, 0], [bowl, 0x2a9a6a, 1.65]].forEach(([p, c, x]) => {
+      const g = new THREE.Group(); g.add(new THREE.Mesh(lathe(p), glass(c, { opacity: 0.55 }))); g.position.x = x; root.add(g); root.userData.spinKids = true; });
+    root.scale.setScalar(0.74);
+  },
+};
+window.setup = (name) => { B[name](); return true; };
+window.frame = (k, N) => {
+  const a = (k / N) * Math.PI * 2;
+  if (root.userData.axis === "x") root.children.forEach((c) => { if (!c.isSprite) c.rotation.x = a; });
+  else if (root.userData.spinKids) root.children.forEach((c) => (c.rotation.y = a));
+  else if (root.userData.rock) root.rotation.y = Math.sin(a) * 0.45;
+  else root.rotation.y = a;
+  r.render(scene, cam);
+  return canvas.toDataURL("image/png");
+};
+window.ready = true;
+</script></body></html>

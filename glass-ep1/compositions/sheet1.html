@@ -9,8 +9,8 @@
 #root .paper{position:absolute;background-color:#E6D3A8;background-image:url('assets/art/papyrus.jpg');background-size:1024px 1024px;}
 #root .vign{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 46%,transparent 52%,rgba(92,48,14,.28) 78%,rgba(34,15,4,.78) 100%)}
 #root .noise{position:absolute;inset:0;pointer-events:none;opacity:.10;mix-blend-mode:multiply;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' seed='4'/></filter><rect width='300' height='300' filter='url(%23n)'/></svg>")}
-#root .disp{position:absolute;font-family:'Cormorant Garamond',serif;font-weight:700;color:#2A190C;line-height:1.0;letter-spacing:-0.01em;white-space:nowrap}
-#root .lab{position:absolute;font-family:'IM Fell English',serif;font-style:italic;color:#2A190C;font-size:34px;white-space:nowrap}
+#root .disp{position:absolute;font-family:'Cormorant Garamond',serif;font-weight:700;color:#1C1007;line-height:1.0;letter-spacing:-0.01em;white-space:nowrap;text-shadow:0 2px 0 rgba(246,234,206,.6)}
+#root .lab{position:absolute;font-family:'IM Fell English',serif;font-style:italic;color:#1C1007;font-size:34px;white-space:nowrap;text-shadow:0 0 6px rgba(246,234,206,.95),0 0 14px rgba(246,234,206,.7)}
 #root .hot{color:#8E2216}
 #root .ondark .hot{color:#FF7A12;text-shadow:0 0 24px rgba(255,122,18,.5)}
 #root .win{position:absolute;overflow:hidden;background:#000;box-shadow:0 0 0 12px #F4E8CC,0 0 0 14px #8A6A44,0 26px 50px rgba(50,24,6,.5)}
@@ -25,8 +25,16 @@
 #root .plate .pi{position:absolute;left:0;top:0;width:100%;height:100%;will-change:transform}
 #root .plate img{width:100%;height:100%;object-fit:cover;display:block}
 #root svg{position:absolute;overflow:visible}
-#root .stk{fill:none;stroke:#2A190C;stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round}
-#root .stk2{fill:none;stroke:#6B4A2C;stroke-width:3;stroke-linecap:round;stroke-dasharray:2 12}
+#root .stk{fill:none;stroke:#1C1007;stroke-width:6;stroke-linecap:round;stroke-linejoin:round}
+#root .stk2{fill:none;stroke:#4E331C;stroke-width:4.5;stroke-linecap:round;stroke-dasharray:3 13}
+#root .obj{position:absolute}
+#root .obj .osp{position:absolute;inset:0;background-size:800% 600%;background-repeat:no-repeat}
+#root .obj .osh{position:absolute;left:14%;right:14%;bottom:7%;height:10%;border-radius:50%;background:radial-gradient(ellipse,rgba(40,20,5,.55),rgba(40,20,5,0) 70%)}
+#root .obj .ohalo{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(255,170,60,.75),rgba(255,110,20,.35) 38%,rgba(255,90,0,0) 70%)}
+#root .obj .otint{position:absolute;border-radius:50%;mix-blend-mode:multiply;background:radial-gradient(circle,rgba(255,150,40,1) 0%,rgba(255,110,25,.95) 32%,rgba(255,110,25,0) 48%)}
+#root .cutw{position:absolute;left:0;top:0;width:1920px;height:1080px;background-color:#E6D3A8;background-image:url('assets/art/papyrus.jpg');background-size:1024px 1024px;}
+#root .cutw .win{top:50px;width:540px;height:980px}
+#root .cutw .cw{position:absolute;font-family:'Cormorant Garamond',serif;font-weight:700;color:#1C1007;line-height:1.02;white-space:nowrap}
 #root .hotf{fill:#8E2216}
 
 #sheet1-world{width:11200px;height:2200px}
@@ -50,49 +58,51 @@
     <svg id="sheet1-pin14" style="left:4091.0px;top:1674.0px" width="80.0" height="80.0" viewBox="0 0 80 80"><path d="M40 8 C56 9 70 20 72 38 C74 56 60 72 40 72 C22 72 7 58 8 40 C9 22 24 8 40 8Z" fill="#8E2216" stroke="#5E140C" stroke-width="2"/><circle cx="40" cy="40" r="17" fill="none" stroke="#6E1A10" stroke-width="3"/><circle cx="40" cy="40" r="5" fill="#6E1A10"/></svg>
     <div id="sheet1-l15" class="lab" style="left:4171px;top:1694px;font-size:40px;">Egypt</div>
     <div id="sheet1-d16" class="disp" style="left:3550px;top:700px;font-size:96px;"><span class="w" style="display:inline-block;margin-right:.24em">The</span><span class="w" style="display:inline-block;margin-right:.24em">first</span><span class="w" style="display:inline-block;margin-right:.24em">glass</span></div>
-    <div id="sheet1-l17" class="lab" style="left:3555px;top:820px;font-size:52px;color:#6B4A2C;">thousands of years ago</div>
+    <div id="sheet1-l17" class="lab" style="left:3555px;top:820px;font-size:52px;color:#4E331C;">thousands of years ago</div>
     <div id="sheet1-p18" class="plate" style="left:4680px;top:860px;width:520px;height:520px;rotate:2deg;opacity:0"><div class="pi"><img src="assets/art/mesopotamia.png" alt=""></div></div>
     <div id="sheet1-rib19" class="rib" style="left:4640px;top:810px">Mesopotamia<small>c. 2500 BCE · beads &amp; inlays</small></div>
     <div id="sheet1-p20" class="plate" style="left:3800px;top:1080px;width:520px;height:520px;rotate:-2deg;opacity:0"><div class="pi"><img src="assets/art/egypt.png" alt=""></div></div>
     <div id="sheet1-rib21" class="rib" style="left:3760px;top:1030px">Egypt<small>c. 1500 BCE · core-formed</small></div>
-    <svg id="sheet1-s22" style="left:4760px;top:1420px" width="420" height="140" viewBox="0 0 420 140"><path class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="M40 60 m-24 0 a24 24 0 1 0 48 0 a24 24 0 1 0 -48 0"/><path class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="M110 60 m-24 0 a24 24 0 1 0 48 0 a24 24 0 1 0 -48 0"/><path class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="M180 60 m-24 0 a24 24 0 1 0 48 0 a24 24 0 1 0 -48 0"/><path class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="M250 60 m-24 0 a24 24 0 1 0 48 0 a24 24 0 1 0 -48 0"/><path class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="M320 60 m-24 0 a24 24 0 1 0 48 0 a24 24 0 1 0 -48 0"/><path class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="M10 60 L380 60"/></svg>
-    <svg id="sheet1-s23" style="left:3540px;top:1250px" width="230" height="330" viewBox="0 0 230 330"><path class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="M90 20 L130 20"/><path class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="M98 20 L98 60 C30 90 20 200 60 270 C80 300 100 310 110 312 C120 310 140 300 160 270 C200 200 190 90 122 60 L122 20"/><path class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="M98 70 C60 60 50 40 60 30"/><path class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="M122 70 C160 60 170 40 160 30"/><path class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="M50 140 L70 125 L90 140 L110 125 L130 140 L150 125 L170 140"/><path class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="M45 190 L65 175 L85 190 L105 175 L125 190 L145 175 L170 190"/></svg>
-    <svg id="sheet1-s24" style="left:2550px;top:1330px" width="340" height="340" viewBox="0 0 340 340"><path class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="M170 170 m-136 0 a136 136 0 1 0 272 0 a136 136 0 1 0 -272 0"/><path class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="M196 179 L340 170 L196 161"/><path class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="M181 195 L236 236 L195 181"/><path class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="M161 196 L170 340 L179 196"/><path class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="M145 181 L104 236 L159 195"/><path class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="M144 161 L0 170 L144 179"/><path class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="M159 145 L104 104 L145 159"/><path class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="M179 144 L170 0 L161 144"/><path class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="M195 159 L236 104 L181 145"/></svg>
-    <div id="sheet1-l25" class="lab" style="left:2704px;top:1250px;font-size:64px;">N</div>
-    <svg id="sheet1-s26" style="left:5600px;top:300px" width="900" height="900" viewBox="0 0 900 900"><path class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="M300 120 L380 120"/><path class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="M310 120 L310 180 C180 230 150 420 200 560 C240 660 300 700 340 720 C380 700 440 660 480 560 C530 420 500 230 370 180 L370 120"/><path class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="M250 260 C330 230 420 260 440 300"/><path class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="M230 360 C330 330 430 360 455 400"/><path class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="M225 460 C330 430 430 460 455 500"/><path class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="M240 560 C320 530 400 560 440 590"/></svg>
-    <svg id="sheet1-s27" style="left:5600px;top:300px" width="900" height="900" viewBox="0 0 900 900"><path class="stk2 p" d="M340 250 C270 300 260 520 340 620 C420 520 410 300 340 250"/></svg>
-    <div id="sheet1-l28" class="lab" style="left:6120px;top:680px;font-size:34px;color:#6B4A2C;">clay core</div>
-    <div id="sheet1-l29" class="lab" style="left:6120px;top:500px;font-size:34px;color:#6B4A2C;">hollow vessel</div>
-    <svg id="sheet1-s30" style="left:5600px;top:300px" width="1500" height="900" viewBox="0 0 1500 900"><path class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="M1080 300 m-120 0 a120 120 0 1 0 240 0 a120 120 0 1 0 -240 0"/><path class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="M1080 180 L1080 150"/><path class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="M1050 150 L1110 150"/><path class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="M1080 300 L1080 220"/><path class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="M1080 300 L1150 330"/></svg>
-    <div id="sheet1-d31" class="disp" style="left:6550px;top:820px;font-size:130px;"><span class="w hot" style="display:inline-block;margin-right:.24em">slow</span></div>
-    <div id="sheet1-d32" class="disp" style="left:6550px;top:960px;font-size:96px;"><span class="w" style="display:inline-block;margin-right:.24em">&amp;</span><span class="w" style="display:inline-block;margin-right:.24em">difficult</span></div>
-    <div id="sheet1-d33" class="disp" style="left:5660px;top:240px;font-size:96px;font-style:italic;font-weight:500;"><span class="w" style="display:inline-block;margin-right:.24em">But</span><span class="w" style="display:inline-block;margin-right:.24em">there</span><span class="w" style="display:inline-block;margin-right:.24em">was</span><span class="w" style="display:inline-block;margin-right:.24em">a</span><span class="w" style="display:inline-block;margin-right:.24em">problem.</span></div>
-    <svg id="sheet1-s34" style="left:8000px;top:600px" width="2800" height="400" viewBox="0 0 2800 400"><path class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="M0 0 L2600 0"/></svg>
-    <svg id="sheet1-s35" style="left:8000px;top:600px" width="2800" height="400" viewBox="0 0 2800 400"><path class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="M0 -30 L0 30"/></svg>
-    <div id="sheet1-l36" class="lab" style="left:7980px;top:650px;font-size:64px;">c. 2500 BCE</div>
-    <div id="sheet1-l37" class="lab" style="left:7980px;top:735px;font-size:50px;color:#6B4A2C;">first glass objects</div>
-    <svg id="sheet1-s38" style="left:8000px;top:600px" width="2800" height="400" viewBox="0 0 2800 400"><path class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="M1092 -30 L1092 30"/></svg>
-    <div id="sheet1-l39" class="lab" style="left:9072px;top:650px;font-size:64px;">c. 1500 BCE</div>
-    <div id="sheet1-l40" class="lab" style="left:9072px;top:735px;font-size:50px;color:#6B4A2C;">core-formed vessels</div>
-    <svg id="sheet1-s41" style="left:8000px;top:600px" width="2800" height="400" viewBox="0 0 2800 400"><path class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="M2444 -30 L2444 30"/></svg>
-    <div id="sheet1-l42" class="lab" style="left:10424px;top:650px;font-size:64px;color:#8E2216;">1st century BCE</div>
+    <div id="sheet1-o22" class="obj" style="left:4720px;top:1340px;width:440px;height:440px;opacity:0"><div class="osh"></div><div class="osp" style="background-image:url(assets/obj/beads.webp)"></div></div>
+    <div id="sheet1-l23" class="lab" style="left:4820px;top:1720px;font-size:44px;">glass beads</div>
+    <div id="sheet1-o24" class="obj" style="left:3340px;top:1150px;width:460px;height:460px;opacity:0"><div class="osh"></div><div class="osp" style="background-image:url(assets/obj/amphoriskos.webp)"></div></div>
+    <div id="sheet1-l25" class="lab" style="left:3420px;top:1610px;font-size:44px;">core-formed flask</div>
+    <svg id="sheet1-s26" style="left:2550px;top:1330px" width="340" height="340" viewBox="0 0 340 340"><path class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="M170 170 m-136 0 a136 136 0 1 0 272 0 a136 136 0 1 0 -272 0"/><path class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="M196 179 L340 170 L196 161"/><path class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="M181 195 L236 236 L195 181"/><path class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="M161 196 L170 340 L179 196"/><path class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="M145 181 L104 236 L159 195"/><path class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="M144 161 L0 170 L144 179"/><path class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="M159 145 L104 104 L145 159"/><path class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="M179 144 L170 0 L161 144"/><path class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="M195 159 L236 104 L181 145"/></svg>
+    <div id="sheet1-l27" class="lab" style="left:2704px;top:1250px;font-size:64px;">N</div>
+    <div id="sheet1-d29" class="disp" style="left:5640px;top:210px;font-size:96px;"><span class="w" style="display:inline-block;margin-right:.24em">Making</span><span class="w" style="display:inline-block;margin-right:.24em">a</span><span class="w" style="display:inline-block;margin-right:.24em">hollow</span><span class="w" style="display:inline-block;margin-right:.24em">vessel</span></div>
+    <div id="sheet1-o30" class="obj" style="left:5650px;top:370px;width:700px;height:700px;opacity:0"><div class="osh"></div><div class="osp" style="background-image:url(assets/obj/claycore.webp)"></div></div>
+    <div id="sheet1-l31" class="lab" style="left:5720px;top:990px;font-size:46px;">molten glass wound around a clay core</div>
+    <div id="sheet1-o32" class="obj" style="left:6530px;top:350px;width:400px;height:400px;opacity:0"><div class="osh"></div><div class="osp" style="background-image:url(assets/obj/hourglass.webp)"></div></div>
+    <div id="sheet1-d33" class="disp" style="left:6550px;top:820px;font-size:130px;"><span class="w hot" style="display:inline-block;margin-right:.24em">slow</span></div>
+    <div id="sheet1-d34" class="disp" style="left:6550px;top:960px;font-size:96px;"><span class="w" style="display:inline-block;margin-right:.24em">&amp;</span><span class="w" style="display:inline-block;margin-right:.24em">difficult</span></div>
+    <svg id="sheet1-s35" style="left:8000px;top:600px" width="2800" height="400" viewBox="0 0 2800 400"><path class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="M0 0 L2600 0"/></svg>
+    <svg id="sheet1-s36" style="left:8000px;top:600px" width="2800" height="400" viewBox="0 0 2800 400"><path class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="M0 -30 L0 30"/></svg>
+    <div id="sheet1-l37" class="lab" style="left:7980px;top:650px;font-size:64px;">c. 2500 BCE</div>
+    <div id="sheet1-l38" class="lab" style="left:7980px;top:735px;font-size:50px;color:#4E331C;">first glass objects</div>
+    <svg id="sheet1-s39" style="left:8000px;top:600px" width="2800" height="400" viewBox="0 0 2800 400"><path class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="M1092 -30 L1092 30"/></svg>
+    <div id="sheet1-l40" class="lab" style="left:9072px;top:650px;font-size:64px;">c. 1500 BCE</div>
+    <div id="sheet1-l41" class="lab" style="left:9072px;top:735px;font-size:50px;color:#4E331C;">core-formed vessels</div>
+    <svg id="sheet1-s42" style="left:8000px;top:600px" width="2800" height="400" viewBox="0 0 2800 400"><path class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="M2444 -30 L2444 30"/></svg>
+    <div id="sheet1-l43" class="lab" style="left:10424px;top:650px;font-size:64px;color:#8E2216;">1st century BCE</div>
     <div id="sheet1-dot" style="position:absolute;left:10414px;top:570px;width:60px;height:60px;border-radius:50%;background:radial-gradient(circle,#FFD27A,#FF7A12 60%,#C24E0A);opacity:0"></div>
-    <div id="sheet1-d43" class="disp" style="left:8300px;top:340px;font-size:96px;font-style:italic;font-weight:500;"><span class="w" style="display:inline-block;margin-right:.24em">something</span><span class="w" style="display:inline-block;margin-right:.24em">remarkable</span><span class="w" style="display:inline-block;margin-right:.24em">happened.</span></div>
+    <div id="sheet1-d44" class="disp" style="left:8300px;top:340px;font-size:96px;font-style:italic;font-weight:500;"><span class="w" style="display:inline-block;margin-right:.24em">something</span><span class="w" style="display:inline-block;margin-right:.24em">remarkable</span><span class="w" style="display:inline-block;margin-right:.24em">happened.</span></div>
   </div>
-  
+  <div id="sheet1-cut28" class="cutw" style="opacity:0"><div class="win" style="left:1240px"><video id="sheet1-cut28m" class="clip" data-start="13.68" data-duration="1.77" data-media-start="6.2" data-playback-rate="1.0" muted playsinline src="assets/clips/olga_run.mp4" style="object-position:50% 40%"></video></div><div class="cw" id="sheet1-cut28w0" style="left:140px;top:330px;font-size:110px;font-style:italic;font-weight:500;">But there was</div><div class="cw" id="sheet1-cut28w1" style="left:140px;top:460px;font-size:170px;color:#8E2216;">a problem.</div></div>
   <div class="vign"></div><div class="noise"></div>
 </div>
 <script>
 (function(){
   const tl = gsap.timeline({ paused: true });
   const world = document.getElementById("sheet1-world");
-  const K = [[0.15, 960, 540, 1.0], [8.51, 4300, 1150, 0.62], [12.69, 4350, 1250, 0.72], [14.23, 6360, 680, 0.95], [20.81, 9450, 660, 0.62], [25.73, 10444, 600, 24.0]];
+  const K = [[0.15, 960, 540, 1.0], [6.31, 760, 650, 1.22], [7.81, 3900, 1050, 0.62], [11.72, 4900, 1240, 0.95], [12.69, 3900, 1380, 0.95], [15.45, 6220, 680, 0.95], [17.74, 6720, 770, 1.25], [20.51, 9450, 660, 0.62], [23.57, 9700, 540, 0.95], [25.73, 10444, 600, 24.0]];
   const ease = (x) => x < 0.5 ? 2*x*x : 1 - Math.pow(-2*x + 2, 2) / 2;   // power2.inOut
   function camAt(t) {
-    // continuous take: between keys the camera travels; while holding it keeps a slow 1%/s push
+    // clean cuts: every key is a hard cut to a new framing that then pushes in slowly (1.4%/s);
+    // only a dive (zoom x4 or more) travels, so the camera flies into the drawing
     let k0 = K[0], k1 = K[0];
     for (let i = 0; i < K.length; i++) { if (t >= K[i][0]) { k0 = K[i]; k1 = K[i + 1] || K[i]; } }
     if (t < K[0][0]) { k0 = k1 = K[0]; }
+    if (!(k1[3] / k0[3] > 4)) return [k0[1], k0[2], k0[3] * Math.min(1 + 0.014 * Math.max(0, t - k0[0]), 1.08)];
     const travel = Math.min(1.0, Math.max(0.01, 0.5 * (k1[0] - k0[0])));
     const m = k1 === k0 ? 0 : ease(Math.min(1, Math.max(0, (t - (k1[0] - travel)) / travel)));
     const drift = 1 + 0.010 * Math.max(0, t - k0[0]) * (1 - m);
@@ -133,29 +143,36 @@
   tl.fromTo("#sheet1-p20",{opacity:0,rotationY:-70,transformPerspective:1800,transformOrigin:"0% 50%"},{opacity:1,rotationY:0,duration:0.9,ease:"expo.out"},12.69);
   tl.fromTo("#sheet1-rib21",{clipPath:"polygon(0 0,0% 0,0% 50%,0% 100%,0 100%)"},{clipPath:"polygon(0 0,100% 0,calc(100% - 26px) 50%,100% 100%,0 100%)",duration:0.6,ease:"expo.out"},13.04);
   tl.fromTo("#sheet1-p20 .pi",{scale:1.35,xPercent:12.3},{scale:1.0,xPercent:-0.0,duration:1.34,ease:"power1.inOut"},12.69);
-  tl.fromTo("#sheet1-s22 .p",{strokeDashoffset:110},{strokeDashoffset:0,duration:0.3,ease:"power2.inOut",stagger:0.08},12.27);
-  tl.fromTo("#sheet1-s23 .p",{strokeDashoffset:110},{strokeDashoffset:0,duration:0.45,ease:"power2.inOut",stagger:0.1},13.19);
-  tl.fromTo("#sheet1-s24 .p",{strokeDashoffset:110},{strokeDashoffset:0,duration:0.5,ease:"power2.inOut",stagger:0.06},8.31);
-  tl.fromTo("#sheet1-l25",{opacity:0,filter:"blur(6px)"},{opacity:1,filter:"blur(0px)",duration:0.18,ease:"power2.out"},8.71);
-  tl.fromTo("#sheet1-s26 .p",{strokeDashoffset:110},{strokeDashoffset:0,duration:0.7,ease:"power2.inOut",stagger:0.18},15.45);
-  tl.fromTo("#sheet1-s27 .p",{opacity:0},{opacity:1,duration:0.6,ease:"power2.out",stagger:0.12},16.17);
-  tl.fromTo("#sheet1-l28",{opacity:0,filter:"blur(6px)"},{opacity:1,filter:"blur(0px)",duration:0.18,ease:"power2.out"},16.47);
-  tl.fromTo("#sheet1-l29",{opacity:0,filter:"blur(6px)"},{opacity:1,filter:"blur(0px)",duration:0.18,ease:"power2.out"},16.71);
-  tl.fromTo("#sheet1-s30 .p",{strokeDashoffset:110},{strokeDashoffset:0,duration:0.4,ease:"power2.inOut",stagger:0.08},17.79);
-  tl.fromTo("#sheet1-d31 .w",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.2,ease:"expo.out",stagger:0.08},17.99);
-  tl.fromTo("#sheet1-d32 .w",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.2,ease:"expo.out",stagger:0.08},18.93);
-  tl.fromTo("#sheet1-d33 .w",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.2,ease:"expo.out",stagger:0.08},13.73);
-  tl.fromTo("#sheet1-s34 .p",{strokeDashoffset:110},{strokeDashoffset:0,duration:1.4,ease:"power2.inOut",stagger:0.12},20.41);
-  tl.fromTo("#sheet1-s35 .p",{strokeDashoffset:110},{strokeDashoffset:0,duration:0.2,ease:"power2.inOut",stagger:0.12},20.61);
-  tl.fromTo("#sheet1-l36",{opacity:0,filter:"blur(6px)"},{opacity:1,filter:"blur(0px)",duration:0.18,ease:"power2.out"},20.61);
-  tl.fromTo("#sheet1-l37",{opacity:0,filter:"blur(6px)"},{opacity:1,filter:"blur(0px)",duration:0.18,ease:"power2.out"},20.71);
-  tl.fromTo("#sheet1-s38 .p",{strokeDashoffset:110},{strokeDashoffset:0,duration:0.2,ease:"power2.inOut",stagger:0.12},21.114);
-  tl.fromTo("#sheet1-l39",{opacity:0,filter:"blur(6px)"},{opacity:1,filter:"blur(0px)",duration:0.18,ease:"power2.out"},21.114);
-  tl.fromTo("#sheet1-l40",{opacity:0,filter:"blur(6px)"},{opacity:1,filter:"blur(0px)",duration:0.18,ease:"power2.out"},21.214);
-  tl.fromTo("#sheet1-s41 .p",{strokeDashoffset:110},{strokeDashoffset:0,duration:0.2,ease:"power2.inOut",stagger:0.12},21.738);
-  tl.fromTo("#sheet1-l42",{opacity:0,filter:"blur(6px)"},{opacity:1,filter:"blur(0px)",duration:0.18,ease:"power2.out"},21.738);
+  tl.fromTo("#sheet1-o22",{opacity:0,scale:0.55,y:70},{opacity:1,scale:1,y:0,duration:0.7,ease:"back.out(1.5)"},12.22);
+  (function(){const o={f:0},el=document.querySelector("#sheet1-o22 .osp");const set=()=>{const k=Math.floor(o.f)%48;el.style.backgroundPosition=((k%8)*100/7).toFixed(3)+"% "+(Math.floor(k/8)*20)+"%";};set();tl.fromTo(o,{f:0},{f:168.72,duration:14.06,ease:"none",onUpdate:set},12.22);})();
+  tl.fromTo("#sheet1-l23",{opacity:0,filter:"blur(6px)"},{opacity:1,filter:"blur(0px)",duration:0.18,ease:"power2.out"},12.47);
+  tl.fromTo("#sheet1-o24",{opacity:0,scale:0.55,y:70},{opacity:1,scale:1,y:0,duration:0.7,ease:"back.out(1.5)"},13.14);
+  (function(){const o={f:0},el=document.querySelector("#sheet1-o24 .osp");const set=()=>{const k=Math.floor(o.f)%48;el.style.backgroundPosition=((k%8)*100/7).toFixed(3)+"% "+(Math.floor(k/8)*20)+"%";};set();tl.fromTo(o,{f:0},{f:157.68,duration:13.14,ease:"none",onUpdate:set},13.14);})();
+  tl.fromTo("#sheet1-l25",{opacity:0,filter:"blur(6px)"},{opacity:1,filter:"blur(0px)",duration:0.18,ease:"power2.out"},13.39);
+  tl.fromTo("#sheet1-s26 .p",{strokeDashoffset:110},{strokeDashoffset:0,duration:0.5,ease:"power2.inOut",stagger:0.06},8.31);
+  tl.fromTo("#sheet1-l27",{opacity:0,filter:"blur(6px)"},{opacity:1,filter:"blur(0px)",duration:0.18,ease:"power2.out"},8.71);
+  tl.set("#sheet1-cut28",{opacity:1},13.68);tl.set("#sheet1-cut28",{opacity:0},15.45);tl.fromTo("#sheet1-cut28 .win",{scale:1.08},{scale:1,duration:1.77,ease:"none"},13.68);
+  tl.fromTo("#sheet1-cut28w0",{opacity:0,scale:1.25,filter:"blur(8px)",transformOrigin:"0% 50%"},{opacity:1,scale:1,filter:"blur(0px)",duration:0.22,ease:"expo.out"},13.730);
+  tl.fromTo("#sheet1-cut28w1",{opacity:0,scale:1.25,filter:"blur(8px)",transformOrigin:"0% 50%"},{opacity:1,scale:1,filter:"blur(0px)",duration:0.22,ease:"expo.out"},14.080);
+  tl.fromTo("#sheet1-d29 .w",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.2,ease:"expo.out",stagger:0.08},15.55);
+  tl.fromTo("#sheet1-o30",{opacity:0,scale:0.55,y:70},{opacity:1,scale:1,y:0,duration:0.7,ease:"back.out(1.5)"},15.45);
+  (function(){const o={f:0},el=document.querySelector("#sheet1-o30 .osp");const set=()=>{const k=Math.floor(o.f)%48;el.style.backgroundPosition=((k%8)*100/7).toFixed(3)+"% "+(Math.floor(k/8)*20)+"%";};set();tl.fromTo(o,{f:0},{f:90.97,duration:10.83,ease:"none",onUpdate:set},15.45);})();
+  tl.fromTo("#sheet1-l31",{opacity:0,filter:"blur(6px)"},{opacity:1,filter:"blur(0px)",duration:0.18,ease:"power2.out"},16.37);
+  tl.fromTo("#sheet1-o32",{opacity:0,scale:0.55,y:70},{opacity:1,scale:1,y:0,duration:0.7,ease:"back.out(1.5)"},17.74);
+  (function(){const o={f:0},el=document.querySelector("#sheet1-o32 .osp");const set=()=>{const k=Math.floor(o.f)%48;el.style.backgroundPosition=((k%8)*100/7).toFixed(3)+"% "+(Math.floor(k/8)*20)+"%";};set();tl.fromTo(o,{f:0},{f:61.49,duration:8.54,ease:"none",onUpdate:set},17.74);})();
+  tl.fromTo("#sheet1-d33 .w",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.2,ease:"expo.out",stagger:0.08},17.99);
+  tl.fromTo("#sheet1-d34 .w",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.2,ease:"expo.out",stagger:0.08},18.93);
+  tl.fromTo("#sheet1-s35 .p",{strokeDashoffset:110},{strokeDashoffset:0,duration:1.4,ease:"power2.inOut",stagger:0.12},20.41);
+  tl.fromTo("#sheet1-s36 .p",{strokeDashoffset:110},{strokeDashoffset:0,duration:0.2,ease:"power2.inOut",stagger:0.12},20.61);
+  tl.fromTo("#sheet1-l37",{opacity:0,filter:"blur(6px)"},{opacity:1,filter:"blur(0px)",duration:0.18,ease:"power2.out"},20.61);
+  tl.fromTo("#sheet1-l38",{opacity:0,filter:"blur(6px)"},{opacity:1,filter:"blur(0px)",duration:0.18,ease:"power2.out"},20.71);
+  tl.fromTo("#sheet1-s39 .p",{strokeDashoffset:110},{strokeDashoffset:0,duration:0.2,ease:"power2.inOut",stagger:0.12},21.114);
+  tl.fromTo("#sheet1-l40",{opacity:0,filter:"blur(6px)"},{opacity:1,filter:"blur(0px)",duration:0.18,ease:"power2.out"},21.114);
+  tl.fromTo("#sheet1-l41",{opacity:0,filter:"blur(6px)"},{opacity:1,filter:"blur(0px)",duration:0.18,ease:"power2.out"},21.214);
+  tl.fromTo("#sheet1-s42 .p",{strokeDashoffset:110},{strokeDashoffset:0,duration:0.2,ease:"power2.inOut",stagger:0.12},21.738);
+  tl.fromTo("#sheet1-l43",{opacity:0,filter:"blur(6px)"},{opacity:1,filter:"blur(0px)",duration:0.18,ease:"power2.out"},21.738);
   tl.fromTo("#sheet1-dot",{opacity:0,scale:0.2},{opacity:1,scale:1,duration:0.4,ease:"back.out(2)"},21.83);
-  tl.fromTo("#sheet1-d43 .w",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.2,ease:"expo.out",stagger:0.08},23.57);
+  tl.fromTo("#sheet1-d44 .w",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.2,ease:"expo.out",stagger:0.08},23.57);
   window.__timelines = window.__timelines || {};
   window.__timelines["sheet1"] = tl;
 })();

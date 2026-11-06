@@ -9,8 +9,8 @@
 #root .paper{position:absolute;background-color:#E6D3A8;background-image:url('assets/art/papyrus.jpg');background-size:1024px 1024px;}
 #root .vign{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 46%,transparent 52%,rgba(92,48,14,.28) 78%,rgba(34,15,4,.78) 100%)}
 #root .noise{position:absolute;inset:0;pointer-events:none;opacity:.10;mix-blend-mode:multiply;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' seed='4'/></filter><rect width='300' height='300' filter='url(%23n)'/></svg>")}
-#root .disp{position:absolute;font-family:'Cormorant Garamond',serif;font-weight:700;color:#2A190C;line-height:1.0;letter-spacing:-0.01em;white-space:nowrap}
-#root .lab{position:absolute;font-family:'IM Fell English',serif;font-style:italic;color:#2A190C;font-size:34px;white-space:nowrap}
+#root .disp{position:absolute;font-family:'Cormorant Garamond',serif;font-weight:700;color:#1C1007;line-height:1.0;letter-spacing:-0.01em;white-space:nowrap;text-shadow:0 2px 0 rgba(246,234,206,.6)}
+#root .lab{position:absolute;font-family:'IM Fell English',serif;font-style:italic;color:#1C1007;font-size:34px;white-space:nowrap;text-shadow:0 0 6px rgba(246,234,206,.95),0 0 14px rgba(246,234,206,.7)}
 #root .hot{color:#8E2216}
 #root .ondark .hot{color:#FF7A12;text-shadow:0 0 24px rgba(255,122,18,.5)}
 #root .win{position:absolute;overflow:hidden;background:#000;box-shadow:0 0 0 12px #F4E8CC,0 0 0 14px #8A6A44,0 26px 50px rgba(50,24,6,.5)}
@@ -25,62 +25,70 @@
 #root .plate .pi{position:absolute;left:0;top:0;width:100%;height:100%;will-change:transform}
 #root .plate img{width:100%;height:100%;object-fit:cover;display:block}
 #root svg{position:absolute;overflow:visible}
-#root .stk{fill:none;stroke:#2A190C;stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round}
-#root .stk2{fill:none;stroke:#6B4A2C;stroke-width:3;stroke-linecap:round;stroke-dasharray:2 12}
+#root .stk{fill:none;stroke:#1C1007;stroke-width:6;stroke-linecap:round;stroke-linejoin:round}
+#root .stk2{fill:none;stroke:#4E331C;stroke-width:4.5;stroke-linecap:round;stroke-dasharray:3 13}
+#root .obj{position:absolute}
+#root .obj .osp{position:absolute;inset:0;background-size:800% 600%;background-repeat:no-repeat}
+#root .obj .osh{position:absolute;left:14%;right:14%;bottom:7%;height:10%;border-radius:50%;background:radial-gradient(ellipse,rgba(40,20,5,.55),rgba(40,20,5,0) 70%)}
+#root .obj .ohalo{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(255,170,60,.75),rgba(255,110,20,.35) 38%,rgba(255,90,0,0) 70%)}
+#root .obj .otint{position:absolute;border-radius:50%;mix-blend-mode:multiply;background:radial-gradient(circle,rgba(255,150,40,1) 0%,rgba(255,110,25,.95) 32%,rgba(255,110,25,0) 48%)}
+#root .cutw{position:absolute;left:0;top:0;width:1920px;height:1080px;background-color:#E6D3A8;background-image:url('assets/art/papyrus.jpg');background-size:1024px 1024px;}
+#root .cutw .win{top:50px;width:540px;height:980px}
+#root .cutw .cw{position:absolute;font-family:'Cormorant Garamond',serif;font-weight:700;color:#1C1007;line-height:1.02;white-space:nowrap}
 #root .hotf{fill:#8E2216}
 
 #outro-world{width:1920px;height:1080px}
 </style>
 <div id="root" data-composition-id="outro" data-width="1920" data-height="1080" data-duration="10.37" style="background:#0E0703">
   <div id="outro-world" class="world">
-    <div id="outro-p1" class="plate" style="left:0px;top:0px;width:1920px;height:1080px;rotate:0deg;opacity:0"><div class="pi"><img src="assets/art/modern.png" alt=""></div></div>
-    <div id="outro-shade" style="position:absolute;left:0;top:0;width:1920px;height:1080px;background:linear-gradient(90deg,rgba(14,7,3,0) 30%,rgba(14,7,3,.93) 62%)"></div>
-    <div id="outro-d2" class="disp ondark" style="left:1080px;top:240px;font-size:110px;font-style:italic;font-weight:500;color:#F4E8CC;"><span class="w" style="display:inline-block;margin-right:.24em">I&#x27;d</span><span class="w" style="display:inline-block;margin-right:.24em">love</span><span class="w" style="display:inline-block;margin-right:.24em">to</span><span class="w" style="display:inline-block;margin-right:.24em">hear</span></div>
-    <div id="outro-d3" class="disp ondark" style="left:1080px;top:360px;font-size:110px;font-style:italic;font-weight:500;color:#F4E8CC;"><span class="w" style="display:inline-block;margin-right:.24em">what</span><span class="w hot" style="display:inline-block;margin-right:.24em">you</span><span class="w" style="display:inline-block;margin-right:.24em">think!</span></div>
+    <div id="outro-v1" class="win" style="left:170px;top:50px;width:690px;height:980px;clip-path:inset(50% 50% 50% 50%)"><video id="outro-v1m" class="clip" data-start="0.0" data-duration="10.97" data-media-start="1.7" data-playback-rate="1.0" muted playsinline src="assets/clips/olga_fashion.mp4" style="object-position:50% 35%"></video></div>
+    <div id="outro-l2" class="lab" style="left:175px;top:1036px;font-size:30px;color:#B98A35;">Olga in her glass costume · Glass Fashion Show</div>
+    <div id="outro-d3" class="disp ondark" style="left:1080px;top:240px;font-size:110px;font-style:italic;font-weight:500;color:#F4E8CC;"><span class="w" style="display:inline-block;margin-right:.24em">I&#x27;d</span><span class="w" style="display:inline-block;margin-right:.24em">love</span><span class="w" style="display:inline-block;margin-right:.24em">to</span><span class="w" style="display:inline-block;margin-right:.24em">hear</span></div>
+    <div id="outro-d4" class="disp ondark" style="left:1080px;top:360px;font-size:110px;font-style:italic;font-weight:500;color:#F4E8CC;"><span class="w" style="display:inline-block;margin-right:.24em">what</span><span class="w hot" style="display:inline-block;margin-right:.24em">you</span><span class="w" style="display:inline-block;margin-right:.24em">think!</span></div>
     <img id="outro-logo" src="assets/art/olga_logo_cut.png" alt="" style="position:absolute;left:1240px;top:520px;width:420px;opacity:0"><div id="outro-shine" style="position:absolute;left:1240px;top:520px;width:420px;height:280px;opacity:0;mix-blend-mode:screen;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.9) 50%,transparent 65%);-webkit-mask:url(assets/art/olga_logo_cut.png) center/contain no-repeat;mask:url(assets/art/olga_logo_cut.png) center/contain no-repeat"></div>
-    <div id="outro-l4" class="lab" style="left:1170px;top:830px;font-size:32px;color:#B98A35;">GLASS STORIES · EPISODE 1</div>
-    <div id="outro-l5" class="lab" style="left:1170px;top:880px;font-size:42px;color:#F4E8CC;">Next time: how is glass made?</div>
-    <div id="outro-l6" class="lab" style="left:1170px;top:945px;font-size:46px;color:#FF7A12;">Follow @olga_rozin</div>
-    <div id="outro-em7" class="ember" style="left:1036px;top:1053px;width:7.7px;height:7.7px;opacity:0"></div>
-    <div id="outro-em8" class="ember" style="left:1759px;top:702px;width:6.8px;height:6.8px;opacity:0"></div>
-    <div id="outro-em9" class="ember" style="left:1231px;top:737px;width:6.1px;height:6.1px;opacity:0"></div>
-    <div id="outro-em10" class="ember" style="left:1673px;top:912px;width:7.7px;height:7.7px;opacity:0"></div>
-    <div id="outro-em11" class="ember" style="left:1753px;top:1035px;width:4.7px;height:4.7px;opacity:0"></div>
-    <div id="outro-em12" class="ember" style="left:1159px;top:922px;width:7.6px;height:7.6px;opacity:0"></div>
-    <div id="outro-em13" class="ember" style="left:1031px;top:1030px;width:8.4px;height:8.4px;opacity:0"></div>
-    <div id="outro-em14" class="ember" style="left:1128px;top:1065px;width:8.0px;height:8.0px;opacity:0"></div>
-    <div id="outro-em15" class="ember" style="left:1500px;top:964px;width:5.3px;height:5.3px;opacity:0"></div>
-    <div id="outro-em16" class="ember" style="left:1707px;top:889px;width:7.1px;height:7.1px;opacity:0"></div>
-    <div id="outro-em17" class="ember" style="left:1553px;top:887px;width:4.6px;height:4.6px;opacity:0"></div>
-    <div id="outro-em18" class="ember" style="left:1374px;top:911px;width:5.8px;height:5.8px;opacity:0"></div>
-    <div id="outro-em19" class="ember" style="left:1558px;top:856px;width:7.2px;height:7.2px;opacity:0"></div>
-    <div id="outro-em20" class="ember" style="left:1641px;top:729px;width:5.4px;height:5.4px;opacity:0"></div>
-    <div id="outro-em21" class="ember" style="left:1696px;top:841px;width:9.4px;height:9.4px;opacity:0"></div>
-    <div id="outro-em22" class="ember" style="left:1269px;top:991px;width:3.6px;height:3.6px;opacity:0"></div>
-    <div id="outro-em23" class="ember" style="left:1076px;top:812px;width:7.2px;height:7.2px;opacity:0"></div>
-    <div id="outro-em24" class="ember" style="left:1394px;top:857px;width:4.9px;height:4.9px;opacity:0"></div>
-    <div id="outro-em25" class="ember" style="left:1557px;top:809px;width:6.7px;height:6.7px;opacity:0"></div>
-    <div id="outro-em26" class="ember" style="left:1502px;top:969px;width:7.6px;height:7.6px;opacity:0"></div>
-    <div id="outro-em27" class="ember" style="left:1763px;top:827px;width:5.1px;height:5.1px;opacity:0"></div>
-    <div id="outro-em28" class="ember" style="left:1843px;top:916px;width:8.0px;height:8.0px;opacity:0"></div>
-    <div id="outro-em29" class="ember" style="left:1039px;top:985px;width:3.2px;height:3.2px;opacity:0"></div>
-    <div id="outro-em30" class="ember" style="left:1141px;top:839px;width:6.9px;height:6.9px;opacity:0"></div>
-    <div id="outro-em31" class="ember" style="left:1840px;top:821px;width:8.3px;height:8.3px;opacity:0"></div>
-    <div id="outro-em32" class="ember" style="left:1767px;top:807px;width:7.5px;height:7.5px;opacity:0"></div>
-    <div id="outro-em33" class="ember" style="left:1350px;top:1047px;width:6.5px;height:6.5px;opacity:0"></div>
-    <div id="outro-em34" class="ember" style="left:1782px;top:789px;width:4.3px;height:4.3px;opacity:0"></div>
-    <div id="outro-em35" class="ember" style="left:1827px;top:850px;width:9.9px;height:9.9px;opacity:0"></div>
-    <div id="outro-em36" class="ember" style="left:1542px;top:841px;width:8.8px;height:8.8px;opacity:0"></div>
-    <div id="outro-em37" class="ember" style="left:1386px;top:764px;width:8.6px;height:8.6px;opacity:0"></div>
-    <div id="outro-em38" class="ember" style="left:1287px;top:1000px;width:7.2px;height:7.2px;opacity:0"></div>
-    <div id="outro-em39" class="ember" style="left:1017px;top:868px;width:9.5px;height:9.5px;opacity:0"></div>
-    <div id="outro-em40" class="ember" style="left:1271px;top:1028px;width:9.9px;height:9.9px;opacity:0"></div>
-    <div id="outro-em41" class="ember" style="left:1680px;top:852px;width:9.3px;height:9.3px;opacity:0"></div>
-    <div id="outro-em42" class="ember" style="left:1853px;top:915px;width:5.5px;height:5.5px;opacity:0"></div>
-    <div id="outro-em43" class="ember" style="left:1706px;top:793px;width:7.9px;height:7.9px;opacity:0"></div>
-    <div id="outro-em44" class="ember" style="left:1301px;top:900px;width:3.5px;height:3.5px;opacity:0"></div>
-    <div id="outro-em45" class="ember" style="left:1436px;top:740px;width:6.6px;height:6.6px;opacity:0"></div>
-    <div id="outro-em46" class="ember" style="left:1522px;top:877px;width:6.6px;height:6.6px;opacity:0"></div>
+    <div id="outro-l5" class="lab" style="left:1170px;top:830px;font-size:32px;color:#B98A35;">GLASS STORIES · EPISODE 1</div>
+    <div id="outro-l6" class="lab" style="left:1170px;top:880px;font-size:42px;color:#F4E8CC;">Next time: how is glass made?</div>
+    <div id="outro-l7" class="lab" style="left:1170px;top:945px;font-size:46px;color:#FF7A12;">Follow @olga_rozin</div>
+    <div id="outro-em8" class="ember" style="left:1036px;top:1053px;width:7.7px;height:7.7px;opacity:0"></div>
+    <div id="outro-em9" class="ember" style="left:1759px;top:702px;width:6.8px;height:6.8px;opacity:0"></div>
+    <div id="outro-em10" class="ember" style="left:1231px;top:737px;width:6.1px;height:6.1px;opacity:0"></div>
+    <div id="outro-em11" class="ember" style="left:1673px;top:912px;width:7.7px;height:7.7px;opacity:0"></div>
+    <div id="outro-em12" class="ember" style="left:1753px;top:1035px;width:4.7px;height:4.7px;opacity:0"></div>
+    <div id="outro-em13" class="ember" style="left:1159px;top:922px;width:7.6px;height:7.6px;opacity:0"></div>
+    <div id="outro-em14" class="ember" style="left:1031px;top:1030px;width:8.4px;height:8.4px;opacity:0"></div>
+    <div id="outro-em15" class="ember" style="left:1128px;top:1065px;width:8.0px;height:8.0px;opacity:0"></div>
+    <div id="outro-em16" class="ember" style="left:1500px;top:964px;width:5.3px;height:5.3px;opacity:0"></div>
+    <div id="outro-em17" class="ember" style="left:1707px;top:889px;width:7.1px;height:7.1px;opacity:0"></div>
+    <div id="outro-em18" class="ember" style="left:1553px;top:887px;width:4.6px;height:4.6px;opacity:0"></div>
+    <div id="outro-em19" class="ember" style="left:1374px;top:911px;width:5.8px;height:5.8px;opacity:0"></div>
+    <div id="outro-em20" class="ember" style="left:1558px;top:856px;width:7.2px;height:7.2px;opacity:0"></div>
+    <div id="outro-em21" class="ember" style="left:1641px;top:729px;width:5.4px;height:5.4px;opacity:0"></div>
+    <div id="outro-em22" class="ember" style="left:1696px;top:841px;width:9.4px;height:9.4px;opacity:0"></div>
+    <div id="outro-em23" class="ember" style="left:1269px;top:991px;width:3.6px;height:3.6px;opacity:0"></div>
+    <div id="outro-em24" class="ember" style="left:1076px;top:812px;width:7.2px;height:7.2px;opacity:0"></div>
+    <div id="outro-em25" class="ember" style="left:1394px;top:857px;width:4.9px;height:4.9px;opacity:0"></div>
+    <div id="outro-em26" class="ember" style="left:1557px;top:809px;width:6.7px;height:6.7px;opacity:0"></div>
+    <div id="outro-em27" class="ember" style="left:1502px;top:969px;width:7.6px;height:7.6px;opacity:0"></div>
+    <div id="outro-em28" class="ember" style="left:1763px;top:827px;width:5.1px;height:5.1px;opacity:0"></div>
+    <div id="outro-em29" class="ember" style="left:1843px;top:916px;width:8.0px;height:8.0px;opacity:0"></div>
+    <div id="outro-em30" class="ember" style="left:1039px;top:985px;width:3.2px;height:3.2px;opacity:0"></div>
+    <div id="outro-em31" class="ember" style="left:1141px;top:839px;width:6.9px;height:6.9px;opacity:0"></div>
+    <div id="outro-em32" class="ember" style="left:1840px;top:821px;width:8.3px;height:8.3px;opacity:0"></div>
+    <div id="outro-em33" class="ember" style="left:1767px;top:807px;width:7.5px;height:7.5px;opacity:0"></div>
+    <div id="outro-em34" class="ember" style="left:1350px;top:1047px;width:6.5px;height:6.5px;opacity:0"></div>
+    <div id="outro-em35" class="ember" style="left:1782px;top:789px;width:4.3px;height:4.3px;opacity:0"></div>
+    <div id="outro-em36" class="ember" style="left:1827px;top:850px;width:9.9px;height:9.9px;opacity:0"></div>
+    <div id="outro-em37" class="ember" style="left:1542px;top:841px;width:8.8px;height:8.8px;opacity:0"></div>
+    <div id="outro-em38" class="ember" style="left:1386px;top:764px;width:8.6px;height:8.6px;opacity:0"></div>
+    <div id="outro-em39" class="ember" style="left:1287px;top:1000px;width:7.2px;height:7.2px;opacity:0"></div>
+    <div id="outro-em40" class="ember" style="left:1017px;top:868px;width:9.5px;height:9.5px;opacity:0"></div>
+    <div id="outro-em41" class="ember" style="left:1271px;top:1028px;width:9.9px;height:9.9px;opacity:0"></div>
+    <div id="outro-em42" class="ember" style="left:1680px;top:852px;width:9.3px;height:9.3px;opacity:0"></div>
+    <div id="outro-em43" class="ember" style="left:1853px;top:915px;width:5.5px;height:5.5px;opacity:0"></div>
+    <div id="outro-em44" class="ember" style="left:1706px;top:793px;width:7.9px;height:7.9px;opacity:0"></div>
+    <div id="outro-em45" class="ember" style="left:1301px;top:900px;width:3.5px;height:3.5px;opacity:0"></div>
+    <div id="outro-em46" class="ember" style="left:1436px;top:740px;width:6.6px;height:6.6px;opacity:0"></div>
+    <div id="outro-em47" class="ember" style="left:1522px;top:877px;width:6.6px;height:6.6px;opacity:0"></div>
   </div>
   
   <div class="vign"></div><div class="noise"></div>
@@ -92,10 +100,12 @@
   const K = [[0.0, 960, 540, 1.0]];
   const ease = (x) => x < 0.5 ? 2*x*x : 1 - Math.pow(-2*x + 2, 2) / 2;   // power2.inOut
   function camAt(t) {
-    // continuous take: between keys the camera travels; while holding it keeps a slow 1%/s push
+    // clean cuts: every key is a hard cut to a new framing that then pushes in slowly (1.4%/s);
+    // only a dive (zoom x4 or more) travels, so the camera flies into the drawing
     let k0 = K[0], k1 = K[0];
     for (let i = 0; i < K.length; i++) { if (t >= K[i][0]) { k0 = K[i]; k1 = K[i + 1] || K[i]; } }
     if (t < K[0][0]) { k0 = k1 = K[0]; }
+    if (!(k1[3] / k0[3] > 4)) return [k0[1], k0[2], k0[3] * Math.min(1 + 0.014 * Math.max(0, t - k0[0]), 1.08)];
     const travel = Math.min(1.0, Math.max(0.01, 0.5 * (k1[0] - k0[0])));
     const m = k1 === k0 ? 0 : ease(Math.min(1, Math.max(0, (t - (k1[0] - travel)) / travel)));
     const drift = 1 + 0.010 * Math.max(0, t - k0[0]) * (1 - m);
@@ -112,54 +122,54 @@
   tl.to(clock, { t: 10.37, duration: 10.37, ease: "none", onUpdate: () => render(clock.t) }, 0);
   render(0);
   
-    tl.fromTo("#outro-p1",{opacity:0,rotationY:-70,transformPerspective:1800,transformOrigin:"0% 50%"},{opacity:1,rotationY:0,duration:0.9,ease:"expo.out"},0.0);
-  tl.fromTo("#outro-p1 .pi",{scale:2.1,xPercent:27.7},{scale:1.85,xPercent:23.8,duration:6.0,ease:"power1.inOut"},0.0);
-  tl.fromTo("#outro-d2 .w",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.2,ease:"expo.out",stagger:0.08},0.25);
-  tl.fromTo("#outro-d3 .w",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.2,ease:"expo.out",stagger:0.08},1.35);
+    tl.fromTo("#outro-v1",{clipPath:"inset(50% 50% 50% 50%)"},{clipPath:"inset(0% 0% 0% 0%)",duration:0.05,ease:"expo.out"},0.0);
+  tl.fromTo("#outro-l2",{opacity:0,filter:"blur(6px)"},{opacity:1,filter:"blur(0px)",duration:0.18,ease:"power2.out"},0.6);
+  tl.fromTo("#outro-d3 .w",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.2,ease:"expo.out",stagger:0.08},0.25);
+  tl.fromTo("#outro-d4 .w",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.2,ease:"expo.out",stagger:0.08},1.35);
   tl.fromTo("#outro-logo",{opacity:0,scale:1.1,filter:"blur(10px)"},{opacity:1,scale:1,filter:"blur(0px)",duration:0.9,ease:"expo.out"},2.07);tl.fromTo("#outro-shine",{opacity:0,backgroundPosition:"-420px 0"},{opacity:1,backgroundPosition:"420px 0",duration:1.0,ease:"power2.inOut"},2.97);tl.fromTo("#outro-shine",{backgroundPosition:"-420px 0"},{immediateRender:false,backgroundPosition:"420px 0",duration:1.2,ease:"power2.inOut"},6.17);
-  tl.fromTo("#outro-l4",{opacity:0,filter:"blur(6px)"},{opacity:1,filter:"blur(0px)",duration:0.18,ease:"power2.out"},2.77);
-  tl.fromTo("#outro-l5",{opacity:0,filter:"blur(6px)"},{opacity:1,filter:"blur(0px)",duration:0.18,ease:"power2.out"},4.17);
-  tl.fromTo("#outro-l6",{opacity:0,filter:"blur(6px)"},{opacity:1,filter:"blur(0px)",duration:0.18,ease:"power2.out"},5.37);
-  tl.fromTo("#outro-em7",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.39},{opacity:0.7,duration:0.98},{opacity:0,duration:0.59}],x:62,y:-787,duration:1.97,ease:"none"},4.861);
-  tl.fromTo("#outro-em8",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.77},{opacity:0.7,duration:1.93},{opacity:0,duration:1.16}],x:-56,y:-341,duration:3.87,ease:"none"},4.069);
-  tl.fromTo("#outro-em9",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.75},{opacity:0.7,duration:1.87},{opacity:0,duration:1.12}],x:45,y:-638,duration:3.74,ease:"none"},4.487);
-  tl.fromTo("#outro-em10",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.44},{opacity:0.7,duration:1.11},{opacity:0,duration:0.67}],x:75,y:-354,duration:2.22,ease:"none"},2.925);
-  tl.fromTo("#outro-em11",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.37},{opacity:0.7,duration:0.93},{opacity:0,duration:0.56}],x:38,y:-665,duration:1.86,ease:"none"},4.172);
-  tl.fromTo("#outro-em12",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.43},{opacity:0.7,duration:1.06},{opacity:0,duration:0.64}],x:-23,y:-638,duration:2.13,ease:"none"},6.317);
-  tl.fromTo("#outro-em13",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.41},{opacity:0.7,duration:1.01},{opacity:0,duration:0.61}],x:55,y:-380,duration:2.03,ease:"none"},6.472);
-  tl.fromTo("#outro-em14",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.74},{opacity:0.7,duration:1.86},{opacity:0,duration:1.11}],x:-72,y:-451,duration:3.71,ease:"none"},5.715);
-  tl.fromTo("#outro-em15",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.70},{opacity:0.7,duration:1.75},{opacity:0,duration:1.05}],x:-16,y:-553,duration:3.50,ease:"none"},6.303);
-  tl.fromTo("#outro-em16",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.73},{opacity:0.7,duration:1.83},{opacity:0,duration:1.10}],x:53,y:-535,duration:3.66,ease:"none"},3.98);
-  tl.fromTo("#outro-em17",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.61},{opacity:0.7,duration:1.53},{opacity:0,duration:0.92}],x:26,y:-418,duration:3.07,ease:"none"},2.579);
-  tl.fromTo("#outro-em18",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.38},{opacity:0.7,duration:0.96},{opacity:0,duration:0.57}],x:62,y:-434,duration:1.92,ease:"none"},6.297);
-  tl.fromTo("#outro-em19",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.66},{opacity:0.7,duration:1.64},{opacity:0,duration:0.98}],x:78,y:-769,duration:3.28,ease:"none"},4.063);
-  tl.fromTo("#outro-em20",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.66},{opacity:0.7,duration:1.66},{opacity:0,duration:0.99}],x:10,y:-588,duration:3.31,ease:"none"},3.407);
-  tl.fromTo("#outro-em21",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.58},{opacity:0.7,duration:1.46},{opacity:0,duration:0.87}],x:62,y:-664,duration:2.91,ease:"none"},5.501);
-  tl.fromTo("#outro-em22",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.53},{opacity:0.7,duration:1.33},{opacity:0,duration:0.80}],x:31,y:-662,duration:2.67,ease:"none"},4.281);
-  tl.fromTo("#outro-em23",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.47},{opacity:0.7,duration:1.17},{opacity:0,duration:0.70}],x:49,y:-766,duration:2.34,ease:"none"},3.811);
-  tl.fromTo("#outro-em24",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.50},{opacity:0.7,duration:1.26},{opacity:0,duration:0.76}],x:21,y:-363,duration:2.52,ease:"none"},2.871);
-  tl.fromTo("#outro-em25",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.42},{opacity:0.7,duration:1.06},{opacity:0,duration:0.64}],x:54,y:-550,duration:2.12,ease:"none"},6.289);
-  tl.fromTo("#outro-em26",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.61},{opacity:0.7,duration:1.52},{opacity:0,duration:0.91}],x:59,y:-697,duration:3.04,ease:"none"},7.013);
-  tl.fromTo("#outro-em27",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.57},{opacity:0.7,duration:1.43},{opacity:0,duration:0.86}],x:-20,y:-355,duration:2.87,ease:"none"},5.638);
-  tl.fromTo("#outro-em28",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.49},{opacity:0.7,duration:1.22},{opacity:0,duration:0.73}],x:-41,y:-675,duration:2.44,ease:"none"},6.726);
-  tl.fromTo("#outro-em29",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.57},{opacity:0.7,duration:1.43},{opacity:0,duration:0.86}],x:68,y:-777,duration:2.85,ease:"none"},5.46);
-  tl.fromTo("#outro-em30",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.52},{opacity:0.7,duration:1.31},{opacity:0,duration:0.79}],x:-71,y:-307,duration:2.62,ease:"none"},5.708);
-  tl.fromTo("#outro-em31",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.43},{opacity:0.7,duration:1.06},{opacity:0,duration:0.64}],x:-47,y:-381,duration:2.13,ease:"none"},2.175);
-  tl.fromTo("#outro-em32",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.59},{opacity:0.7,duration:1.47},{opacity:0,duration:0.88}],x:55,y:-321,duration:2.94,ease:"none"},2.515);
-  tl.fromTo("#outro-em33",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.72},{opacity:0.7,duration:1.81},{opacity:0,duration:1.09}],x:72,y:-776,duration:3.62,ease:"none"},3.354);
-  tl.fromTo("#outro-em34",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.39},{opacity:0.7,duration:0.99},{opacity:0,duration:0.59}],x:-34,y:-742,duration:1.97,ease:"none"},6.72);
-  tl.fromTo("#outro-em35",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.48},{opacity:0.7,duration:1.20},{opacity:0,duration:0.72}],x:6,y:-548,duration:2.41,ease:"none"},3.723);
-  tl.fromTo("#outro-em36",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.53},{opacity:0.7,duration:1.33},{opacity:0,duration:0.80}],x:37,y:-323,duration:2.65,ease:"none"},4.116);
-  tl.fromTo("#outro-em37",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.50},{opacity:0.7,duration:1.25},{opacity:0,duration:0.75}],x:-22,y:-449,duration:2.49,ease:"none"},4.113);
-  tl.fromTo("#outro-em38",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.50},{opacity:0.7,duration:1.26},{opacity:0,duration:0.75}],x:-11,y:-692,duration:2.51,ease:"none"},5.175);
-  tl.fromTo("#outro-em39",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.61},{opacity:0.7,duration:1.52},{opacity:0,duration:0.91}],x:61,y:-353,duration:3.04,ease:"none"},1.898);
-  tl.fromTo("#outro-em40",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.58},{opacity:0.7,duration:1.45},{opacity:0,duration:0.87}],x:-74,y:-431,duration:2.89,ease:"none"},7.226);
-  tl.fromTo("#outro-em41",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.59},{opacity:0.7,duration:1.48},{opacity:0,duration:0.89}],x:-77,y:-530,duration:2.96,ease:"none"},7.131);
-  tl.fromTo("#outro-em42",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.71},{opacity:0.7,duration:1.77},{opacity:0,duration:1.06}],x:-7,y:-545,duration:3.55,ease:"none"},3.502);
-  tl.fromTo("#outro-em43",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.67},{opacity:0.7,duration:1.67},{opacity:0,duration:1.00}],x:15,y:-317,duration:3.35,ease:"none"},4.421);
-  tl.fromTo("#outro-em44",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.77},{opacity:0.7,duration:1.93},{opacity:0,duration:1.16}],x:14,y:-434,duration:3.87,ease:"none"},4.982);
-  tl.fromTo("#outro-em45",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.52},{opacity:0.7,duration:1.31},{opacity:0,duration:0.79}],x:-12,y:-627,duration:2.62,ease:"none"},2.621);
-  tl.fromTo("#outro-em46",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.41},{opacity:0.7,duration:1.02},{opacity:0,duration:0.61}],x:64,y:-355,duration:2.04,ease:"none"},4.072);
+  tl.fromTo("#outro-l5",{opacity:0,filter:"blur(6px)"},{opacity:1,filter:"blur(0px)",duration:0.18,ease:"power2.out"},2.77);
+  tl.fromTo("#outro-l6",{opacity:0,filter:"blur(6px)"},{opacity:1,filter:"blur(0px)",duration:0.18,ease:"power2.out"},4.17);
+  tl.fromTo("#outro-l7",{opacity:0,filter:"blur(6px)"},{opacity:1,filter:"blur(0px)",duration:0.18,ease:"power2.out"},5.37);
+  tl.fromTo("#outro-em8",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.39},{opacity:0.7,duration:0.98},{opacity:0,duration:0.59}],x:62,y:-787,duration:1.97,ease:"none"},4.861);
+  tl.fromTo("#outro-em9",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.77},{opacity:0.7,duration:1.93},{opacity:0,duration:1.16}],x:-56,y:-341,duration:3.87,ease:"none"},4.069);
+  tl.fromTo("#outro-em10",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.75},{opacity:0.7,duration:1.87},{opacity:0,duration:1.12}],x:45,y:-638,duration:3.74,ease:"none"},4.487);
+  tl.fromTo("#outro-em11",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.44},{opacity:0.7,duration:1.11},{opacity:0,duration:0.67}],x:75,y:-354,duration:2.22,ease:"none"},2.925);
+  tl.fromTo("#outro-em12",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.37},{opacity:0.7,duration:0.93},{opacity:0,duration:0.56}],x:38,y:-665,duration:1.86,ease:"none"},4.172);
+  tl.fromTo("#outro-em13",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.43},{opacity:0.7,duration:1.06},{opacity:0,duration:0.64}],x:-23,y:-638,duration:2.13,ease:"none"},6.317);
+  tl.fromTo("#outro-em14",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.41},{opacity:0.7,duration:1.01},{opacity:0,duration:0.61}],x:55,y:-380,duration:2.03,ease:"none"},6.472);
+  tl.fromTo("#outro-em15",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.74},{opacity:0.7,duration:1.86},{opacity:0,duration:1.11}],x:-72,y:-451,duration:3.71,ease:"none"},5.715);
+  tl.fromTo("#outro-em16",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.70},{opacity:0.7,duration:1.75},{opacity:0,duration:1.05}],x:-16,y:-553,duration:3.50,ease:"none"},6.303);
+  tl.fromTo("#outro-em17",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.73},{opacity:0.7,duration:1.83},{opacity:0,duration:1.10}],x:53,y:-535,duration:3.66,ease:"none"},3.98);
+  tl.fromTo("#outro-em18",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.61},{opacity:0.7,duration:1.53},{opacity:0,duration:0.92}],x:26,y:-418,duration:3.07,ease:"none"},2.579);
+  tl.fromTo("#outro-em19",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.38},{opacity:0.7,duration:0.96},{opacity:0,duration:0.57}],x:62,y:-434,duration:1.92,ease:"none"},6.297);
+  tl.fromTo("#outro-em20",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.66},{opacity:0.7,duration:1.64},{opacity:0,duration:0.98}],x:78,y:-769,duration:3.28,ease:"none"},4.063);
+  tl.fromTo("#outro-em21",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.66},{opacity:0.7,duration:1.66},{opacity:0,duration:0.99}],x:10,y:-588,duration:3.31,ease:"none"},3.407);
+  tl.fromTo("#outro-em22",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.58},{opacity:0.7,duration:1.46},{opacity:0,duration:0.87}],x:62,y:-664,duration:2.91,ease:"none"},5.501);
+  tl.fromTo("#outro-em23",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.53},{opacity:0.7,duration:1.33},{opacity:0,duration:0.80}],x:31,y:-662,duration:2.67,ease:"none"},4.281);
+  tl.fromTo("#outro-em24",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.47},{opacity:0.7,duration:1.17},{opacity:0,duration:0.70}],x:49,y:-766,duration:2.34,ease:"none"},3.811);
+  tl.fromTo("#outro-em25",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.50},{opacity:0.7,duration:1.26},{opacity:0,duration:0.76}],x:21,y:-363,duration:2.52,ease:"none"},2.871);
+  tl.fromTo("#outro-em26",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.42},{opacity:0.7,duration:1.06},{opacity:0,duration:0.64}],x:54,y:-550,duration:2.12,ease:"none"},6.289);
+  tl.fromTo("#outro-em27",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.61},{opacity:0.7,duration:1.52},{opacity:0,duration:0.91}],x:59,y:-697,duration:3.04,ease:"none"},7.013);
+  tl.fromTo("#outro-em28",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.57},{opacity:0.7,duration:1.43},{opacity:0,duration:0.86}],x:-20,y:-355,duration:2.87,ease:"none"},5.638);
+  tl.fromTo("#outro-em29",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.49},{opacity:0.7,duration:1.22},{opacity:0,duration:0.73}],x:-41,y:-675,duration:2.44,ease:"none"},6.726);
+  tl.fromTo("#outro-em30",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.57},{opacity:0.7,duration:1.43},{opacity:0,duration:0.86}],x:68,y:-777,duration:2.85,ease:"none"},5.46);
+  tl.fromTo("#outro-em31",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.52},{opacity:0.7,duration:1.31},{opacity:0,duration:0.79}],x:-71,y:-307,duration:2.62,ease:"none"},5.708);
+  tl.fromTo("#outro-em32",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.43},{opacity:0.7,duration:1.06},{opacity:0,duration:0.64}],x:-47,y:-381,duration:2.13,ease:"none"},2.175);
+  tl.fromTo("#outro-em33",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.59},{opacity:0.7,duration:1.47},{opacity:0,duration:0.88}],x:55,y:-321,duration:2.94,ease:"none"},2.515);
+  tl.fromTo("#outro-em34",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.72},{opacity:0.7,duration:1.81},{opacity:0,duration:1.09}],x:72,y:-776,duration:3.62,ease:"none"},3.354);
+  tl.fromTo("#outro-em35",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.39},{opacity:0.7,duration:0.99},{opacity:0,duration:0.59}],x:-34,y:-742,duration:1.97,ease:"none"},6.72);
+  tl.fromTo("#outro-em36",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.48},{opacity:0.7,duration:1.20},{opacity:0,duration:0.72}],x:6,y:-548,duration:2.41,ease:"none"},3.723);
+  tl.fromTo("#outro-em37",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.53},{opacity:0.7,duration:1.33},{opacity:0,duration:0.80}],x:37,y:-323,duration:2.65,ease:"none"},4.116);
+  tl.fromTo("#outro-em38",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.50},{opacity:0.7,duration:1.25},{opacity:0,duration:0.75}],x:-22,y:-449,duration:2.49,ease:"none"},4.113);
+  tl.fromTo("#outro-em39",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.50},{opacity:0.7,duration:1.26},{opacity:0,duration:0.75}],x:-11,y:-692,duration:2.51,ease:"none"},5.175);
+  tl.fromTo("#outro-em40",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.61},{opacity:0.7,duration:1.52},{opacity:0,duration:0.91}],x:61,y:-353,duration:3.04,ease:"none"},1.898);
+  tl.fromTo("#outro-em41",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.58},{opacity:0.7,duration:1.45},{opacity:0,duration:0.87}],x:-74,y:-431,duration:2.89,ease:"none"},7.226);
+  tl.fromTo("#outro-em42",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.59},{opacity:0.7,duration:1.48},{opacity:0,duration:0.89}],x:-77,y:-530,duration:2.96,ease:"none"},7.131);
+  tl.fromTo("#outro-em43",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.71},{opacity:0.7,duration:1.77},{opacity:0,duration:1.06}],x:-7,y:-545,duration:3.55,ease:"none"},3.502);
+  tl.fromTo("#outro-em44",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.67},{opacity:0.7,duration:1.67},{opacity:0,duration:1.00}],x:15,y:-317,duration:3.35,ease:"none"},4.421);
+  tl.fromTo("#outro-em45",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.77},{opacity:0.7,duration:1.93},{opacity:0,duration:1.16}],x:14,y:-434,duration:3.87,ease:"none"},4.982);
+  tl.fromTo("#outro-em46",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.52},{opacity:0.7,duration:1.31},{opacity:0,duration:0.79}],x:-12,y:-627,duration:2.62,ease:"none"},2.621);
+  tl.fromTo("#outro-em47",{opacity:0,x:0,y:0},{keyframes:[{opacity:1,duration:0.41},{opacity:0.7,duration:1.02},{opacity:0,duration:0.61}],x:64,y:-355,duration:2.04,ease:"none"},4.072);
   window.__timelines = window.__timelines || {};
   window.__timelines["outro"] = tl;
 })();

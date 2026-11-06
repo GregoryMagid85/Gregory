@@ -20,7 +20,7 @@ def T(word, n=0):
     if n >= len(hits): raise SystemExit(f"cue not in narration: {word}#{n}")
     return hits[n]
 
-C = dict(ink="#2A190C", ink2="#6B4A2C", paper="#E6D3A8", land="#D6BC86", red="#8E2216", hot="#8E2216", gold="#B98A35", cream="#F4E8CC",
+C = dict(ink="#1C1007", ink2="#4E331C", paper="#E6D3A8", land="#D6BC86", red="#8E2216", hot="#8E2216", gold="#B98A35", cream="#F4E8CC",
          molten="#FF7A12", molten2="#FFD27A", dark="#0E0703")
 EP = dict(n=1, title="The Invention of Glassblowing")     # series opener + end card read from here
 FONT = """@font-face{font-family:'Cormorant Garamond';font-weight:700;src:url('assets/fonts/cormorant-garamond-latin-700-normal.woff2') format('woff2');}
@@ -35,8 +35,8 @@ BASE_CSS = f"""
 #root .paper{{position:absolute;{PAPER}}}
 #root .vign{{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 46%,transparent 52%,rgba(92,48,14,.28) 78%,rgba(34,15,4,.78) 100%)}}
 #root .noise{{position:absolute;inset:0;pointer-events:none;opacity:.10;mix-blend-mode:multiply;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' seed='4'/></filter><rect width='300' height='300' filter='url(%23n)'/></svg>")}}
-#root .disp{{position:absolute;font-family:'Cormorant Garamond',serif;font-weight:700;color:{C['ink']};line-height:1.0;letter-spacing:-0.01em;white-space:nowrap}}
-#root .lab{{position:absolute;font-family:'IM Fell English',serif;font-style:italic;color:{C['ink']};font-size:34px;white-space:nowrap}}
+#root .disp{{position:absolute;font-family:'Cormorant Garamond',serif;font-weight:700;color:{C['ink']};line-height:1.0;letter-spacing:-0.01em;white-space:nowrap;text-shadow:0 2px 0 rgba(246,234,206,.6)}}
+#root .lab{{position:absolute;font-family:'IM Fell English',serif;font-style:italic;color:{C['ink']};font-size:34px;white-space:nowrap;text-shadow:0 0 6px rgba(246,234,206,.95),0 0 14px rgba(246,234,206,.7)}}
 #root .hot{{color:{C['hot']}}}
 #root .ondark .hot{{color:{C['molten']};text-shadow:0 0 24px rgba(255,122,18,.5)}}
 #root .win{{position:absolute;overflow:hidden;background:#000;box-shadow:0 0 0 12px {C['cream']},0 0 0 14px #8A6A44,0 26px 50px rgba(50,24,6,.5)}}
@@ -51,8 +51,16 @@ BASE_CSS = f"""
 #root .plate .pi{{position:absolute;left:0;top:0;width:100%;height:100%;will-change:transform}}
 #root .plate img{{width:100%;height:100%;object-fit:cover;display:block}}
 #root svg{{position:absolute;overflow:visible}}
-#root .stk{{fill:none;stroke:{C['ink']};stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round}}
-#root .stk2{{fill:none;stroke:{C['ink2']};stroke-width:3;stroke-linecap:round;stroke-dasharray:2 12}}
+#root .stk{{fill:none;stroke:{C['ink']};stroke-width:6;stroke-linecap:round;stroke-linejoin:round}}
+#root .stk2{{fill:none;stroke:{C['ink2']};stroke-width:4.5;stroke-linecap:round;stroke-dasharray:3 13}}
+#root .obj{{position:absolute}}
+#root .obj .osp{{position:absolute;inset:0;background-size:800% 600%;background-repeat:no-repeat}}
+#root .obj .osh{{position:absolute;left:14%;right:14%;bottom:7%;height:10%;border-radius:50%;background:radial-gradient(ellipse,rgba(40,20,5,.55),rgba(40,20,5,0) 70%)}}
+#root .obj .ohalo{{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(255,170,60,.75),rgba(255,110,20,.35) 38%,rgba(255,90,0,0) 70%)}}
+#root .obj .otint{{position:absolute;border-radius:50%;mix-blend-mode:multiply;background:radial-gradient(circle,rgba(255,150,40,1) 0%,rgba(255,110,25,.95) 32%,rgba(255,110,25,0) 48%)}}
+#root .cutw{{position:absolute;left:0;top:0;width:1920px;height:1080px;{PAPER}}}
+#root .cutw .win{{top:50px;width:540px;height:980px}}
+#root .cutw .cw{{position:absolute;font-family:'Cormorant Garamond',serif;font-weight:700;color:{C['ink']};line-height:1.02;white-space:nowrap}}
 #root .hotf{{fill:{C['hot']}}}
 """
 
@@ -62,6 +70,7 @@ class Scene:
         self.cid, self.a, self.b = cid, a, b
         self.html, self.js, self.css, self.n = [], [], [], 0
         self.cam = []                         # (t_local, cx, cy, scale)
+        self.over = []                        # full-frame cutaways drawn above the world
     def L(self, t):                                  # absolute -> local; a cue far outside the scene is a wrong word match
         if t < self.a - 0.6 or t > self.b + 0.6: raise SystemExit(f"{self.cid}: cue at {t:.2f}s is outside {self.a:.2f}-{self.b:.2f}")
         return max(0.0, round(t - self.a, 3))
@@ -144,6 +153,34 @@ class Scene:
         ring = [f"M{r} {r} m-{r * 0.8:.0f} 0 a{r * 0.8:.0f} {r * 0.8:.0f} 0 1 0 {r * 1.6:.0f} 0 a{r * 0.8:.0f} {r * 0.8:.0f} 0 1 0 -{r * 1.6:.0f} 0"]
         self.sketch(ring + pts, t, dur=0.5, stagger=0.06, x=x - r, y=y - r, w=2 * r, h=2 * r)
         self.lab("N", x - 16, y - r - 80, t + 0.4, size=64)
+    def obj(self, name, x, y, size, t, spin=1.0, glow=None):
+        """a pre-rendered 3D object (48-frame turntable sprite) set on the page at world (x, y) = its centre"""
+        i = self.id("o"); EV.append((round(t, 3), "window")); D = round(self.b - t + 0.5, 3)
+        h = g = ""
+        if glow:
+            cx, cy, d = glow[0] + glow[2] / 2, glow[1] + glow[2] / 2, glow[2]
+            h = f'<div class="ohalo" style="left:{cx - d}%;top:{cy - d}%;width:{2 * d}%;height:{2 * d}%"></div>'
+            g = f'<div class="otint" style="left:{cx - d * 0.62}%;top:{cy - d * 0.62}%;width:{1.24 * d}%;height:{1.24 * d}%"></div>'
+        self.html.append(f'<div id="{i}" class="obj" style="left:{x - size / 2:.0f}px;top:{y - size / 2:.0f}px;width:{size}px;height:{size}px;opacity:0">'
+                         f'<div class="osh"></div>{h}<div class="osp" style="background-image:url(assets/obj/{name}.webp)"></div>{g}</div>')
+        self.js.append(f'tl.fromTo("#{i}",{{opacity:0,scale:0.55,y:70}},{{opacity:1,scale:1,y:0,duration:0.7,ease:"back.out(1.5)"}},{self.L(t)});')
+        self.js.append(f'(function(){{const o={{f:0}},el=document.querySelector("#{i} .osp");const set=()=>{{const k=Math.floor(o.f)%48;el.style.backgroundPosition=((k%8)*100/7).toFixed(3)+"% "+(Math.floor(k/8)*20)+"%";}};set();'
+                       f'tl.fromTo(o,{{f:0}},{{f:{round(12 * spin * D, 2)},duration:{D},ease:"none",onUpdate:set}},{self.L(t)});}})();')
+        return i
+    def cutaway(self, name, t0, t1, media=0.0, words=(), side="right", rate=1.0, pos="50% 40%"):
+        """a clean full-frame cut to Olga's footage on a fresh sheet, with the line set beside it in big type"""
+        i = self.id("cut"); EV.append((round(t0, 3), "cut")); EV.append((round(t1, 3), "cut"))
+        X = 1240 if side == "right" else 140
+        tx = 140 if side == "right" else 800
+        ws = "".join(f'<div class="cw" id="{i}w{k}" style="left:{tx}px;top:{y}px;font-size:{sz}px;{"color:" + C["hot"] + ";" if hot else ""}{"font-style:italic;font-weight:500;" if it else ""}">{html.escape(w)}</div>'
+                     for k, (w, y, sz, hot, it) in enumerate(words))
+        self.over.append(f'<div id="{i}" class="cutw" style="opacity:0"><div class="win" style="left:{X}px"><video id="{i}m" class="clip" data-start="{self.L(t0)}" data-duration="{round(t1 - t0, 3)}" '
+                         f'data-media-start="{media}" data-playback-rate="{rate}" muted playsinline src="assets/clips/{name}.mp4" style="object-position:{pos}"></video></div>{ws}</div>')
+        self.js.append(f'tl.set("#{i}",{{opacity:1}},{self.L(t0)});tl.set("#{i}",{{opacity:0}},{self.L(t1)});'
+                       f'tl.fromTo("#{i} .win",{{scale:1.08}},{{scale:1,duration:{round(t1 - t0, 3)},ease:"none"}},{self.L(t0)});')
+        for k in range(len(words)):
+            self.js.append(f'tl.fromTo("#{i}w{k}",{{opacity:0,scale:1.25,filter:"blur(8px)",transformOrigin:"0% 50%"}},{{opacity:1,scale:1,filter:"blur(0px)",duration:0.22,ease:"expo.out"}},{self.L(t0) + 0.05 + k * 0.35:.3f});')
+        return i
     def raw(self, h, js=""):
         self.html.append(h)
         if js: self.js.append(js)
@@ -152,8 +189,9 @@ class Scene:
         cam = sorted(self.cam) or [(0, 960, 540, 1.0)]
         for k0, k1 in zip(cam[:-1], cam[1:]):
             if (k0[1], k0[2], k0[3]) != (k1[1], k1[2], k1[3]):
-                travel = min(1.0, max(0.01, 0.5 * (k1[0] - k0[0])))
-                EV.append((round(self.a + k1[0] - travel, 3), "dive" if k1[3] / k0[3] > 4 else "whoosh"))
+                if k1[3] / k0[3] > 4: EV.append((round(self.a + k1[0] - min(1.0, 0.5 * (k1[0] - k0[0])), 3), "dive"))
+                else: EV.append((round(self.a + k1[0], 3), "cut"))
+        after_world = "".join(self.over) + after_world
         dur = round(self.b - self.a, 3)
         if wipe_in:
             after_world += f'<div id="{self.cid}-wi" class="wipe" style="transform:translateX(-540px)"></div>'
@@ -180,10 +218,12 @@ class Scene:
   const K = {json.dumps(cam)};
   const ease = (x) => x < 0.5 ? 2*x*x : 1 - Math.pow(-2*x + 2, 2) / 2;   // power2.inOut
   function camAt(t) {{
-    // continuous take: between keys the camera travels; while holding it keeps a slow 1%/s push
+    // clean cuts: every key is a hard cut to a new framing that then pushes in slowly (1.4%/s);
+    // only a dive (zoom x4 or more) travels, so the camera flies into the drawing
     let k0 = K[0], k1 = K[0];
     for (let i = 0; i < K.length; i++) {{ if (t >= K[i][0]) {{ k0 = K[i]; k1 = K[i + 1] || K[i]; }} }}
     if (t < K[0][0]) {{ k0 = k1 = K[0]; }}
+    if (!(k1[3] / k0[3] > 4)) return [k0[1], k0[2], k0[3] * Math.min(1 + 0.014 * Math.max(0, t - k0[0]), 1.08)];
     const travel = Math.min(1.0, Math.max(0.01, 0.5 * (k1[0] - k0[0])));
     const m = k1 === k0 ? 0 : ease(Math.min(1, Math.max(0, (t - (k1[0] - travel)) / travel)));
     const drift = 1 + 0.010 * Math.max(0, t - k0[0]) * (1 - m);
@@ -209,12 +249,14 @@ class Scene:
 </template>
 """
 
+I, F = True, False   # cutaway word flags: (text, y, size, hot, italic)
 SCENES = []   # (cid, a, b, file text)
 EV = []       # (absolute time, kind) for the sound design
 
 # ================================================================ 0. HOOK (0 - 4.6) + OR sting (4.4 - 7.6)
 s = Scene("hook", 0.0, 7.6)
-cuts = [("glory_hole", 0.0, 0.4), ("olga_blow", 0.8, 1.6), ("red_bubble", 1.6, 0.2), ("torch", 2.45, 0.9), ("rose_torch", 3.3, 0.4)]
+cuts = [("glory_hole", 0.0, 0.4), ("olga_blow2", 0.6, 0.2), ("red_bubble", 1.2, 0.2), ("olga_glory", 1.6, 3.0), ("torch", 2.2, 0.9),
+        ("olga_run", 2.8, 7.6), ("rose_torch", 3.3, 0.4), ("olga_dolphin", 3.85, 1.0)]
 for k, (nm, t0, med) in enumerate(cuts):
     t1 = cuts[k + 1][1] if k + 1 < len(cuts) else 4.45
     i = s.id("hv")
@@ -222,8 +264,7 @@ for k, (nm, t0, med) in enumerate(cuts):
           f'<video id="{i}m" class="clip" data-start="{t0}" data-duration="{round(t1 - t0, 3)}" data-media-start="{med}" data-playback-rate="1.25" muted playsinline src="assets/clips/{nm}.mp4"></video></div>',
           f'tl.fromTo("#{i}",{{scale:1.12}},{{scale:1,duration:0.45,ease:"expo.out"}},{t0});')
 # a chalk bubble sketch draws beside the footage while the words slam
-s.sketch(["M180 760 L700 760", "M700 760 C760 600 1000 560 1060 700 C1110 820 960 900 820 860 C760 840 720 800 700 760",
-          "M150 742 L150 778", "M980 640 C1000 660 1010 690 1005 720"], 0.1, dur=0.9, stagger=0.25)
+s.obj("blowpipe", 560, 800, 620, 0.1, spin=1.5, glow=(62, 33, 22))
 for (txt, t0, t1, y) in [("ONE BREATH.", 0.15, 1.5, 300), ("ONE IDEA.", 1.6, 2.95, 300), ("2,000 YEARS", 3.05, 4.45, 250)]:
     i = s.disp(txt, 120, y, 150, t0, out=t1)
 s.disp("OF GLASS.", 120, 420, 150, 3.25, hot=(1,), out=4.45)
@@ -257,6 +298,7 @@ for k, (w, cue) in enumerate([("Art", "art,"), ("Windows", "windows,"), ("Everyd
 s.disp("A rare", 160, 560, 150, T("rare") - 0.1)
 s.disp("luxury.", 160, 710, 190, T("luxury."), hot=(0,))
 s.key(HOOK, 960, 540, 1.0)
+s.key(T("rare") - 0.1, 760, 650, 1.22)      # punch-in cut on "a rare luxury"
 # station B (2200..5200, 0..1900): the map of the first glass
 MX, MY = 2200, 0
 s.raw(f'<svg id="sheet1-map" style="left:{MX}px;top:{MY}px" width="{MAP["W"]}" height="{MAP["H"]}" viewBox="0 0 {MAP["W"]} {MAP["H"]}">'
@@ -272,27 +314,25 @@ s.lab("thousands of years ago", MX + 1355, MY + 820, T("earliest") + 0.3, size=5
 s.plate("mesopotamia", MX + 2480, MY + 860, 520, 520, T("ancient"), T("ancient"), T("but") + 0.3, fx0=0.25, fx1=0.75, rot=2, cap=("Mesopotamia", "c. 2500 BCE · beads & inlays"))
 s.plate("egypt", MX + 1600, MY + 1080, 520, 520, T("egypt.") - 0.2, T("egypt.") - 0.2, T("but") + 0.3, fx0=0.25, fx1=0.75, rot=-2, cap=("Egypt", "c. 1500 BCE · core-formed"))
 # beads beside Mesopotamia, an amphoriskos beside Egypt (drawn in ink as they appear)
-s.sketch([f"M{40 + k * 70} 60 m-24 0 a24 24 0 1 0 48 0 a24 24 0 1 0 -48 0" for k in range(5)] + ["M10 60 L380 60"], T("ancient") + 0.5, dur=0.3, stagger=0.08, x=MX + 2560, y=MY + 1420, w=420, h=140)
-s.sketch(["M90 20 L130 20", "M98 20 L98 60 C30 90 20 200 60 270 C80 300 100 310 110 312 C120 310 140 300 160 270 C200 200 190 90 122 60 L122 20",
-          "M98 70 C60 60 50 40 60 30", "M122 70 C160 60 170 40 160 30", "M50 140 L70 125 L90 140 L110 125 L130 140 L150 125 L170 140", "M45 190 L65 175 L85 190 L105 175 L125 190 L145 175 L170 190"],
-         T("egypt.") + 0.3, dur=0.45, stagger=0.1, x=MX + 1340, y=MY + 1250, w=230, h=330)
+s.obj("beads", MX + 2740, MY + 1560, 440, T("ancient") + 0.45)
+s.lab("glass beads", MX + 2620, MY + 1720, T("ancient") + 0.7, size=44)
+s.obj("amphoriskos", MX + 1370, MY + 1380, 460, T("egypt.") + 0.25)
+s.lab("core-formed flask", MX + 1220, MY + 1610, T("egypt.") + 0.5, size=44)
 s.compass(MX + 520, MY + 1500, T("now") + 0.4)
-s.key(T("now") + 0.6, MX + 2100, MY + 1150, 0.62)
-s.key(T("egypt.") - 0.2, MX + 2150, MY + 1250, 0.72)
+s.key(T("now") - 0.1, MX + 1700, MY + 1050, 0.62)
+s.key(T("ancient") - 0.05, MX + 2700, MY + 1240, 0.95)     # cut to Mesopotamia
+s.key(T("egypt.") - 0.2, MX + 1700, MY + 1380, 0.95)        # cut to Egypt
 # station C (5600..7500, 0..1300): the problem — a core-formed vessel drafted, a stopwatch
 PX, PY = 5600, 300
-vessel = ["M300 120 L380 120", "M310 120 L310 180 C180 230 150 420 200 560 C240 660 300 700 340 720 C380 700 440 660 480 560 C530 420 500 230 370 180 L370 120",
-          "M250 260 C330 230 420 260 440 300", "M230 360 C330 330 430 360 455 400", "M225 460 C330 430 430 460 455 500", "M240 560 C320 530 400 560 440 590"]
-s.sketch(vessel, T("making") - 0.1, dur=0.7, stagger=0.18, x=PX, y=PY, w=900, h=900)
-s.sketch(["M340 250 C270 300 260 520 340 620 C420 520 410 300 340 250"], T("hollow") + 0.1, dur=0.6, x=PX, y=PY, w=900, h=900, cls="stk2")
-s.lab("clay core", PX + 520, PY + 380, T("hollow") + 0.4, color=C["ink2"])
-s.lab("hollow vessel", PX + 520, PY + 200, T("vessel"), color=C["ink2"])
-s.sketch(["M1080 300 m-120 0 a120 120 0 1 0 240 0 a120 120 0 1 0 -240 0", "M1080 180 L1080 150", "M1050 150 L1110 150", "M1080 300 L1080 220", "M1080 300 L1150 330"],
-         T("slow") - 0.2, dur=0.4, stagger=0.08, x=PX, y=PY, w=1500, h=900)
+s.cutaway("olga_run", T("but") - 0.05, T("making") - 0.1, media=6.2, words=[("But there was", 330, 110, F, I), ("a problem.", 460, 170, I, F)])
+s.disp("Making a hollow vessel", PX + 40, PY - 90, 96, T("making"))
+s.obj("claycore", PX + 400, PY + 420, 700, T("making") - 0.1, spin=0.7)
+s.lab("molten glass wound around a clay core", PX + 120, PY + 690, T("hollow") + 0.3, size=46)
+s.obj("hourglass", PX + 1130, PY + 250, 400, T("slow") - 0.25, spin=0.6)
 s.disp("slow", PX + 950, PY + 520, 130, T("slow"), hot=(0,))
 s.disp("& difficult", PX + 950, PY + 660, 96, T("difficult"))
-s.disp("But there was a problem.", PX + 60, PY - 60, 96, T("but"), italic=True)
-s.key(T("but") + 0.5, PX + 760, PY + 380, 0.95)
+s.key(T("making") - 0.1, PX + 620, PY + 380, 0.95)
+s.key(T("slow") - 0.25, PX + 1120, PY + 470, 1.25)          # punch-in cut: slow
 # station D (8000..11000, 0..1080): the timeline — 1st century BCE ignites, the camera dives into the dot
 TX, TY = 8000, 600
 s.sketch([f"M0 0 L2600 0"], T("then") - 0.2, dur=1.4, x=TX, y=TY, w=2800, h=400)
@@ -305,7 +345,8 @@ DX = TX + int(2600 * 0.94)
 s.raw(f'<div id="sheet1-dot" style="position:absolute;left:{DX - 30}px;top:{TY - 30}px;width:60px;height:60px;border-radius:50%;background:radial-gradient(circle,{C["molten2"]},{C["molten"]} 60%,#C24E0A);opacity:0"></div>',
       f'tl.fromTo("#sheet1-dot",{{opacity:0,scale:0.2}},{{opacity:1,scale:1,duration:0.4,ease:"back.out(2)"}},{s.L(T("century") - 0.1)});')
 s.disp("something remarkable happened.", TX + 300, TY - 260, 96, T("something"), italic=True)
-s.key(T("then") + 0.2, TX + 1450, TY + 60, 0.62)
+s.key(T("then") - 0.1, TX + 1450, TY + 60, 0.62)
+s.key(T("something"), TX + 1700, TY - 60, 0.95)            # punch-in cut: "something remarkable"
 s.key(b - 0.05, DX, TY, 24.0)          # dive into the glowing dot: it becomes the furnace
 SCENES.append((s.cid, s.a, s.b, s.file(11200, 2200)))
 
@@ -315,7 +356,7 @@ s = Scene("furnace", a, b)
 s.raw(f'<div id="furnace-flood" style="position:absolute;left:0;top:0;width:1920px;height:1080px;background:radial-gradient(circle at 50% 50%,{C["molten2"]},{C["molten"]} 55%,#B5450A)"></div>',
       f'tl.fromTo("#furnace-flood",{{opacity:1}},{{opacity:0,duration:0.45,ease:"power2.in"}},0.25);')
 s.video("glory_gather", 1160, 0, 608, 1080, a + 0.05, T("changed") - 0.2, media=0.0, appear=0.4)
-s.video("red_bubble", 1160, 0, 608, 1080, T("changed") - 0.25, b)
+s.video("olga_glory", 1160, 0, 608, 1080, T("changed") - 0.25, b, media=3.5, appear=0.15)
 s.disp("Glassblowing", 120, 330, 170, T("glassblowing"), hot=(0,))
 s.disp("was invented.", 130, 520, 96, T("invented."), italic=True)
 s.disp("And that changed", 130, 700, 84, T("changed") - 0.5)
@@ -344,30 +385,29 @@ s.key(T("technique") + 0.6, lx - 10, ly + 30, 3.0)
 FX, FY = 3600, 200
 s.raw(f'<div id="sheet2-cc" class="plate" style="left:{FX}px;top:{FY}px;width:1672px;height:941px;opacity:0"><img src="assets/art/claycore.png" alt="" style="width:100%;height:100%"></div>',
       f'tl.fromTo("#sheet2-cc",{{opacity:0,scale:0.94}},{{opacity:1,scale:1,duration:0.7,ease:"expo.out"}},{s.L(T("you") - 0.3)});')
+s.cutaway("olga_hytta", T("you") - 0.05, T("one", 0) - 0.05, media=2.5, words=[("You see,", 330, 110, F, I), ("before glassblowing…", 460, 120, F, F)], side="left")
+s.cutaway("olga_glory", T("rather", 1) - 0.15, T("but", 1) - 0.1, media=5.5, words=[("A rather", 300, 110, F, I), ("laborious", 420, 170, I, F), ("process.", 600, 120, F, F)])
 s.key(T("you") - 0.4, FX + 836, FY + 470, 1.08)
 s.key(T("shape"), FX + 390, FY + 480, 2.0)
 s.key(T("laborious") - 0.3, FX + 855, FY + 480, 2.0)
 s.key(T("imagine.") - 0.6, FX + 1330, FY + 470, 2.0)
 # station G (6000..): the blowpipe, drafted as an exploded technical sketch, then the Levant glassblower
 GX, GY = 6000, 300
-pipe = ["M0 290 L1500 290", "M0 340 L1500 340", "M0 290 C-40 290 -40 340 0 340", "M1500 290 L1500 340"]
-s.sketch(pipe, T("blowpipe,") - 0.2, dur=0.7, stagger=0.1, x=GX + 100, y=GY, w=2200, h=800)
-s.sketch(["M100 380 L100 420 L800 420 L800 380", "M1200 250 L1260 180 L1500 180"], T("blowpipe,") + 0.5, dur=0.4, x=GX + 100, y=GY, w=2200, h=800, cls="stk2")
-s.lab("hollow steel blowpipe", GX + 330, GY + 440, T("blowpipe,") + 0.6, color=C["ink2"])
-s.raw(f'<div id="sheet2-gather" style="position:absolute;left:{GX + 1560}px;top:{GY + 220}px;width:200px;height:180px;border-radius:48% 52% 50% 50%;background:radial-gradient(circle at 40% 40%,{C["molten2"]},{C["molten"]} 55%,#C24E0A);box-shadow:0 0 50px {C["molten"]}88;opacity:0"></div>',
-      f'tl.fromTo("#sheet2-gather",{{opacity:0,scale:0.2,transformOrigin:"0% 50%"}},{{opacity:1,scale:1,duration:0.7,ease:"expo.out"}},{s.L(T("gather") - 0.1)});')
-s.lab("a gather of molten glass", GX + 1370, GY + 140, T("gather") + 0.2, color=C["hot"])
+s.obj("blowpipe", GX + 900, GY + 330, 1150, T("blowpipe,") - 0.2, spin=0.8, glow=(62, 33, 22))
+s.lab("hollow iron blowpipe", GX + 380, GY + 560, T("blowpipe,") + 0.5, size=50)
+s.lab("a gather of molten glass", GX + 1050, GY + 90, T("gather") + 0.15, size=50, color=C["hot"])
 s.disp("gather…", GX + 300, GY - 140, 130, T("gather"), italic=True)
 s.plate("levant", GX + 2100, GY - 60, 1150, 647, T("glass", 4) - 0.6, T("glass", 4) - 0.6, b, fx0=0.3, fx1=0.42, z0=1.5, z1=1.25, cap=("The Levant", "c. 50 BCE · the first blowpipe"))
-s.key(T("blowpipe,") - 0.2, GX + 1000, GY + 300, 1.0)
+s.key(T("blowpipe,") - 0.2, GX + 950, GY + 260, 1.0)
+s.key(T("gather"), GX + 1000, GY + 210, 1.3)          # punch-in cut on the gather
 s.key(b - 0.1, GX + 2600, GY + 260, 1.35)    # the camera arrives on the ancient breath
 SCENES.append((s.cid, s.a, s.b, s.file(9600, 2000, wipe_in=True)))
 
 # ================================================================ 4. BREATH — Olga blows, a hollow 3-D bubble (56.2 - 60.5)
 a, b = T("blow") - 0.25, T("now", 2) - 0.2
 s = Scene("breath", a, b)
-s.video("olga_blow", 656, 0, 608, 1080, a + 0.02, T("suddenly") + 0.2, media=0.9, appear=0.2)     # match cut from the ancient breath
-s.disp("…and blow.", 120, 420, 150, T("blow"), italic=True)
+s.video("olga_blow2", 656, 0, 608, 1080, a + 0.02, T("suddenly") + 0.2, media=0.1, appear=0.05)     # match cut from the ancient breath
+s.disp("…and blow.", 70, 420, 118, T("blow"), italic=True)
 s.raw('<canvas id="breath-gl" width="1920" height="1080" style="position:absolute;left:0;top:0;width:1920px;height:1080px;opacity:0"></canvas>',
       f'tl.fromTo("#breath-gl",{{opacity:0}},{{opacity:1,duration:0.35,ease:"power2.out"}},{s.L(T("suddenly") - 0.1)});')
 s.disp("A hollow glass form.", 960, 90, 120, T("hollow", 2) - 0.3, hot=(1,), align="center")
@@ -428,27 +468,20 @@ SCENES.append((s.cid, s.a, s.b, s.file(1920, 1080, module=BUBBLE, wipe_out=True)
 a, b = T("now", 2) - 0.2, T("heat") - 0.3
 s = Scene("sheet3", a, b)
 # station H (0..3000): one diagram that grows: faster / thinner & lighter / endless shapes
-s.disp("Think about what that meant.", 120, 110, 96, T("think"), italic=True)
-s.sketch(["M300 500 m-130 0 a130 130 0 1 0 260 0 a130 130 0 1 0 -260 0", "M300 370 L300 335", "M270 335 L330 335", "M300 500 L300 400", "M300 500 L390 540"],
-         T("faster,") - 0.3, dur=0.35, stagger=0.06, x=0, y=0, w=800, h=900)
-s.disp("faster", 180, 680, 110, T("faster,"), hot=(0,))
-# wall cross-sections: thick (core-formed) -> thin (blown)
-s.sketch(["M800 330 L800 670", "M860 330 L860 670"], T("thinner,") - 0.25, dur=0.3, x=0, y=0, w=1800, h=900)
-s.sketch(["M1100 330 L1100 670", "M1112 330 L1112 670"], T("thinner,") + 0.1, dur=0.3, x=0, y=0, w=1800, h=900)
-s.sketch(["M780 300 L880 300", "M1080 300 L1130 300"], T("lighter,") - 0.1, dur=0.3, x=0, y=0, w=1800, h=900, cls="stk2")
-s.lab("then", 785, 700, T("thinner,"), color=C["ink2"]); s.lab("now", 1075, 700, T("thinner,") + 0.15, color=C["ink2"])
-s.disp("thinner, lighter", 760, 790, 96, T("thinner,"))
-shapes = ["M1500 640 C1440 560 1450 430 1520 380 L1520 320 L1560 320 L1560 380 C1630 430 1640 560 1580 640 Z",
-          "M1700 640 C1690 560 1680 440 1700 330 L1760 330 C1780 440 1770 560 1760 640 Z",
-          "M1880 640 L1930 520 C1880 470 1880 360 1940 330 C2000 360 2000 470 1950 520 L2000 640 Z",
-          "M2080 640 C2060 600 2060 520 2120 500 C2180 520 2180 600 2160 640 Z",
-          "M2260 640 L2240 330 L2340 330 L2320 640 Z"]
-s.sketch(shapes, T("variety") - 0.3, dur=0.45, stagger=0.1, x=0, y=0, w=2600, h=900)
-s.disp("in endless shapes", 1500, 790, 96, T("variety"))
-s.video("blue_goblet", 2500, 120, 400, 700, T("shapes.") - 0.3, T("romans") + 0.6)
-s.key(a, 960, 540, 1.0)
-s.key(T("thinner,") - 0.5, 1250, 540, 1.0)
-s.key(T("variety") - 0.6, 2050, 520, 1.0)
+s.cutaway("olga_dolphin", a + 0.02, T("you", 3) - 0.05, media=0.0, words=[("Think about", 330, 110, F, I), ("what that meant.", 460, 140, F, F)])
+s.obj("hourglass", 380, 430, 480, T("faster,") - 0.3, spin=2.2)
+s.disp("faster", 250, 650, 120, T("faster,"), hot=(0,))
+s.obj("flask", 1060, 430, 520, T("thinner,") - 0.3, spin=0.8)
+s.lab("thin, light, blown walls", 900, 640, T("lighter,"), size=46)
+s.disp("thinner, lighter", 800, 710, 100, T("thinner,"))
+s.obj("vessels", 1960, 420, 720, T("variety") - 0.3, spin=0.6)
+s.disp("in endless shapes", 1640, 710, 100, T("variety"))
+s.video("blue_goblet", 2560, 120, 400, 700, T("shapes.") - 0.3, T("romans") + 0.6)
+s.key(T("you", 3) - 0.05, 960, 540, 1.0)
+s.key(T("faster,") - 0.3, 560, 520, 1.3)                 # punch-in: faster
+s.key(T("thinner,") - 0.3, 1100, 500, 1.25)                # cut: thinner, lighter
+s.key(T("variety") - 0.3, 2080, 500, 1.12)                # cut: endless shapes
+s.key(T("shapes.") - 0.25, 2500, 520, 0.95)               # cut: Olga's goblet
 # station I (3300..): the Roman glassblower, panning
 s.plate("rome", 3300, 120, 1600, 900, T("romans") - 0.5, T("romans") - 0.5, T("adopted") + 0.2, fx0=0.25, fx1=0.75, z0=1.5, z1=1.05, cap=("Rome", "1st century CE · glass for everyone"))
 s.disp("The Romans", 3360, 1060, 110, T("romans"))
@@ -474,21 +507,22 @@ s.raw('<div id="sheet3-count" class="disp" style="left:8640px;top:1060px;font-si
       f'tl.fromTo("#sheet3-count",{{opacity:0,filter:"blur(8px)"}},{{opacity:1,filter:"blur(0px)",duration:0.2}},{s.L(T("more") - 0.1)});'
       f'(function(){{const o={{v:0}};tl.fromTo(o,{{v:0}},{{v:2000,duration:1.3,ease:"power2.out",onUpdate:()=>{{document.getElementById("sheet3-num").textContent=Math.round(o.v).toLocaleString("en-US");}}}},{s.L(T("more"))});}})();')
 s.disp("the same principles.", 8660, 1230, 96, T("same"), italic=True, hot=(1,))
+s.cutaway("olga_rose", T("but", 2) - 0.05, T("more") - 0.1, media=0.2, words=[("But here's something", 330, 96, F, I), ("I find particularly", 450, 96, F, I), ("fascinating.", 570, 150, I, F)])
 s.key(T("but", 2) + 0.6, 9400, 640, 0.95)
-s.key(T("more") - 0.2, 9400, 900, 0.68)
+s.key(T("more") - 0.2, 9400, 820, 0.66)
 SCENES.append((s.cid, s.a, s.b, s.file(11000, 2200, wipe_in=True, wipe_out=True)))
 
 # ================================================================ 6. TODAY — heat, air, control over Olga's footage; the hands (87.0 - 103.4)
 a, b = T("heat") - 0.3, T("i'm") - 0.3
 s = Scene("today", a, b)
-stations = [("glory_hole", "heat", "Heat", 0, 0.0, "50% 50%"), ("olga_blow", "introduce", "Air", 2300, 1.2, "50% 35%"), ("swing", "controlling", "Control", 4600, 0.0, "50% 50%")]
+stations = [("olga_glory", "heat", "Heat", 0, 1.0, "50% 40%"), ("olga_blow2", "introduce", "Air", 2300, 4.6, "50% 35%"), ("swing", "controlling", "Control", 4600, 0.0, "50% 50%")]
 for k, (nm, cue, word, X, med, pos) in enumerate(stations):
     t0 = T(cue) - 0.35
     t1 = T(stations[k + 1][1]) if k + 1 < len(stations) else T("course", 1) - 0.3
-    s.video(nm, X + 1100, 60, 540, 960, t0, t1, media=med, pos=pos)
+    s.video(nm, X + 1100, 60, 540, 960, t0, t1, media=med, pos=pos, appear=0.05)
     s.disp(f"{k + 1}.", X + 140, 260, 110, t0, color=C["ink2"])
     s.disp(word, X + 280, 260, 150, T(cue), hot=(0,))
-    s.key(t0 - 0.1, X + 960, 540, 1.0)
+    s.key(t0 - 0.1, X + 900, 540, 1.0)
 s.sketch(["M720 520 L1080 520", "M1040 490 L1080 520 L1040 550"], T("soft") - 0.2, dur=0.35, x=0, y=0, w=1200, h=800)
 s.lab("until it's soft enough to work", 150, 480, T("soft"), color=C["ink2"])
 s.sketch(["M2300 520 L2700 520", "M2300 560 L2760 560", "M2300 600 L2700 600", "M2720 490 L2760 560 L2720 630"], T("air", 1) - 0.1, dur=0.35, stagger=0.06, x=0, y=0, w=3000, h=800)
@@ -496,18 +530,19 @@ s.lab("through the blowpipe", 2450, 480, T("blowpipe", 1), color=C["ink2"])
 for k, (w, cue) in enumerate([("temperature", "temperature,"), ("movement", "movement,"), ("gravity", "gravity,")]):
     s.lab(w, 4740, 470 + k * 90, T(cue), size=52, color=C["hot"] if k == 0 else C["ink"])
 s.sketch(["M5500 360 A140 140 0 1 1 5620 520", "M5600 500 L5620 520 L5640 490", "M5560 640 L5560 820", "M5530 790 L5560 830 L5590 790"], T("movement,") - 0.1, dur=0.45, stagger=0.25, x=0, y=0, w=6000, h=1000)
+s.cutaway("olga_dolphin", T("course", 1) - 0.45, T("hands") - 0.25, media=8.0,
+          words=[("One more", 330, 110, F, I), ("very important", 450, 110, F, I), ("ingredient…", 570, 160, I, F)], side="left")
 # the hands
-s.video("bench_hands", 7100, 0, 608, 1080, T("course", 1) - 0.3, b, media=0.0)
-s.disp("One more ingredient…", 7800, 330, 84, T("ingredient.") - 0.4, italic=True)
+s.video("bench_hands", 7100, 0, 608, 1080, T("hands") - 0.25, b, media=0.0, appear=0.05)
 s.disp("the hands", 7800, 450, 170, T("hands"), hot=(1,))
 s.disp("of the glassmaker.", 7810, 640, 96, T("maker!", 1))
-s.key(T("course", 1) - 0.5, 7100 + 860, 540, 1.0)
+s.key(T("hands") - 0.25, 7100 + 860, 540, 1.0)
 SCENES.append((s.cid, s.a, s.b, s.file(9000, 1080, wipe_in=True, wipe_out=True)))
 
 # ================================================================ 7. OLGA — name + OR monogram, the craft, Instagram, the question (103.4 - 130.3)
 a, b = T("i'm") - 0.3, T("i'd", 1) - 0.25
 s = Scene("olga", a, b)
-s.video("olga_blow", 1180, 0, 608, 1080, a + 0.02, T("connected") - 0.4, media=1.8, rate=0.9, pos="50% 35%")
+s.video("olga_hytta", 1180, 0, 608, 1080, a + 0.02, T("connected") - 0.4, media=0.8, rate=0.9, pos="50% 30%", appear=0.05)
 s.raw(f'<div id="olga-plq" style="position:absolute;left:130px;top:120px;width:600px;height:440px;border-radius:22px;background:radial-gradient(ellipse at 50% 40%,#2A1608,{C["dark"]} 75%);box-shadow:0 0 0 4px {C["gold"]},0 0 0 10px {C["dark"]},0 30px 60px rgba(40,18,4,.55);opacity:0">'
       '<img id="olga-logo" src="assets/art/olga_logo_cut.png" alt="" style="position:absolute;left:40px;top:40px;width:520px"></div>',
       f'tl.fromTo("#olga-plq",{{opacity:0,rotationY:80,transformPerspective:1600}},{{opacity:1,rotationY:0,duration:1.0,ease:"expo.out"}},{s.L(T("olga") - 0.3)});')
@@ -519,8 +554,8 @@ s.plate("montage", 2300, 90, 1600, 900, T("connected") - 0.5, T("connected") - 0
 s.disp("thousands of years", 2360, 1020, 110, T("thousands", 1), hot=(0,))
 s.key(T("connected") - 0.6, 3100, 600, 0.95)
 # the history: her pieces
-for k, nm in enumerate(["rose_torch", "roses", "twist"]):
-    s.video(nm, 4400 + k * 600, 120, 520, 860, T("history") - 0.4 + k * 0.5, T("follow") + 0.4)
+for k, (nm, med) in enumerate([("olga_rose", 3.0), ("olga_dolphin", 12.0), ("roses", 0.0)]):
+    s.video(nm, 4400 + k * 600, 120, 520, 860, T("history") - 0.4 + k * 0.5, T("follow") + 0.4, media=med)
 s.disp("so much history to share", 4420, 1030, 96, T("share") - 0.3, italic=True)
 s.key(T("history") - 0.6, 5180, 620, 0.9)
 # Instagram
@@ -544,8 +579,8 @@ SCENES.append((s.cid, s.a, s.b, s.file(11000, 1080, wipe_in=True)))
 # ================================================================ 8. OUTRO — goodbye + OR end card (130.3 - end)
 a, b = T("i'd", 1) - 0.25, DUR
 s = Scene("outro", a, b)
-s.plate("modern", 0, 0, 1920, 1080, a, a, a + 6.0, fx0=0.32, fx1=0.3, z0=2.1, z1=1.85)
-s.raw('<div id="outro-shade" style="position:absolute;left:0;top:0;width:1920px;height:1080px;background:linear-gradient(90deg,rgba(14,7,3,0) 30%,rgba(14,7,3,.93) 62%)"></div>')
+s.video("olga_fashion", 170, 50, 690, 980, a, b, media=1.7, pos="50% 35%", appear=0.05)
+s.lab("Olga in her glass costume · Glass Fashion Show", 175, 1036, a + 0.6, size=30, color=C["gold"])
 s.disp("I'd love to hear", 1080, 240, 110, T("i'd", 1), italic=True, color=C["cream"])
 s.disp("what you think!", 1080, 360, 110, T("think!", 1), italic=True, hot=(1,), color=C["cream"])
 s.raw('<img id="outro-logo" src="assets/art/olga_logo_cut.png" alt="" style="position:absolute;left:1240px;top:520px;width:420px;opacity:0">'

@@ -3,6 +3,20 @@
 1920×1080, 30 fps, 138.1 s. Olga's own English narration; her studio reels; the series era art and clay-core
 infographic; the OR monogram.
 
+## v3 (feedback: drawings too simple / not visible, more 3D, use Olga's own footage, many clean cuts)
+- Editing is now cut-based: every station change is a hard cut on the spoken word, then a slow push-in
+  (1.4 %/s); punch-in cuts inside stations (rare luxury, Mesopotamia, Egypt, slow, gather, faster, thinner,
+  shapes); only the timeline dot still flies (the dive into the furnace).
+- Seven full-frame cutaways to Olga herself between the graphics ("But there was a problem", "You see",
+  "A rather laborious process", "Think about what that meant", "particularly fascinating", "one more
+  ingredient"), each with its line in big type.
+- Olga on camera everywhere: hook (8 cuts), furnace, her own breath (match cut), Heat/Air stations, her intro,
+  her pieces, and the goodbye in her glass costume (Glass Fashion Show reel). New clips are cut from her reels
+  in assets/clips/olga_*.mp4. One reel (olga_close) was left out: profanity on the T-shirt.
+- Line sketches replaced by real 3D objects (three.js turntables, tools3d/): core-formed amphoriskos, clay core
+  with a cobalt trail, glass beads, blowpipe with a glowing gather, Roman flask, hourglass, a family of blown
+  vessels. Ink is darker and thicker; labels carry a paper halo so they read on the papyrus.
+
 ## Restyle (v2, after feedback "no blue PowerPoint look, make it historic and premium")
 - The blueprint became an aged papyrus manuscript: sepia ink, red rubric, gold titles, burnt vignette, IM Fell
   annotations. Same timing, camera and narration cues.

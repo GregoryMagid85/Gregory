@@ -9,8 +9,8 @@
 #root .paper{position:absolute;background-color:#E6D3A8;background-image:url('assets/art/papyrus.jpg');background-size:1024px 1024px;}
 #root .vign{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 46%,transparent 52%,rgba(92,48,14,.28) 78%,rgba(34,15,4,.78) 100%)}
 #root .noise{position:absolute;inset:0;pointer-events:none;opacity:.10;mix-blend-mode:multiply;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' seed='4'/></filter><rect width='300' height='300' filter='url(%23n)'/></svg>")}
-#root .disp{position:absolute;font-family:'Cormorant Garamond',serif;font-weight:700;color:#2A190C;line-height:1.0;letter-spacing:-0.01em;white-space:nowrap}
-#root .lab{position:absolute;font-family:'IM Fell English',serif;font-style:italic;color:#2A190C;font-size:34px;white-space:nowrap}
+#root .disp{position:absolute;font-family:'Cormorant Garamond',serif;font-weight:700;color:#1C1007;line-height:1.0;letter-spacing:-0.01em;white-space:nowrap;text-shadow:0 2px 0 rgba(246,234,206,.6)}
+#root .lab{position:absolute;font-family:'IM Fell English',serif;font-style:italic;color:#1C1007;font-size:34px;white-space:nowrap;text-shadow:0 0 6px rgba(246,234,206,.95),0 0 14px rgba(246,234,206,.7)}
 #root .hot{color:#8E2216}
 #root .ondark .hot{color:#FF7A12;text-shadow:0 0 24px rgba(255,122,18,.5)}
 #root .win{position:absolute;overflow:hidden;background:#000;box-shadow:0 0 0 12px #F4E8CC,0 0 0 14px #8A6A44,0 26px 50px rgba(50,24,6,.5)}
@@ -25,16 +25,24 @@
 #root .plate .pi{position:absolute;left:0;top:0;width:100%;height:100%;will-change:transform}
 #root .plate img{width:100%;height:100%;object-fit:cover;display:block}
 #root svg{position:absolute;overflow:visible}
-#root .stk{fill:none;stroke:#2A190C;stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round}
-#root .stk2{fill:none;stroke:#6B4A2C;stroke-width:3;stroke-linecap:round;stroke-dasharray:2 12}
+#root .stk{fill:none;stroke:#1C1007;stroke-width:6;stroke-linecap:round;stroke-linejoin:round}
+#root .stk2{fill:none;stroke:#4E331C;stroke-width:4.5;stroke-linecap:round;stroke-dasharray:3 13}
+#root .obj{position:absolute}
+#root .obj .osp{position:absolute;inset:0;background-size:800% 600%;background-repeat:no-repeat}
+#root .obj .osh{position:absolute;left:14%;right:14%;bottom:7%;height:10%;border-radius:50%;background:radial-gradient(ellipse,rgba(40,20,5,.55),rgba(40,20,5,0) 70%)}
+#root .obj .ohalo{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(255,170,60,.75),rgba(255,110,20,.35) 38%,rgba(255,90,0,0) 70%)}
+#root .obj .otint{position:absolute;border-radius:50%;mix-blend-mode:multiply;background:radial-gradient(circle,rgba(255,150,40,1) 0%,rgba(255,110,25,.95) 32%,rgba(255,110,25,0) 48%)}
+#root .cutw{position:absolute;left:0;top:0;width:1920px;height:1080px;background-color:#E6D3A8;background-image:url('assets/art/papyrus.jpg');background-size:1024px 1024px;}
+#root .cutw .win{top:50px;width:540px;height:980px}
+#root .cutw .cw{position:absolute;font-family:'Cormorant Garamond',serif;font-weight:700;color:#1C1007;line-height:1.02;white-space:nowrap}
 #root .hotf{fill:#8E2216}
 
 #breath-world{width:1920px;height:1080px}
 </style>
 <div id="root" data-composition-id="breath" data-width="1920" data-height="1080" data-duration="4.33" style="">
   <div id="breath-world" class="world">
-    <div id="breath-v1" class="win" style="left:656px;top:0px;width:608px;height:1080px;clip-path:inset(50% 50% 50% 50%)"><video id="breath-v1m" class="clip" data-start="0.0" data-duration="2.57" data-media-start="0.9" data-playback-rate="1.0" muted playsinline src="assets/clips/olga_blow.mp4" style="object-position:50% 50%"></video></div>
-    <div id="breath-d2" class="disp" style="left:120px;top:420px;font-size:150px;font-style:italic;font-weight:500;"><span class="w" style="display:inline-block;margin-right:.24em">…and</span><span class="w" style="display:inline-block;margin-right:.24em">blow.</span></div>
+    <div id="breath-v1" class="win" style="left:656px;top:0px;width:608px;height:1080px;clip-path:inset(50% 50% 50% 50%)"><video id="breath-v1m" class="clip" data-start="0.0" data-duration="2.57" data-media-start="0.1" data-playback-rate="1.0" muted playsinline src="assets/clips/olga_blow2.mp4" style="object-position:50% 50%"></video></div>
+    <div id="breath-d2" class="disp" style="left:70px;top:420px;font-size:118px;font-style:italic;font-weight:500;"><span class="w" style="display:inline-block;margin-right:.24em">…and</span><span class="w" style="display:inline-block;margin-right:.24em">blow.</span></div>
     <canvas id="breath-gl" width="1920" height="1080" style="position:absolute;left:0;top:0;width:1920px;height:1080px;opacity:0"></canvas>
     <div id="breath-d3" class="disp" style="left:0px;width:1920px;top:90px;font-size:120px;text-align:center;"><span class="w" style="display:inline-block;margin-right:.24em">A</span><span class="w hot" style="display:inline-block;margin-right:.24em">hollow</span><span class="w" style="display:inline-block;margin-right:.24em">glass</span><span class="w" style="display:inline-block;margin-right:.24em">form.</span></div>
   </div>
@@ -48,10 +56,12 @@
   const K = [[0.0, 960, 540, 1.0]];
   const ease = (x) => x < 0.5 ? 2*x*x : 1 - Math.pow(-2*x + 2, 2) / 2;   // power2.inOut
   function camAt(t) {
-    // continuous take: between keys the camera travels; while holding it keeps a slow 1%/s push
+    // clean cuts: every key is a hard cut to a new framing that then pushes in slowly (1.4%/s);
+    // only a dive (zoom x4 or more) travels, so the camera flies into the drawing
     let k0 = K[0], k1 = K[0];
     for (let i = 0; i < K.length; i++) { if (t >= K[i][0]) { k0 = K[i]; k1 = K[i + 1] || K[i]; } }
     if (t < K[0][0]) { k0 = k1 = K[0]; }
+    if (!(k1[3] / k0[3] > 4)) return [k0[1], k0[2], k0[3] * Math.min(1 + 0.014 * Math.max(0, t - k0[0]), 1.08)];
     const travel = Math.min(1.0, Math.max(0.01, 0.5 * (k1[0] - k0[0])));
     const m = k1 === k0 ? 0 : ease(Math.min(1, Math.max(0, (t - (k1[0] - travel)) / travel)));
     const drift = 1 + 0.010 * Math.max(0, t - k0[0]) * (1 - m);
@@ -68,7 +78,7 @@
   tl.to(clock, { t: 4.33, duration: 4.33, ease: "none", onUpdate: () => render(clock.t) }, 0);
   render(0);
   
-    tl.fromTo("#breath-v1",{clipPath:"inset(50% 50% 50% 50%)"},{clipPath:"inset(0% 0% 0% 0%)",duration:0.2,ease:"expo.out"},0.0);
+    tl.fromTo("#breath-v1",{clipPath:"inset(50% 50% 50% 50%)"},{clipPath:"inset(0% 0% 0% 0%)",duration:0.05,ease:"expo.out"},0.0);
   tl.fromTo("#breath-d2 .w",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.2,ease:"expo.out",stagger:0.08},0.25);
   tl.fromTo("#breath-gl",{opacity:0},{opacity:1,duration:0.35,ease:"power2.out"},1.67);
   tl.fromTo("#breath-d3 .w",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.2,ease:"expo.out",stagger:0.08},2.79);
