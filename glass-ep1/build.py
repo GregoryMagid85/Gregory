@@ -83,6 +83,7 @@ BASE_CSS = f"""
 
 # ---------------------------------------------------------------- the grid every shot is laid out on (screen px)
 #  margins 120 left/right, 100 top; text never enters the caption band (y > 840); footage windows share one size.
+COLA_C, COLA_W, COLB_C, COLB_W = 680, 1080, 1280, 1000      # centres + widths of the two text columns
 GRID = dict(m=120, right=1800, top=100, safe=840, mid=470, win_w=500, win_h=890, win_y=95, win_r=1300, col_b=760,
             colA=1060, full=1680)
 TS = dict(D1=150, D2=96, D3=64, LAB=40, K=30)          # type scale: display / title / secondary / label / kicker
@@ -219,10 +220,10 @@ class Scene:
     def cutaway(self, name, t0, t1, media=0.0, lines=(), side="right", rate=1.0, pos="50% 40%"):
         """a clean full-frame cut to Olga's footage on a fresh sheet; her line set beside it on the grid, word by word"""
         i = self.id("cut"); EV.append((round(t0, 3), "cut")); EV.append((round(t1, 3), "cut"))
-        wx, tx = (GRID["win_r"], GRID["m"]) if side == "right" else (GRID["m"], GRID["col_b"])
+        wx, tx, tw = (GRID["win_r"], COLA_C, COLA_W) if side == "right" else (GRID["m"], COLB_C, COLB_W)
         buf = []
         for (text, y, size, font, style, cue, hot) in layout_block(lines):
-            self.ktext(text, tx, y, size, t0 + 0.05, style=style, font=font, hot=hot, cue=cue, dest=buf)
+            self.ktext(text, tx, y, size, t0 + 0.05, style=style, font=font, hot=hot, cue=cue, dest=buf, align="center", width=tw)
         self.over.append(f'<div id="{i}" class="cutw" data-layout-allow-overlap style="opacity:0"><div class="win" style="left:{wx}px;top:{GRID['win_y']}px;width:{GRID['win_w']}px;height:{GRID['win_h']}px"><video id="{i}m" class="clip" data-start="{self.L(t0)}" data-duration="{round(t1 - t0, 3)}" '
                          f'data-media-start="{media}" data-playback-rate="{rate}" muted playsinline src="assets/clips/{name}.mp4" style="object-position:{pos}"></video></div>{"".join(buf)}</div>')
         self.js.append(f'tl.set("#{i}",{{opacity:1}},{self.L(t0)});tl.set("#{i}",{{opacity:0}},{self.L(t1)});'
@@ -348,6 +349,8 @@ class Shot:
         if kw.get("width"): kw["width"] = self.S(kw["width"])
         return self.keep(self.sc.ktext(text, self.X(sx), self.Y(sy), self.S(size), t, **kw))
     def block(self, lines, sx, t, yc=None, align="left", width=None, ondark=False):
+        if align == "left" and sx == GRID["m"]: sx, align, width = COLA_C, "center", COLA_W
+        elif align == "left" and sx == GRID["col_b"]: sx, align, width = COLB_C, "center", COLB_W
         for (text, y, size, font, style, cue, hot) in layout_block(lines, yc):
             self.text(text, sx, y, size, t, style=style, font=font, hot=hot, cue=cue, align=align, width=width, cls="ondark" if ondark else "")
     def video(self, name, t_in, t_out, side="right", media=0.0, rate=1.0, pos="50% 40%", rect=None):
@@ -393,10 +396,10 @@ for k, (nm, t0, med) in enumerate(cuts):
           f'<video id="{i}m" class="clip" data-start="{t0}" data-duration="{round(t1 - t0, 3)}" data-media-start="{med}" data-playback-rate="1.25" muted playsinline src="assets/clips/{nm}.mp4"></video></div>',
           f'tl.fromTo("#{i} video",{{scale:1.14}},{{scale:1,duration:0.45,ease:"expo.out"}},{t0});')
 for (txt, t0, t1) in [("ONE BREATH.", 0.15, 1.5), ("ONE IDEA.", 1.6, 2.95)]:
-    i = s.ktext(txt, M, 250, D1, t0, style="slam"); s.js.append(f'tl.to("#{i}",{{opacity:0,duration:0.12}},{t1});')
-i = s.ktext("2,000 YEARS", M, 190, D1, 3.05, style="slam"); s.js.append(f'tl.to("#{i}",{{opacity:0,duration:0.12}},4.4);')
-i = s.ktext("OF GLASS.", M, 190 + D1 * 1.12, D1, 3.3, style="slam", hot=(1,)); s.js.append(f'tl.to("#{i}",{{opacity:0,duration:0.12}},4.4);')
-s.obj("blowpipe", 580, 650, 560, 0.1, spin=1.5, glow=(62, 33, 22))
+    i = s.ktext(txt, COLA_C, 250, D1, t0, style="slam", align="center", width=COLA_W); s.js.append(f'tl.to("#{i}",{{opacity:0,duration:0.12}},{t1});')
+i = s.ktext("2,000 YEARS", COLA_C, 190, D1, 3.05, style="slam", align="center", width=COLA_W); s.js.append(f'tl.to("#{i}",{{opacity:0,duration:0.12}},4.4);')
+i = s.ktext("OF GLASS.", COLA_C, 190 + D1 * 1.12, D1, 3.3, style="slam", align="center", width=COLA_W, hot=(1,)); s.js.append(f'tl.to("#{i}",{{opacity:0,duration:0.12}},4.4);')
+s.obj("blowpipe", COLA_C, 650, 560, 0.1, spin=1.5, glow=(62, 33, 22))
 s.raw(f'<div id="hook-black" style="position:absolute;left:0;top:0;width:1920px;height:1080px;background:radial-gradient(ellipse at 50% 60%,#2A1206,{C["dark"]} 70%);opacity:0"></div>'
       f'<img id="hook-logo" src="assets/art/olga_logo_alpha.png" style="position:absolute;left:660px;top:120px;width:600px;height:418px;opacity:0" alt="">'
       f'<div id="hook-shine" style="position:absolute;left:660px;top:120px;width:600px;height:418px;opacity:0;mix-blend-mode:screen;'
@@ -422,7 +425,7 @@ blk = layout_block(lines)
 sh.block(lines, M, 0)
 for k in range(3):     # struck through as it turns out glass was a luxury
     y = blk[k][1] + D2 * 0.62; w = [190, 470, 900][k]
-    s.sketch([f"M{M - 10} {y:.0f} L{M + w} {y - 6:.0f}"], T("actually") - 0.1 + k * 0.1, dur=0.22, w=1920, h=1080, x=cx - 960, y=cy - 540)
+    s.sketch([f"M{COLA_C - w / 2 - 10:.0f} {y:.0f} L{COLA_C + w / 2 + 10:.0f} {y - 6:.0f}"], T("actually") - 0.1 + k * 0.1, dur=0.22, w=1920, h=1080, x=cx - 960, y=cy - 540)
 cx, cy = cell(5 + 1); sh = Shot(s, T("rare") - 0.1, cx, cy)             # cut: a rare luxury
 sh.video("candles", T("rare") - 0.1, T("now") + 0.3)
 sh.block([("A rare", D2, "D", "rise", ("rare", 0), ()), ("luxury.", D1 * 1.3, "D", "slam", ("luxury.", 0), (0,))], M, 0)
@@ -462,7 +465,7 @@ sh.text("& difficult", 960, 560 + D1 * 1.12, D3, 0, font="F", cue=("difficult", 
 # D — the timeline; the camera dives into the 1st-century dot, which becomes the furnace
 cx, cy = cell(5); ox, oy = cx - 960, cy - 540; sh = Shot(s, T("then") - 0.1, cx, cy)
 sh.block([("Then, around the first century BCE,", D3, "F", "rise", ("then,", 0), ()), ("something remarkable", D2, "D", "rise", ("something", 0), ()),
-          ("happened.", D2, "D", "rise", ("happened.", 0), (0,))], M, 0, yc=270)
+          ("happened.", D2, "D", "rise", ("happened.", 0), (0,))], 960, 0, yc=270, align="center", width=GRID["full"])
 TY = 560
 s.sketch([f"M{M} {TY} L{RX_} {TY}"], T("then") - 0.1, dur=1.2, x=ox, y=oy, w=1920, h=1080)
 for k, (fr, d1, d2) in enumerate([(0.0, "c. 2500 BCE", "first glass objects"), (0.42, "c. 1500 BCE", "core-formed vessels"), (0.94, "1st century BCE", "")]):
@@ -518,11 +521,11 @@ s.cutaway("olga_glory", T("rather", 1) - 0.15, T("but", 1) - 0.1, media=5.5,
 cx, cy = cell(3); sh = Shot(s, T("but", 1) - 0.1, cx, cy)
 sh.text("With the invention of the blowpipe…", 960, GRID["top"], D2 * 0.84, 0, cue=("with", 0), align="center", width=GRID["full"])
 bp = sh.obj("blowpipe", 960, 470, 1000, T("blowpipe,") - 0.3, spin=0.8, glow=(62, 33, 22))
-sh.text("a hollow iron pipe", 520, 700, LB, T("blowpipe,") + 0.4, font="F", style="type")
+sh.text("a hollow iron pipe", 960, 720, LB, T("blowpipe,") + 0.4, font="F", style="type", align="center", width=GRID["full"])
 sh.end(T("gather") - 0.05, keep=(bp,))
-g = Shot(s, T("gather") - 0.05, cx + 260, cy - 40, 1.45)
-g.text("gather", M, GRID["top"], D1, 0, style="slam", cue=("gather", 0), hot=(0,))
-g.text("molten glass onto the end of a pipe", M, GRID["top"] + D1 * 1.15, D3, 0, font="F", cue=("molten", 1))
+g = Shot(s, T("gather") - 0.05, cx + 200, cy - 150, 1.45)
+g.text("gather", 960, GRID["top"], D1, 0, style="slam", cue=("gather", 0), hot=(0,), align="center", width=GRID["full"])
+g.text("molten glass onto the end of a pipe", 960, GRID["top"] + D1 * 1.15, D3, 0, font="F", cue=("molten", 1), align="center", width=GRID["full"])
 # H — layout D: the Levant plate (the ancient breath) before the match cut
 cx, cy = cell(4); sh = Shot(s, T("glass", 4) - 0.6, cx, cy)
 sh.plate("levant", T("glass", 4) - 0.6, b, cap=("Ancient Israel", "c. 50 BCE · the first blowpipe"), fx0=0.3, fx1=0.42, z0=1.5, z1=1.25)
@@ -656,11 +659,11 @@ s = Scene("olga", a, b)
 cx, cy = cell(0); sh = Shot(s, a, cx, cy)                                 # layout A: who she is
 sh.video("olga_hytta", a + 0.02, T("connected") - 0.4, media=0.8, rate=0.9, pos="50% 30%")
 LOGO_W, LOGO_H = 520, 362
-s.raw(f'<div id="olga-plq" style="position:absolute;left:{sh.X(M)}px;top:{sh.Y(130)}px;width:{LOGO_W}px;height:{LOGO_H}px;opacity:0">'
+s.raw(f'<div id="olga-plq" style="position:absolute;left:{sh.X(COLA_C - LOGO_W / 2)}px;top:{sh.Y(130)}px;width:{LOGO_W}px;height:{LOGO_H}px;opacity:0">'
       f'<img id="olga-logo" src="assets/art/olga_logo_alpha.png" alt="" style="position:absolute;left:0;top:0;width:{LOGO_W}px;height:{LOGO_H}px;filter:drop-shadow(6px 10px 10px rgba(50,24,6,.45))"></div>',
       f'tl.fromTo("#olga-plq",{{opacity:0,rotationY:80,transformPerspective:1600}},{{opacity:1,rotationY:0,duration:1.0,ease:"expo.out"}},{s.L(T("olga") - 0.3)});')
-sh.text("Olga Rozin", M, 130 + LOGO_H + 40, D1, 0, style="slam", cue=("olga", 0))
-sh.text("Glass artist", M, 130 + LOGO_H + 40 + D1 * 1.15, KK * 1.4, 0, font="K", style="type", cue=("glass", 13) if False else ("artist.", 0))
+sh.text("Olga Rozin", COLA_C, 130 + LOGO_H + 40, D1, 0, style="slam", cue=("olga", 0), align="center", width=COLA_W)
+sh.text("Glass artist", COLA_C, 130 + LOGO_H + 40 + D1 * 1.15, KK * 1.4, 0, font="K", style="type", cue=("artist.", 0), align="center", width=COLA_W)
 cx, cy = cell(1); sh = Shot(s, T("connected") - 0.5, cx, cy)             # layout D: the craft through the ages
 sh.plate("montage", T("connected") - 0.5, T("there's", 1) - 0.1, cap=("Thousands of years", "one craft, still connected"), fx0=0.2, fx1=0.75, z0=1.6, z1=1.02)
 cx, cy = cell(2); sh = Shot(s, T("there's", 1) - 0.1, cx, cy)            # layout A: her pieces
@@ -685,17 +688,17 @@ s = Scene("outro", a, b)
 sh = Shot(s, a, 960, 540)
 sh.video("olga_fashion", a, b, side="left", media=1.7, pos="50% 35%", rect=(M, GRID["win_y"], 620, 880))
 s.ktext("Olga in her glass costume · Glass Fashion Show", M, GRID["win_y"] + 880 + 14, 28, a + 0.6, font="F", style="type", color=C["gold"])
-COLX = 860
-s.ktext("I'd love to hear", COLX, 150, D2, 0, cue=("i'd", 1), cls="ondark")
-s.ktext("what you think!", COLX, 150 + D2 * 1.12, D2, 0, cue=("what", 1) if False else ("think!", 1), hot=(1,), cls="ondark")
-s.raw(f'<img id="outro-logo" src="assets/art/olga_logo_alpha.png" alt="" style="position:absolute;left:{COLX}px;top:420px;width:400px;height:279px;opacity:0">'
-      f'<div id="outro-shine" style="position:absolute;left:{COLX}px;top:420px;width:400px;height:279px;opacity:0;mix-blend-mode:screen;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.9) 50%,transparent 65%) no-repeat;-webkit-mask:url(assets/art/olga_logo_alpha.png) center/100% 100% no-repeat;mask:url(assets/art/olga_logo_alpha.png) center/100% 100% no-repeat"></div>',
+COLX, OC = 860, 1330
+s.ktext("I'd love to hear", OC, 150, D2, 0, cue=("i'd", 1), cls="ondark", align="center", width=900)
+s.ktext("what you think!", OC, 150 + D2 * 1.12, D2, 0, cue=("think!", 1), hot=(1,), cls="ondark", align="center", width=900)
+s.raw(f'<img id="outro-logo" src="assets/art/olga_logo_alpha.png" alt="" style="position:absolute;left:{OC - 200}px;top:420px;width:400px;height:279px;opacity:0">'
+      f'<div id="outro-shine" style="position:absolute;left:{OC - 200}px;top:420px;width:400px;height:279px;opacity:0;mix-blend-mode:screen;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.9) 50%,transparent 65%) no-repeat;-webkit-mask:url(assets/art/olga_logo_alpha.png) center/100% 100% no-repeat;mask:url(assets/art/olga_logo_alpha.png) center/100% 100% no-repeat"></div>',
       f'tl.fromTo("#outro-logo",{{opacity:0,scale:1.1,filter:"blur(10px)"}},{{opacity:1,scale:1,filter:"blur(0px)",duration:0.9,ease:"expo.out"}},{s.L(LAST + 0.5)});'
       f'tl.fromTo("#outro-shine",{{opacity:0,backgroundPosition:"-400px 0"}},{{opacity:1,backgroundPosition:"400px 0",duration:1.0,ease:"power2.inOut"}},{s.L(LAST + 1.4)});'
       f'tl.fromTo("#outro-shine",{{backgroundPosition:"-400px 0"}},{{immediateRender:false,backgroundPosition:"400px 0",duration:1.2,ease:"power2.inOut"}},{s.L(LAST + 4.6)});')
-s.ktext(f"Glass Stories · Episode {EP['n']}", COLX, 750, KK, LAST + 1.2, font="K", style="type", cls="gold")
-s.ktext("Next time: how is glass made?", COLX, 800, D3 * 0.75, LAST + 2.4, font="F", cls="ondark")
-s.ktext("Follow @olga_rozin", COLX, 880, D3 * 0.75, LAST + 3.6, font="D", hot=(1,), cls="ondark", style="slam")
+s.ktext(f"Glass Stories · Episode {EP['n']}", OC, 750, KK, LAST + 1.2, font="K", style="type", cls="gold", align="center", width=900)
+s.ktext("Next time: how is glass made?", OC, 800, D3 * 0.75, LAST + 2.4, font="F", cls="ondark", align="center", width=900)
+s.ktext("Follow @olga_rozin", OC, 880, D3 * 0.75, LAST + 3.6, font="D", hot=(1,), cls="ondark", style="slam", align="center", width=900)
 s.embers(LAST + 0.3, DUR, n=40, seed=9, x0=760, x1=1920)
 SCENES.append((s.cid, s.a, s.b, s.file(1920, 1080, bg=C["dark"])))
 
