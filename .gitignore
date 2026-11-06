@@ -14,3 +14,7 @@ report/glass_vo/*.wav
 report/glass_vo/*.f32
 report/public/glass/vo.wav
 report/public/glass/vo_*.wav
+glass-ep1/.hyperframes/
+glass-ep1/renders/
+glass-ep1/assets/audio/*.wav
+glass-ep1/node_modules/

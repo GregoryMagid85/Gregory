@@ -1,0 +1,10 @@
+{
+  "compositions/components/camera-shake.html": "3f64f5da225acb5b408847fef9c388f889b1bf1e8d85ec95f0f4316839a60db4",
+  "compositions/components/caption-camera-follow.html": "4a0da1ba065882e95274468c8f3e36f1094fc598c3c93be1fc63182e9e42953c",
+  "compositions/components/grain-overlay.html": "97a0da8f26feca9574abcf08b8186cef10ea4819b2aeabc30547ae16ed9ae80d",
+  "compositions/components/kinetic-center-build.html": "774f75b80d82fbc0c6226b85743804fb7a2229fb038eb0d38fa2e9503072c2e0",
+  "compositions/components/logo-sting.html": "d120e9f7f8e76fc609d3413b94459f64e2112bc2504a8cb71fcfca72e32a99da",
+  "compositions/components/strikethrough-replace.html": "8ef7447fe6e1f122cec5f601b3388b8cb4c18eb0c7341dd7e5af3dac53e65e10",
+  "compositions/components/whiteboard-ink.html": "5ee29dbcb1fb998e226717149d414fd7176809e2f5cc04c5d73112f7ce60757e",
+  "compositions/glass-hero.html": "d49ba5ea111af72138f1693d8cc1de60520191fbe96ff71ac88f6a1fe02cea88"
+}

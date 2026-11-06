@@ -1,0 +1,85 @@
+<template>
+<style>@font-face{font-family:'Cormorant Garamond';font-weight:700;src:url('assets/fonts/cormorant-garamond-latin-700-normal.woff2') format('woff2');}
+@font-face{font-family:'Cormorant Garamond';font-weight:600;src:url('assets/fonts/cormorant-garamond-latin-600-normal.woff2') format('woff2');}
+@font-face{font-family:'Cormorant Garamond';font-style:italic;font-weight:500;src:url('assets/fonts/cormorant-garamond-latin-500-italic.woff2') format('woff2');}
+#root{position:absolute;inset:0;overflow:hidden;background-color:#16395C;
+background-image:linear-gradient(#3B6E9C66 1.5px,transparent 1.5px),linear-gradient(90deg,#3B6E9C66 1.5px,transparent 1.5px),
+linear-gradient(#2A5B8655 1px,transparent 1px),linear-gradient(90deg,#2A5B8655 1px,transparent 1px);
+background-size:200px 200px,200px 200px,40px 40px,40px 40px;}
+#root .world{position:absolute;left:0;top:0;transform-origin:0 0;will-change:transform}
+#root .paper{position:absolute;background-color:#16395C;
+background-image:linear-gradient(#3B6E9C66 1.5px,transparent 1.5px),linear-gradient(90deg,#3B6E9C66 1.5px,transparent 1.5px),
+linear-gradient(#2A5B8655 1px,transparent 1px),linear-gradient(90deg,#2A5B8655 1px,transparent 1px);
+background-size:200px 200px,200px 200px,40px 40px,40px 40px;}
+#root .vign{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 45%,transparent 55%,rgba(6,18,32,.55) 100%)}
+#root .noise{position:absolute;inset:0;pointer-events:none;opacity:.05;mix-blend-mode:overlay;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' seed='4'/></filter><rect width='300' height='300' filter='url(%23n)'/></svg>")}
+#root .disp{position:absolute;font-family:'Cormorant Garamond',serif;font-weight:700;color:#EAF2FA;line-height:1.0;letter-spacing:-0.01em;white-space:nowrap}
+#root .lab{position:absolute;font-family:Inter,sans-serif;font-weight:700;color:#EAF2FA;font-size:34px;white-space:nowrap}
+#root .hot{color:#FF8A1F}
+#root .win{position:absolute;overflow:hidden;background:#000;box-shadow:0 0 0 3px #EAF2FA,0 24px 60px rgba(4,12,22,.6)}
+#root .win video{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover}
+#root .plate{position:absolute;overflow:hidden;box-shadow:0 0 0 3px #EAF2FA,0 26px 60px rgba(4,12,22,.55)}
+#root .plate .pi{position:absolute;left:0;top:0;width:100%;height:100%;will-change:transform}
+#root .plate img{width:100%;height:100%;object-fit:cover;display:block}
+#root svg{position:absolute;overflow:visible}
+#root .stk{fill:none;stroke:#EAF2FA;stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+#root .stk2{fill:none;stroke:#9CC3E6;stroke-width:3;stroke-linecap:round;stroke-dasharray:2 12}
+#root .hotf{fill:#FF8A1F}
+
+#outro-world{width:1920px;height:1080px}
+</style>
+<div id="root" data-composition-id="outro" data-width="1920" data-height="1080" data-duration="10.37" style="background:#050505">
+  <div id="outro-world" class="world">
+    <div id="outro-p1" class="plate" style="left:0px;top:0px;width:1920px;height:1080px;rotate:0deg;opacity:0"><div class="pi"><img src="assets/art/modern.png" alt=""></div></div>
+    <div id="outro-shade" style="position:absolute;left:0;top:0;width:1920px;height:1080px;background:linear-gradient(90deg,rgba(5,5,5,0) 30%,rgba(5,5,5,.92) 62%)"></div>
+    <div id="outro-d2" class="disp" style="left:1080px;top:240px;font-size:110px;font-style:italic;font-weight:500;"><span class="w" style="display:inline-block;margin-right:.24em">I&#x27;d</span><span class="w" style="display:inline-block;margin-right:.24em">love</span><span class="w" style="display:inline-block;margin-right:.24em">to</span><span class="w" style="display:inline-block;margin-right:.24em">hear</span></div>
+    <div id="outro-d3" class="disp" style="left:1080px;top:360px;font-size:110px;font-style:italic;font-weight:500;"><span class="w" style="display:inline-block;margin-right:.24em">what</span><span class="w hot" style="display:inline-block;margin-right:.24em">you</span><span class="w" style="display:inline-block;margin-right:.24em">think!</span></div>
+    <img id="outro-logo" src="assets/art/olga_logo_cut.png" alt="" style="position:absolute;left:1240px;top:520px;width:420px;opacity:0"><div id="outro-shine" style="position:absolute;left:1240px;top:520px;width:420px;height:280px;opacity:0;mix-blend-mode:screen;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.9) 50%,transparent 65%);-webkit-mask:url(assets/art/olga_logo_cut.png) center/contain no-repeat;mask:url(assets/art/olga_logo_cut.png) center/contain no-repeat"></div>
+    <div id="outro-l4" class="lab" style="left:1170px;top:830px;font-size:30px;color:#BFC6CE;">GLASS STORIES · EPISODE 1</div>
+    <div id="outro-l5" class="lab" style="left:1170px;top:880px;font-size:40px;">Next time: how is glass made?</div>
+    <div id="outro-l6" class="lab" style="left:1170px;top:945px;font-size:44px;color:#FF8A1F;">Follow @olga_rozin</div>
+  </div>
+  
+  <div class="vign"></div><div class="noise"></div>
+</div>
+<script>
+(function(){
+  const tl = gsap.timeline({ paused: true });
+  const world = document.getElementById("outro-world");
+  const K = [[0.0, 960, 540, 1.0]];
+  const ease = (x) => x < 0.5 ? 2*x*x : 1 - Math.pow(-2*x + 2, 2) / 2;   // power2.inOut
+  function camAt(t) {
+    // continuous take: between keys the camera travels; while holding it keeps a slow 1%/s push
+    let k0 = K[0], k1 = K[0];
+    for (let i = 0; i < K.length; i++) { if (t >= K[i][0]) { k0 = K[i]; k1 = K[i + 1] || K[i]; } }
+    if (t < K[0][0]) { k0 = k1 = K[0]; }
+    const travel = Math.min(1.0, Math.max(0.01, 0.5 * (k1[0] - k0[0])));
+    const m = k1 === k0 ? 0 : ease(Math.min(1, Math.max(0, (t - (k1[0] - travel)) / travel)));
+    const drift = 1 + 0.010 * Math.max(0, t - k0[0]) * (1 - m);
+    const cx = k0[1] + (k1[1] - k0[1]) * m, cy = k0[2] + (k1[2] - k0[2]) * m;
+    const s = k0[3] * Math.pow(k1[3] / k0[3], m) * Math.min(drift, 1.06);
+    return [cx, cy, s];
+  }
+  const clock = { t: 0 };
+  function render(t) {
+    const [cx, cy, s] = camAt(t);
+    world.style.transform = "translate(" + (960 - cx * s).toFixed(2) + "px," + (540 - cy * s).toFixed(2) + "px) scale(" + s.toFixed(5) + ")";
+    if (window.__render_outro) window.__render_outro(t);
+  }
+  tl.to(clock, { t: 10.37, duration: 10.37, ease: "none", onUpdate: () => render(clock.t) }, 0);
+  render(0);
+  
+    tl.fromTo("#outro-p1",{opacity:0,scale:0.92},{opacity:1,scale:1,duration:0.6,ease:"expo.out"},0.0);
+  tl.fromTo("#outro-p1 .pi",{scale:2.1,xPercent:27.7},{scale:1.85,xPercent:23.8,duration:6.0,ease:"power1.inOut"},0.0);
+  tl.fromTo("#outro-d2 .w",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.2,ease:"expo.out",stagger:0.08},0.25);
+  tl.fromTo("#outro-d3 .w",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.2,ease:"expo.out",stagger:0.08},1.35);
+  tl.fromTo("#outro-logo",{opacity:0,scale:1.1,filter:"blur(10px)"},{opacity:1,scale:1,filter:"blur(0px)",duration:0.9,ease:"expo.out"},2.07);tl.fromTo("#outro-shine",{opacity:0,backgroundPosition:"-420px 0"},{opacity:1,backgroundPosition:"420px 0",duration:1.0,ease:"power2.inOut"},2.97);tl.fromTo("#outro-shine",{backgroundPosition:"-420px 0"},{immediateRender:false,backgroundPosition:"420px 0",duration:1.2,ease:"power2.inOut"},6.17);
+  tl.fromTo("#outro-l4",{opacity:0,filter:"blur(6px)"},{opacity:1,filter:"blur(0px)",duration:0.18,ease:"power2.out"},2.77);
+  tl.fromTo("#outro-l5",{opacity:0,filter:"blur(6px)"},{opacity:1,filter:"blur(0px)",duration:0.18,ease:"power2.out"},4.17);
+  tl.fromTo("#outro-l6",{opacity:0,filter:"blur(6px)"},{opacity:1,filter:"blur(0px)",duration:0.18,ease:"power2.out"},5.37);
+  window.__timelines = window.__timelines || {};
+  window.__timelines["outro"] = tl;
+})();
+</script>
+
+</template>
