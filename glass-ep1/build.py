@@ -383,7 +383,7 @@ s.raw(f'<svg id="sheet2-reg" style="left:{lx - 60}px;top:{ly - 140}px" width="12
 jx, jy = P["jerusalem"]
 s.pin(jx, jy, T("syro-palestinian") + 0.3, k=0.3)
 s.lab("Jerusalem · earliest evidence, c. 50 BCE", jx + 16, jy - 8, T("syro-palestinian") + 0.4, size=12, color=C["ink"])
-s.lab("Syro-Palestinian region", lx + 45, ly - 120, T("most"), size=13, color=C["hot"])
+s.lab("Ancient Israel", lx + 45, ly - 120, T("most"), size=13, color=C["hot"])
 s.key(a, 1500, 950, 0.5)
 s.key(T("technique") + 0.6, lx - 10, ly + 30, 3.0)
 # station F (3600..): the clay-core infographic, toured part by part
@@ -402,7 +402,7 @@ s.obj("blowpipe", GX + 900, GY + 330, 1150, T("blowpipe,") - 0.2, spin=0.8, glow
 s.lab("hollow iron blowpipe", GX + 380, GY + 560, T("blowpipe,") + 0.5, size=50)
 s.lab("a gather of molten glass", GX + 1050, GY + 90, T("gather") + 0.15, size=50, color=C["hot"])
 s.disp("gather…", GX + 300, GY - 140, 130, T("gather"), italic=True)
-s.plate("levant", GX + 2100, GY - 60, 1150, 647, T("glass", 4) - 0.6, T("glass", 4) - 0.6, b, fx0=0.3, fx1=0.42, z0=1.5, z1=1.25, cap=("The Levant", "c. 50 BCE · the first blowpipe"))
+s.plate("levant", GX + 2100, GY - 60, 1150, 647, T("glass", 4) - 0.6, T("glass", 4) - 0.6, b, fx0=0.3, fx1=0.42, z0=1.5, z1=1.25, cap=("Ancient Israel", "c. 50 BCE · the first blowpipe"))
 s.key(T("blowpipe,") - 0.2, GX + 950, GY + 260, 1.0)
 s.key(T("gather"), GX + 1000, GY + 210, 1.3)          # punch-in cut on the gather
 s.key(b - 0.1, GX + 2600, GY + 260, 1.35)    # the camera arrives on the ancient breath
