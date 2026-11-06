@@ -2,29 +2,32 @@
 <style>@font-face{font-family:'Cormorant Garamond';font-weight:700;src:url('assets/fonts/cormorant-garamond-latin-700-normal.woff2') format('woff2');}
 @font-face{font-family:'Cormorant Garamond';font-weight:600;src:url('assets/fonts/cormorant-garamond-latin-600-normal.woff2') format('woff2');}
 @font-face{font-family:'Cormorant Garamond';font-style:italic;font-weight:500;src:url('assets/fonts/cormorant-garamond-latin-500-italic.woff2') format('woff2');}
-#root{position:absolute;inset:0;overflow:hidden;background-color:#16395C;
-background-image:linear-gradient(#3B6E9C66 1.5px,transparent 1.5px),linear-gradient(90deg,#3B6E9C66 1.5px,transparent 1.5px),
-linear-gradient(#2A5B8655 1px,transparent 1px),linear-gradient(90deg,#2A5B8655 1px,transparent 1px);
-background-size:200px 200px,200px 200px,40px 40px,40px 40px;}
+@font-face{font-family:'IM Fell English';font-weight:400;src:url('assets/fonts/im-fell-english-latin-400-normal.woff2') format('woff2');}
+@font-face{font-family:'IM Fell English';font-style:italic;font-weight:400;src:url('assets/fonts/im-fell-english-latin-400-italic.woff2') format('woff2');}
+#root{position:absolute;inset:0;overflow:hidden;background-color:#E6D3A8;background-image:url('assets/art/papyrus.jpg');background-size:1024px 1024px;}
 #root .world{position:absolute;left:0;top:0;transform-origin:0 0;will-change:transform}
-#root .paper{position:absolute;background-color:#16395C;
-background-image:linear-gradient(#3B6E9C66 1.5px,transparent 1.5px),linear-gradient(90deg,#3B6E9C66 1.5px,transparent 1.5px),
-linear-gradient(#2A5B8655 1px,transparent 1px),linear-gradient(90deg,#2A5B8655 1px,transparent 1px);
-background-size:200px 200px,200px 200px,40px 40px,40px 40px;}
-#root .vign{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 45%,transparent 55%,rgba(6,18,32,.55) 100%)}
-#root .noise{position:absolute;inset:0;pointer-events:none;opacity:.05;mix-blend-mode:overlay;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' seed='4'/></filter><rect width='300' height='300' filter='url(%23n)'/></svg>")}
-#root .disp{position:absolute;font-family:'Cormorant Garamond',serif;font-weight:700;color:#EAF2FA;line-height:1.0;letter-spacing:-0.01em;white-space:nowrap}
-#root .lab{position:absolute;font-family:Inter,sans-serif;font-weight:700;color:#EAF2FA;font-size:34px;white-space:nowrap}
-#root .hot{color:#FF8A1F}
-#root .win{position:absolute;overflow:hidden;background:#000;box-shadow:0 0 0 3px #EAF2FA,0 24px 60px rgba(4,12,22,.6)}
+#root .paper{position:absolute;background-color:#E6D3A8;background-image:url('assets/art/papyrus.jpg');background-size:1024px 1024px;}
+#root .vign{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 46%,transparent 52%,rgba(92,48,14,.28) 78%,rgba(34,15,4,.78) 100%)}
+#root .noise{position:absolute;inset:0;pointer-events:none;opacity:.10;mix-blend-mode:multiply;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' seed='4'/></filter><rect width='300' height='300' filter='url(%23n)'/></svg>")}
+#root .disp{position:absolute;font-family:'Cormorant Garamond',serif;font-weight:700;color:#2A190C;line-height:1.0;letter-spacing:-0.01em;white-space:nowrap}
+#root .lab{position:absolute;font-family:'IM Fell English',serif;font-style:italic;color:#2A190C;font-size:34px;white-space:nowrap}
+#root .hot{color:#8E2216}
+#root .ondark .hot{color:#FF7A12;text-shadow:0 0 24px rgba(255,122,18,.5)}
+#root .win{position:absolute;overflow:hidden;background:#000;box-shadow:0 0 0 12px #F4E8CC,0 0 0 14px #8A6A44,0 26px 50px rgba(50,24,6,.5)}
 #root .win video{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover}
-#root .plate{position:absolute;overflow:hidden;box-shadow:0 0 0 3px #EAF2FA,0 26px 60px rgba(4,12,22,.55)}
+#root .plate{position:absolute;overflow:hidden;box-shadow:0 0 0 14px #F4E8CC,0 0 0 16px #8A6A44,0 30px 60px rgba(50,24,6,.5)}
+#root .rib{position:absolute;padding:14px 46px 16px 40px;background:linear-gradient(180deg,#B3301F,#8E2116);color:#F4E8CC;font-family:'Cormorant Garamond',serif;font-weight:700;font-size:54px;line-height:1;white-space:nowrap;
+  clip-path:polygon(0 0,100% 0,calc(100% - 26px) 50%,100% 100%,0 100%);box-shadow:0 10px 24px rgba(50,20,5,.4)}
+#root .rib small{display:block;font-family:'IM Fell English',serif;font-style:italic;font-weight:400;font-size:30px;margin-top:6px;color:#F6DFAF}
+#root .ember{position:absolute;width:6px;height:6px;border-radius:50%;background:radial-gradient(circle,#FFE6A8,#FF8A1F 55%,rgba(255,90,0,0) 72%)}
+#root .wipe{position:absolute;left:0;top:0;width:3000px;height:1080px;transform:translateX(1920px);
+  background:linear-gradient(90deg,rgba(255,210,122,0) 0px,#FFD27A 120px,#FF7A12 220px,#9E2A05 300px,#2A0D03 420px,#140602 1500px,#2A0D03 2580px,#9E2A05 2700px,#FF7A12 2780px,#FFD27A 2880px,rgba(255,210,122,0) 3000px)}
 #root .plate .pi{position:absolute;left:0;top:0;width:100%;height:100%;will-change:transform}
 #root .plate img{width:100%;height:100%;object-fit:cover;display:block}
 #root svg{position:absolute;overflow:visible}
-#root .stk{fill:none;stroke:#EAF2FA;stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
-#root .stk2{fill:none;stroke:#9CC3E6;stroke-width:3;stroke-linecap:round;stroke-dasharray:2 12}
-#root .hotf{fill:#FF8A1F}
+#root .stk{fill:none;stroke:#2A190C;stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round}
+#root .stk2{fill:none;stroke:#6B4A2C;stroke-width:3;stroke-linecap:round;stroke-dasharray:2 12}
+#root .hotf{fill:#8E2216}
 
 #breath-world{width:1920px;height:1080px}
 </style>
@@ -35,7 +38,7 @@ background-size:200px 200px,200px 200px,40px 40px,40px 40px;}
     <canvas id="breath-gl" width="1920" height="1080" style="position:absolute;left:0;top:0;width:1920px;height:1080px;opacity:0"></canvas>
     <div id="breath-d3" class="disp" style="left:0px;width:1920px;top:90px;font-size:120px;text-align:center;"><span class="w" style="display:inline-block;margin-right:.24em">A</span><span class="w hot" style="display:inline-block;margin-right:.24em">hollow</span><span class="w" style="display:inline-block;margin-right:.24em">glass</span><span class="w" style="display:inline-block;margin-right:.24em">form.</span></div>
   </div>
-  
+  <div id="breath-wo" class="wipe"></div>
   <div class="vign"></div><div class="noise"></div>
 </div>
 <script>
@@ -69,6 +72,7 @@ background-size:200px 200px,200px 200px,40px 40px,40px 40px;}
   tl.fromTo("#breath-d2 .w",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.2,ease:"expo.out",stagger:0.08},0.25);
   tl.fromTo("#breath-gl",{opacity:0},{opacity:1,duration:0.35,ease:"power2.out"},1.67);
   tl.fromTo("#breath-d3 .w",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.2,ease:"expo.out",stagger:0.08},2.79);
+  tl.fromTo("#breath-wo",{x:1920},{x:-540,duration:0.45,ease:"power2.out"},3.86);
   window.__timelines = window.__timelines || {};
   window.__timelines["breath"] = tl;
 })();
@@ -81,21 +85,28 @@ const canvas = document.getElementById("breath-gl");
 const r = new THREE.WebGLRenderer({ canvas, antialias: true, preserveDrawingBuffer: true, alpha: false });
 r.setPixelRatio(1); r.setSize(1920, 1080, false); r.outputColorSpace = THREE.SRGBColorSpace;
 const scene = new THREE.Scene();
-// the blueprint sheet itself is the backdrop, so the glass refracts the drafting grid
+// the manuscript page itself is the backdrop, so the glass refracts the papyrus and its ink
 const c = document.createElement("canvas"); c.width = 2048; c.height = 1152; const g = c.getContext("2d");
-g.fillStyle = "#16395C"; g.fillRect(0, 0, c.width, c.height);
-for (let x = 0; x <= c.width; x += 43) { g.strokeStyle = x % 215 < 1 ? "#3B6E9C" : "#2A5B86"; g.lineWidth = x % 215 < 1 ? 2 : 1; g.beginPath(); g.moveTo(x, 0); g.lineTo(x, c.height); g.stroke(); }
-for (let y = 0; y <= c.height; y += 43) { g.strokeStyle = y % 215 < 1 ? "#3B6E9C" : "#2A5B86"; g.lineWidth = y % 215 < 1 ? 2 : 1; g.beginPath(); g.moveTo(0, y); g.lineTo(c.width, y); g.stroke(); }
+const pap = new Image(); pap.src = "assets/art/papyrus.jpg"; await pap.decode();
+for (let x = 0; x < c.width; x += 1024) for (let y = 0; y < c.height; y += 1024) g.drawImage(pap, x, y);
+// faint ink: a manuscript page of vessel studies behind the bubble
+g.strokeStyle = "rgba(42,25,12,.55)"; g.lineWidth = 4; g.lineCap = "round";
+const vase = (x, y, s) => { g.beginPath(); g.moveTo(x - 20 * s, y); g.lineTo(x - 20 * s, y + 40 * s); g.bezierCurveTo(x - 110 * s, y + 80 * s, x - 100 * s, y + 230 * s, x, y + 260 * s);
+  g.bezierCurveTo(x + 100 * s, y + 230 * s, x + 110 * s, y + 80 * s, x + 20 * s, y + 40 * s); g.lineTo(x + 20 * s, y); g.stroke(); };
+[[260, 180, 1.6], [620, 640, 1.2], [1500, 200, 1.4], [1820, 620, 1.1], [1080, 760, 0.9], [980, 120, 0.8]].forEach(([x, y, s]) => vase(x, y, s));
+g.strokeStyle = "rgba(42,25,12,.25)"; g.lineWidth = 2;
+for (let y = 90; y < c.height; y += 64) { g.beginPath(); g.moveTo(80, y); g.lineTo(c.width - 80, y); g.stroke(); }
+const vg = g.createRadialGradient(1024, 560, 300, 1024, 576, 1250); vg.addColorStop(0, "rgba(0,0,0,0)"); vg.addColorStop(1, "rgba(40,18,4,.7)"); g.fillStyle = vg; g.fillRect(0, 0, c.width, c.height);
 const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace;
 const cam = new THREE.PerspectiveCamera(30, 1920 / 1080, 0.1, 100); cam.position.set(0, 0, 10);
 const ph = 2 * Math.tan(THREE.MathUtils.degToRad(15)) * 14;
 const back = new THREE.Mesh(new THREE.PlaneGeometry(ph * 16 / 9, ph), new THREE.MeshBasicMaterial({ map: tex })); back.position.z = -4; scene.add(back);
-const pm = new THREE.PMREMGenerator(r); const studio = new THREE.Scene(); studio.background = new THREE.Color(0.05, 0.07, 0.1);
+const pm = new THREE.PMREMGenerator(r); const studio = new THREE.Scene(); studio.background = new THREE.Color(0.09, 0.06, 0.04);
 const box = (w, h, x, y, z, l) => { const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ color: new THREE.Color(l, l, l), side: THREE.DoubleSide })); m.position.set(x, y, z); m.lookAt(0, 0, 0); studio.add(m); };
 box(8, 3, -2, 6, 3, 3); box(1.2, 9, -7, 0, -1, 4); box(1.2, 9, 7, 0, 1, 2); box(6, 1, 0, -5, 3, 1.5);
 scene.environment = pm.fromScene(studio, 0.02).texture;
 const glassMat = new THREE.MeshPhysicalMaterial({ color: 0xffffff, transmission: 1, thickness: 0.25, ior: 1.5, roughness: 0.02, dispersion: 0.4,
-  attenuationColor: new THREE.Color("#d8ecff"), attenuationDistance: 3, clearcoat: 1, clearcoatRoughness: 0.03, specularIntensity: 1 });
+  attenuationColor: new THREE.Color("#e6f4ea"), attenuationDistance: 3, clearcoat: 1, clearcoatRoughness: 0.03, specularIntensity: 1 });
 const bubble = new THREE.Mesh(new THREE.SphereGeometry(1, 128, 96), glassMat); scene.add(bubble);
 const pipe = new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.07, 9, 32), new THREE.MeshStandardMaterial({ color: 0x8a8f96, metalness: 0.9, roughness: 0.3 }));
 pipe.rotation.z = Math.PI / 2; scene.add(pipe);

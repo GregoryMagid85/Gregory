@@ -2,61 +2,64 @@
 <style>@font-face{font-family:'Cormorant Garamond';font-weight:700;src:url('assets/fonts/cormorant-garamond-latin-700-normal.woff2') format('woff2');}
 @font-face{font-family:'Cormorant Garamond';font-weight:600;src:url('assets/fonts/cormorant-garamond-latin-600-normal.woff2') format('woff2');}
 @font-face{font-family:'Cormorant Garamond';font-style:italic;font-weight:500;src:url('assets/fonts/cormorant-garamond-latin-500-italic.woff2') format('woff2');}
-#root{position:absolute;inset:0;overflow:hidden;background-color:#16395C;
-background-image:linear-gradient(#3B6E9C66 1.5px,transparent 1.5px),linear-gradient(90deg,#3B6E9C66 1.5px,transparent 1.5px),
-linear-gradient(#2A5B8655 1px,transparent 1px),linear-gradient(90deg,#2A5B8655 1px,transparent 1px);
-background-size:200px 200px,200px 200px,40px 40px,40px 40px;}
+@font-face{font-family:'IM Fell English';font-weight:400;src:url('assets/fonts/im-fell-english-latin-400-normal.woff2') format('woff2');}
+@font-face{font-family:'IM Fell English';font-style:italic;font-weight:400;src:url('assets/fonts/im-fell-english-latin-400-italic.woff2') format('woff2');}
+#root{position:absolute;inset:0;overflow:hidden;background-color:#E6D3A8;background-image:url('assets/art/papyrus.jpg');background-size:1024px 1024px;}
 #root .world{position:absolute;left:0;top:0;transform-origin:0 0;will-change:transform}
-#root .paper{position:absolute;background-color:#16395C;
-background-image:linear-gradient(#3B6E9C66 1.5px,transparent 1.5px),linear-gradient(90deg,#3B6E9C66 1.5px,transparent 1.5px),
-linear-gradient(#2A5B8655 1px,transparent 1px),linear-gradient(90deg,#2A5B8655 1px,transparent 1px);
-background-size:200px 200px,200px 200px,40px 40px,40px 40px;}
-#root .vign{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 45%,transparent 55%,rgba(6,18,32,.55) 100%)}
-#root .noise{position:absolute;inset:0;pointer-events:none;opacity:.05;mix-blend-mode:overlay;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' seed='4'/></filter><rect width='300' height='300' filter='url(%23n)'/></svg>")}
-#root .disp{position:absolute;font-family:'Cormorant Garamond',serif;font-weight:700;color:#EAF2FA;line-height:1.0;letter-spacing:-0.01em;white-space:nowrap}
-#root .lab{position:absolute;font-family:Inter,sans-serif;font-weight:700;color:#EAF2FA;font-size:34px;white-space:nowrap}
-#root .hot{color:#FF8A1F}
-#root .win{position:absolute;overflow:hidden;background:#000;box-shadow:0 0 0 3px #EAF2FA,0 24px 60px rgba(4,12,22,.6)}
+#root .paper{position:absolute;background-color:#E6D3A8;background-image:url('assets/art/papyrus.jpg');background-size:1024px 1024px;}
+#root .vign{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 46%,transparent 52%,rgba(92,48,14,.28) 78%,rgba(34,15,4,.78) 100%)}
+#root .noise{position:absolute;inset:0;pointer-events:none;opacity:.10;mix-blend-mode:multiply;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' seed='4'/></filter><rect width='300' height='300' filter='url(%23n)'/></svg>")}
+#root .disp{position:absolute;font-family:'Cormorant Garamond',serif;font-weight:700;color:#2A190C;line-height:1.0;letter-spacing:-0.01em;white-space:nowrap}
+#root .lab{position:absolute;font-family:'IM Fell English',serif;font-style:italic;color:#2A190C;font-size:34px;white-space:nowrap}
+#root .hot{color:#8E2216}
+#root .ondark .hot{color:#FF7A12;text-shadow:0 0 24px rgba(255,122,18,.5)}
+#root .win{position:absolute;overflow:hidden;background:#000;box-shadow:0 0 0 12px #F4E8CC,0 0 0 14px #8A6A44,0 26px 50px rgba(50,24,6,.5)}
 #root .win video{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover}
-#root .plate{position:absolute;overflow:hidden;box-shadow:0 0 0 3px #EAF2FA,0 26px 60px rgba(4,12,22,.55)}
+#root .plate{position:absolute;overflow:hidden;box-shadow:0 0 0 14px #F4E8CC,0 0 0 16px #8A6A44,0 30px 60px rgba(50,24,6,.5)}
+#root .rib{position:absolute;padding:14px 46px 16px 40px;background:linear-gradient(180deg,#B3301F,#8E2116);color:#F4E8CC;font-family:'Cormorant Garamond',serif;font-weight:700;font-size:54px;line-height:1;white-space:nowrap;
+  clip-path:polygon(0 0,100% 0,calc(100% - 26px) 50%,100% 100%,0 100%);box-shadow:0 10px 24px rgba(50,20,5,.4)}
+#root .rib small{display:block;font-family:'IM Fell English',serif;font-style:italic;font-weight:400;font-size:30px;margin-top:6px;color:#F6DFAF}
+#root .ember{position:absolute;width:6px;height:6px;border-radius:50%;background:radial-gradient(circle,#FFE6A8,#FF8A1F 55%,rgba(255,90,0,0) 72%)}
+#root .wipe{position:absolute;left:0;top:0;width:3000px;height:1080px;transform:translateX(1920px);
+  background:linear-gradient(90deg,rgba(255,210,122,0) 0px,#FFD27A 120px,#FF7A12 220px,#9E2A05 300px,#2A0D03 420px,#140602 1500px,#2A0D03 2580px,#9E2A05 2700px,#FF7A12 2780px,#FFD27A 2880px,rgba(255,210,122,0) 3000px)}
 #root .plate .pi{position:absolute;left:0;top:0;width:100%;height:100%;will-change:transform}
 #root .plate img{width:100%;height:100%;object-fit:cover;display:block}
 #root svg{position:absolute;overflow:visible}
-#root .stk{fill:none;stroke:#EAF2FA;stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
-#root .stk2{fill:none;stroke:#9CC3E6;stroke-width:3;stroke-linecap:round;stroke-dasharray:2 12}
-#root .hotf{fill:#FF8A1F}
+#root .stk{fill:none;stroke:#2A190C;stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round}
+#root .stk2{fill:none;stroke:#6B4A2C;stroke-width:3;stroke-linecap:round;stroke-dasharray:2 12}
+#root .hotf{fill:#8E2216}
 
 #olga-world{width:11000px;height:1080px}
 </style>
 <div id="root" data-composition-id="olga" data-width="1920" data-height="1080" data-duration="24.41" style="">
   <div id="olga-world" class="world">
     <div id="olga-v1" class="win" style="left:1180px;top:0px;width:608px;height:1080px;clip-path:inset(50% 50% 50% 50%)"><video id="olga-v1m" class="clip" data-start="0.0" data-duration="6.36" data-media-start="1.8" data-playback-rate="0.9" muted playsinline src="assets/clips/olga_blow.mp4" style="object-position:50% 35%"></video></div>
-    <img id="olga-logo" src="assets/art/olga_logo_cut.png" alt="" style="position:absolute;left:150px;top:170px;width:560px;opacity:0">
+    <div id="olga-plq" style="position:absolute;left:130px;top:120px;width:600px;height:440px;border-radius:22px;background:radial-gradient(ellipse at 50% 40%,#2A1608,#0E0703 75%);box-shadow:0 0 0 4px #B98A35,0 0 0 10px #0E0703,0 30px 60px rgba(40,18,4,.55);opacity:0"><img id="olga-logo" src="assets/art/olga_logo_cut.png" alt="" style="position:absolute;left:40px;top:40px;width:520px"></div>
     <div id="olga-d2" class="disp" style="left:160px;top:600px;font-size:150px;"><span class="w" style="display:inline-block;margin-right:.24em">Olga</span><span class="w" style="display:inline-block;margin-right:.24em">Rozin</span></div>
-    <div id="olga-l3" class="lab" style="left:168px;top:770px;font-size:44px;color:#FF8A1F;">Glass artist</div>
+    <div id="olga-l3" class="lab" style="left:168px;top:770px;font-size:44px;color:#8E2216;">Glass artist</div>
     <div id="olga-p4" class="plate" style="left:2300px;top:90px;width:1600px;height:900px;rotate:0deg;opacity:0"><div class="pi"><img src="assets/art/montage.png" alt=""></div></div>
     <div id="olga-d5" class="disp" style="left:2360px;top:1020px;font-size:110px;"><span class="w hot" style="display:inline-block;margin-right:.24em">thousands</span><span class="w" style="display:inline-block;margin-right:.24em">of</span><span class="w" style="display:inline-block;margin-right:.24em">years</span></div>
     <div id="olga-v6" class="win" style="left:4400px;top:120px;width:520px;height:860px;clip-path:inset(50% 50% 50% 50%)"><video id="olga-v6m" class="clip" data-start="9.99" data-duration="6.09" data-media-start="0.0" data-playback-rate="1.0" muted playsinline src="assets/clips/rose_torch.mp4" style="object-position:50% 50%"></video></div>
     <div id="olga-v7" class="win" style="left:5000px;top:120px;width:520px;height:860px;clip-path:inset(50% 50% 50% 50%)"><video id="olga-v7m" class="clip" data-start="10.49" data-duration="5.59" data-media-start="0.0" data-playback-rate="1.0" muted playsinline src="assets/clips/roses.mp4" style="object-position:50% 50%"></video></div>
     <div id="olga-v8" class="win" style="left:5600px;top:120px;width:520px;height:860px;clip-path:inset(50% 50% 50% 50%)"><video id="olga-v8m" class="clip" data-start="10.99" data-duration="5.09" data-media-start="0.0" data-playback-rate="1.0" muted playsinline src="assets/clips/twist.mp4" style="object-position:50% 50%"></video></div>
     <div id="olga-d9" class="disp" style="left:4420px;top:1030px;font-size:96px;font-style:italic;font-weight:500;"><span class="w" style="display:inline-block;margin-right:.24em">so</span><span class="w" style="display:inline-block;margin-right:.24em">much</span><span class="w" style="display:inline-block;margin-right:.24em">history</span><span class="w" style="display:inline-block;margin-right:.24em">to</span><span class="w" style="display:inline-block;margin-right:.24em">share</span></div>
-    <svg id="olga-ig" style="left:6740px;top:330px" width="220" height="220" viewBox="0 0 64 64"><rect class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" x="6" y="6" width="52" height="52" rx="15"/><circle class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" cx="32" cy="32" r="12"/><circle cx="46" cy="18" r="3" fill="#EAF2FA"/></svg>
+    <svg id="olga-ig" style="left:6740px;top:330px" width="220" height="220" viewBox="0 0 64 64"><rect class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" x="6" y="6" width="52" height="52" rx="15"/><circle class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" cx="32" cy="32" r="12"/><circle cx="46" cy="18" r="3" fill="#2A190C"/></svg>
     <div id="olga-d10" class="disp" style="left:7020px;top:360px;font-size:84px;"><span class="w" style="display:inline-block;margin-right:.24em">Follow</span><span class="w" style="display:inline-block;margin-right:.24em">me</span><span class="w" style="display:inline-block;margin-right:.24em">on</span><span class="w" style="display:inline-block;margin-right:.24em">Instagram</span></div>
     <div id="olga-d11" class="disp" style="left:7020px;top:470px;font-size:170px;"><span class="w hot" style="display:inline-block;margin-right:.24em">@olga_rozin</span></div>
-    <div id="olga-l12" class="lab" style="left:7030px;top:680px;font-size:40px;color:#9CC3E6;">for more stories about glassmaking</div>
+    <div id="olga-l12" class="lab" style="left:7030px;top:680px;font-size:40px;color:#6B4A2C;">for more stories about glassmaking</div>
     <svg id="olga-q" style="left:9120px;top:260px" width="260" height="220" viewBox="0 0 64 54"><path class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="M6 6 h52 v30 h-30 l-12 12 v-12 h-10 z"/></svg>
     <div id="olga-d13" class="disp" style="left:9430px;top:300px;font-size:84px;font-style:italic;font-weight:500;"><span class="w" style="display:inline-block;margin-right:.24em">Tell</span><span class="w" style="display:inline-block;margin-right:.24em">me</span><span class="w" style="display:inline-block;margin-right:.24em">in</span><span class="w" style="display:inline-block;margin-right:.24em">the</span><span class="w" style="display:inline-block;margin-right:.24em">comments:</span></div>
     <div id="olga-d14" class="disp" style="left:9160px;top:520px;font-size:120px;"><span class="w" style="display:inline-block;margin-right:.24em">Would</span><span class="w" style="display:inline-block;margin-right:.24em">you</span><span class="w" style="display:inline-block;margin-right:.24em">like</span><span class="w" style="display:inline-block;margin-right:.24em">to</span><span class="w" style="display:inline-block;margin-right:.24em">learn</span></div>
     <div id="olga-d15" class="disp" style="left:9160px;top:660px;font-size:150px;"><span class="w" style="display:inline-block;margin-right:.24em">how</span><span class="w hot" style="display:inline-block;margin-right:.24em">glass</span><span class="w" style="display:inline-block;margin-right:.24em">is</span><span class="w" style="display:inline-block;margin-right:.24em">made?</span></div>
   </div>
-  
+  <div id="olga-wi" class="wipe" style="transform:translateX(-540px)"></div>
   <div class="vign"></div><div class="noise"></div>
 </div>
 <script>
 (function(){
   const tl = gsap.timeline({ paused: true });
   const world = document.getElementById("olga-world");
-  const K = [[0.0, 960, 540, 1.0], [5.56, 3100, 600, 0.95], [10.14, 5180, 620, 0.9], [14.68, 7560, 540, 1.0], [21.12, 9960, 540, 1.0]];
+  const K = [[0.0, 960, 540, 1.0], [5.56, 3100, 600, 0.95], [10.14, 5180, 620, 0.9], [14.68, 7560, 540, 1.0], [20.72, 9960, 540, 1.0]];
   const ease = (x) => x < 0.5 ? 2*x*x : 1 - Math.pow(-2*x + 2, 2) / 2;   // power2.inOut
   function camAt(t) {
     // continuous take: between keys the camera travels; while holding it keeps a slow 1%/s push
@@ -80,24 +83,25 @@ background-size:200px 200px,200px 200px,40px 40px,40px 40px;}
   render(0);
   
     tl.fromTo("#olga-v1",{clipPath:"inset(50% 50% 50% 50%)"},{clipPath:"inset(0% 0% 0% 0%)",duration:0.35,ease:"expo.out"},0.0);
-  tl.fromTo("#olga-logo",{opacity:0,scale:1.1,filter:"blur(8px)"},{opacity:1,scale:1,filter:"blur(0px)",duration:0.8,ease:"expo.out"},0.38);
+  tl.fromTo("#olga-plq",{opacity:0,rotationY:80,transformPerspective:1600},{opacity:1,rotationY:0,duration:1.0,ease:"expo.out"},0.28);
   tl.fromTo("#olga-d2 .w",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.2,ease:"expo.out",stagger:0.08},0.58);
   tl.fromTo("#olga-l3",{opacity:0,filter:"blur(6px)"},{opacity:1,filter:"blur(0px)",duration:0.18,ease:"power2.out"},2.0);
-  tl.fromTo("#olga-p4",{opacity:0,scale:0.92},{opacity:1,scale:1,duration:0.6,ease:"expo.out"},5.66);
+  tl.fromTo("#olga-p4",{opacity:0,rotationY:-70,transformPerspective:1800,transformOrigin:"0% 50%"},{opacity:1,rotationY:0,duration:0.9,ease:"expo.out"},5.66);
   tl.fromTo("#olga-p4 .pi",{scale:1.6,xPercent:25.2},{scale:1.02,xPercent:-0.7,duration:4.0,ease:"power1.inOut"},5.66);
   tl.fromTo("#olga-d5 .w",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.2,ease:"expo.out",stagger:0.08},7.88);
   tl.fromTo("#olga-v6",{clipPath:"inset(50% 50% 50% 50%)"},{clipPath:"inset(0% 0% 0% 0%)",duration:0.35,ease:"expo.out"},9.99);
   tl.fromTo("#olga-v7",{clipPath:"inset(50% 50% 50% 50%)"},{clipPath:"inset(0% 0% 0% 0%)",duration:0.35,ease:"expo.out"},10.49);
   tl.fromTo("#olga-v8",{clipPath:"inset(50% 50% 50% 50%)"},{clipPath:"inset(0% 0% 0% 0%)",duration:0.35,ease:"expo.out"},10.99);
   tl.fromTo("#olga-d9 .w",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.2,ease:"expo.out",stagger:0.08},12.96);
-  tl.fromTo("#olga-ig .p",{strokeDashoffset:110},{strokeDashoffset:0,duration:0.6,stagger:0.1,ease:"power2.inOut"},14.88);
+  tl.fromTo("#olga-ig .p",{strokeDashoffset:110},{strokeDashoffset:0,duration:0.6,stagger:0.1,ease:"power2.inOut"},14.63);
   tl.fromTo("#olga-d10 .w",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.2,ease:"expo.out",stagger:0.08},15.08);
   tl.fromTo("#olga-d11 .w",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.2,ease:"expo.out",stagger:0.08},16.44);
   tl.fromTo("#olga-l12",{opacity:0,filter:"blur(6px)"},{opacity:1,filter:"blur(0px)",duration:0.18,ease:"power2.out"},18.82);
-  tl.fromTo("#olga-q .p",{strokeDashoffset:110},{strokeDashoffset:0,duration:0.6,ease:"power2.inOut"},20.92);
+  tl.fromTo("#olga-q .p",{strokeDashoffset:110},{strokeDashoffset:0,duration:0.6,ease:"power2.inOut"},20.72);
   tl.fromTo("#olga-d13 .w",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.2,ease:"expo.out",stagger:0.08},21.02);
   tl.fromTo("#olga-d14 .w",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.2,ease:"expo.out",stagger:0.08},22.04);
   tl.fromTo("#olga-d15 .w",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.2,ease:"expo.out",stagger:0.08},23.34);
+  tl.fromTo("#olga-wi",{x:-540},{x:-3000,duration:0.45,ease:"power2.in"},0.02);
   window.__timelines = window.__timelines || {};
   window.__timelines["olga"] = tl;
 })();

@@ -29,7 +29,8 @@ Apply these on every video request unless the person says otherwise in that chat
 ## Signature techniques (use all of them, every video - "go all out")
 - **Kinetic typography** (טיפוגרפיה קינטית): key words animate in on the spoken word - slams, per-letter
   reveals, scale/blur pops, words that move with the camera. Not just static titles.
-- **Technical sketch** (שרטוט טכני): blueprint/grid-paper drawings that draw themselves line by line -
+- **Technical sketch** (שרטוט טכני): ink drawings that draw themselves line by line on the series' own paper
+  (aged papyrus / manuscript for history - never a flat blue "PowerPoint" blueprint unless asked) -
   measurements, arrows, labels, exploded views - for any process or tool being explained.
 - **3D elements** (אלמנטים בתלת ממד): real 3D objects or 2.5D parallax layers with depth, lighting and
   shadows (registry 3D blocks / three.js); rotate or orbit the object while explaining it.
@@ -68,6 +69,21 @@ When he asks for a video, make sure these five are set (ask once for what's miss
   person, use their own recording or a consented clone - never pass off a library voice as them.
 - Language versions: same visuals and sound design, re-timed to the new voice-over, captions and on-screen
   text translated. Tighten slow reads (cap long pauses, up to ~6% faster, pitch kept).
+
+## Series: Glass Stories (Olga Rozin, @olga_rozin)
+A web series: each episode takes one topic from the glass world (history, how glass is made, techniques...),
+always with the same opener and end card so episodes read as one show. Template: `glass-ep1/` (`build.py`,
+`EP = dict(n=..., title=...)` drives the sting and end card). Look - "The Glassmaker's Codex":
+- Premium and historic, never a cheap slideshow: aged papyrus world (`assets/art/papyrus.jpg`) with burnt
+  vignette, iron-gall sepia ink, red rubric for the key word, gold for series titles.
+- Type: Cormorant Garamond (display) + IM Fell English italic (annotations); captions stay orange-on-black.
+- His GPT era portraits (Olga as Mesopotamian / Egyptian / Levantine / Roman / modern glassblower) are the
+  heroes: mounted as cream-bordered leaves that flip in in 3D, red ribbon cartouche (place + date), pan +
+  zoom-out, with relevant ink sketches around them (beads, vessels, maps, compass rose, wax-seal pins).
+- Olga's footage in cream photo mounts; molten-glass chapter wipes; embers on the sting, furnace and end card.
+- Opener: hook cut on the beat over her footage + kinetic words -> silver OR monogram on dark with embers ->
+  "GLASS STORIES · EPISODE n" + title in cream with furnace glow. End card: Olga + OR + next-episode tease.
+- English first; other languages only when he asks.
 
 ## Formats
 - Deliver 9:16 (TikTok/Reels/Shorts) and 16:9 (YouTube) from one project; full episode plus a ~60 s cut

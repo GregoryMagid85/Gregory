@@ -2,57 +2,60 @@
 <style>@font-face{font-family:'Cormorant Garamond';font-weight:700;src:url('assets/fonts/cormorant-garamond-latin-700-normal.woff2') format('woff2');}
 @font-face{font-family:'Cormorant Garamond';font-weight:600;src:url('assets/fonts/cormorant-garamond-latin-600-normal.woff2') format('woff2');}
 @font-face{font-family:'Cormorant Garamond';font-style:italic;font-weight:500;src:url('assets/fonts/cormorant-garamond-latin-500-italic.woff2') format('woff2');}
-#root{position:absolute;inset:0;overflow:hidden;background-color:#16395C;
-background-image:linear-gradient(#3B6E9C66 1.5px,transparent 1.5px),linear-gradient(90deg,#3B6E9C66 1.5px,transparent 1.5px),
-linear-gradient(#2A5B8655 1px,transparent 1px),linear-gradient(90deg,#2A5B8655 1px,transparent 1px);
-background-size:200px 200px,200px 200px,40px 40px,40px 40px;}
+@font-face{font-family:'IM Fell English';font-weight:400;src:url('assets/fonts/im-fell-english-latin-400-normal.woff2') format('woff2');}
+@font-face{font-family:'IM Fell English';font-style:italic;font-weight:400;src:url('assets/fonts/im-fell-english-latin-400-italic.woff2') format('woff2');}
+#root{position:absolute;inset:0;overflow:hidden;background-color:#E6D3A8;background-image:url('assets/art/papyrus.jpg');background-size:1024px 1024px;}
 #root .world{position:absolute;left:0;top:0;transform-origin:0 0;will-change:transform}
-#root .paper{position:absolute;background-color:#16395C;
-background-image:linear-gradient(#3B6E9C66 1.5px,transparent 1.5px),linear-gradient(90deg,#3B6E9C66 1.5px,transparent 1.5px),
-linear-gradient(#2A5B8655 1px,transparent 1px),linear-gradient(90deg,#2A5B8655 1px,transparent 1px);
-background-size:200px 200px,200px 200px,40px 40px,40px 40px;}
-#root .vign{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 45%,transparent 55%,rgba(6,18,32,.55) 100%)}
-#root .noise{position:absolute;inset:0;pointer-events:none;opacity:.05;mix-blend-mode:overlay;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' seed='4'/></filter><rect width='300' height='300' filter='url(%23n)'/></svg>")}
-#root .disp{position:absolute;font-family:'Cormorant Garamond',serif;font-weight:700;color:#EAF2FA;line-height:1.0;letter-spacing:-0.01em;white-space:nowrap}
-#root .lab{position:absolute;font-family:Inter,sans-serif;font-weight:700;color:#EAF2FA;font-size:34px;white-space:nowrap}
-#root .hot{color:#FF8A1F}
-#root .win{position:absolute;overflow:hidden;background:#000;box-shadow:0 0 0 3px #EAF2FA,0 24px 60px rgba(4,12,22,.6)}
+#root .paper{position:absolute;background-color:#E6D3A8;background-image:url('assets/art/papyrus.jpg');background-size:1024px 1024px;}
+#root .vign{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 46%,transparent 52%,rgba(92,48,14,.28) 78%,rgba(34,15,4,.78) 100%)}
+#root .noise{position:absolute;inset:0;pointer-events:none;opacity:.10;mix-blend-mode:multiply;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' seed='4'/></filter><rect width='300' height='300' filter='url(%23n)'/></svg>")}
+#root .disp{position:absolute;font-family:'Cormorant Garamond',serif;font-weight:700;color:#2A190C;line-height:1.0;letter-spacing:-0.01em;white-space:nowrap}
+#root .lab{position:absolute;font-family:'IM Fell English',serif;font-style:italic;color:#2A190C;font-size:34px;white-space:nowrap}
+#root .hot{color:#8E2216}
+#root .ondark .hot{color:#FF7A12;text-shadow:0 0 24px rgba(255,122,18,.5)}
+#root .win{position:absolute;overflow:hidden;background:#000;box-shadow:0 0 0 12px #F4E8CC,0 0 0 14px #8A6A44,0 26px 50px rgba(50,24,6,.5)}
 #root .win video{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover}
-#root .plate{position:absolute;overflow:hidden;box-shadow:0 0 0 3px #EAF2FA,0 26px 60px rgba(4,12,22,.55)}
+#root .plate{position:absolute;overflow:hidden;box-shadow:0 0 0 14px #F4E8CC,0 0 0 16px #8A6A44,0 30px 60px rgba(50,24,6,.5)}
+#root .rib{position:absolute;padding:14px 46px 16px 40px;background:linear-gradient(180deg,#B3301F,#8E2116);color:#F4E8CC;font-family:'Cormorant Garamond',serif;font-weight:700;font-size:54px;line-height:1;white-space:nowrap;
+  clip-path:polygon(0 0,100% 0,calc(100% - 26px) 50%,100% 100%,0 100%);box-shadow:0 10px 24px rgba(50,20,5,.4)}
+#root .rib small{display:block;font-family:'IM Fell English',serif;font-style:italic;font-weight:400;font-size:30px;margin-top:6px;color:#F6DFAF}
+#root .ember{position:absolute;width:6px;height:6px;border-radius:50%;background:radial-gradient(circle,#FFE6A8,#FF8A1F 55%,rgba(255,90,0,0) 72%)}
+#root .wipe{position:absolute;left:0;top:0;width:3000px;height:1080px;transform:translateX(1920px);
+  background:linear-gradient(90deg,rgba(255,210,122,0) 0px,#FFD27A 120px,#FF7A12 220px,#9E2A05 300px,#2A0D03 420px,#140602 1500px,#2A0D03 2580px,#9E2A05 2700px,#FF7A12 2780px,#FFD27A 2880px,rgba(255,210,122,0) 3000px)}
 #root .plate .pi{position:absolute;left:0;top:0;width:100%;height:100%;will-change:transform}
 #root .plate img{width:100%;height:100%;object-fit:cover;display:block}
 #root svg{position:absolute;overflow:visible}
-#root .stk{fill:none;stroke:#EAF2FA;stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
-#root .stk2{fill:none;stroke:#9CC3E6;stroke-width:3;stroke-linecap:round;stroke-dasharray:2 12}
-#root .hotf{fill:#FF8A1F}
+#root .stk{fill:none;stroke:#2A190C;stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round}
+#root .stk2{fill:none;stroke:#6B4A2C;stroke-width:3;stroke-linecap:round;stroke-dasharray:2 12}
+#root .hotf{fill:#8E2216}
 
 #today-world{width:9000px;height:1080px}
 </style>
 <div id="root" data-composition-id="today" data-width="1920" data-height="1080" data-duration="16.36" style="">
   <div id="today-world" class="world">
     <div id="today-v1" class="win" style="left:1100px;top:60px;width:540px;height:960px;clip-path:inset(50% 50% 50% 50%)"><video id="today-v1m" class="clip" data-start="0.0" data-duration="3.44" data-media-start="0.0" data-playback-rate="1.0" muted playsinline src="assets/clips/glory_hole.mp4" style="object-position:50% 50%"></video></div>
-    <div id="today-d2" class="disp" style="left:140px;top:260px;font-size:110px;color:#9CC3E6;"><span class="w" style="display:inline-block;margin-right:.24em">1.</span></div>
+    <div id="today-d2" class="disp" style="left:140px;top:260px;font-size:110px;color:#6B4A2C;"><span class="w" style="display:inline-block;margin-right:.24em">1.</span></div>
     <div id="today-d3" class="disp" style="left:280px;top:260px;font-size:150px;"><span class="w hot" style="display:inline-block;margin-right:.24em">Heat</span></div>
     <div id="today-v4" class="win" style="left:3400px;top:60px;width:540px;height:960px;clip-path:inset(50% 50% 50% 50%)"><video id="today-v4m" class="clip" data-start="2.14" data-duration="4.62" data-media-start="1.2" data-playback-rate="1.0" muted playsinline src="assets/clips/olga_blow.mp4" style="object-position:50% 35%"></video></div>
-    <div id="today-d5" class="disp" style="left:2440px;top:260px;font-size:110px;color:#9CC3E6;"><span class="w" style="display:inline-block;margin-right:.24em">2.</span></div>
+    <div id="today-d5" class="disp" style="left:2440px;top:260px;font-size:110px;color:#6B4A2C;"><span class="w" style="display:inline-block;margin-right:.24em">2.</span></div>
     <div id="today-d6" class="disp" style="left:2580px;top:260px;font-size:150px;"><span class="w hot" style="display:inline-block;margin-right:.24em">Air</span></div>
     <div id="today-v7" class="win" style="left:5700px;top:60px;width:540px;height:960px;clip-path:inset(50% 50% 50% 50%)"><video id="today-v7m" class="clip" data-start="5.46" data-duration="6.48" data-media-start="0.0" data-playback-rate="1.0" muted playsinline src="assets/clips/swing.mp4" style="object-position:50% 50%"></video></div>
-    <div id="today-d8" class="disp" style="left:4740px;top:260px;font-size:110px;color:#9CC3E6;"><span class="w" style="display:inline-block;margin-right:.24em">3.</span></div>
+    <div id="today-d8" class="disp" style="left:4740px;top:260px;font-size:110px;color:#6B4A2C;"><span class="w" style="display:inline-block;margin-right:.24em">3.</span></div>
     <div id="today-d9" class="disp" style="left:4880px;top:260px;font-size:150px;"><span class="w hot" style="display:inline-block;margin-right:.24em">Control</span></div>
     <svg id="today-s10" style="left:0px;top:0px" width="1200" height="800" viewBox="0 0 1200 800"><path class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="M720 520 L1080 520"/><path class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="M1040 490 L1080 520 L1040 550"/></svg>
-    <div id="today-l11" class="lab" style="left:150px;top:480px;font-size:34px;color:#9CC3E6;">until it&#x27;s soft enough to work</div>
+    <div id="today-l11" class="lab" style="left:150px;top:480px;font-size:34px;color:#6B4A2C;">until it&#x27;s soft enough to work</div>
     <svg id="today-s12" style="left:0px;top:0px" width="3000" height="800" viewBox="0 0 3000 800"><path class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="M2300 520 L2700 520"/><path class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="M2300 560 L2760 560"/><path class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="M2300 600 L2700 600"/><path class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="M2720 490 L2760 560 L2720 630"/></svg>
-    <div id="today-l13" class="lab" style="left:2450px;top:480px;font-size:34px;color:#9CC3E6;">through the blowpipe</div>
-    <div id="today-l14" class="lab" style="left:4740px;top:470px;font-size:52px;color:#FF8A1F;">temperature</div>
-    <div id="today-l15" class="lab" style="left:4740px;top:560px;font-size:52px;color:#EAF2FA;">movement</div>
-    <div id="today-l16" class="lab" style="left:4740px;top:650px;font-size:52px;color:#EAF2FA;">gravity</div>
+    <div id="today-l13" class="lab" style="left:2450px;top:480px;font-size:34px;color:#6B4A2C;">through the blowpipe</div>
+    <div id="today-l14" class="lab" style="left:4740px;top:470px;font-size:52px;color:#8E2216;">temperature</div>
+    <div id="today-l15" class="lab" style="left:4740px;top:560px;font-size:52px;color:#2A190C;">movement</div>
+    <div id="today-l16" class="lab" style="left:4740px;top:650px;font-size:52px;color:#2A190C;">gravity</div>
     <svg id="today-s17" style="left:0px;top:0px" width="6000" height="1000" viewBox="0 0 6000 1000"><path class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="M5500 360 A140 140 0 1 1 5620 520"/><path class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="M5600 500 L5620 520 L5640 490"/><path class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="M5560 640 L5560 820"/><path class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="M5530 790 L5560 830 L5590 790"/></svg>
     <div id="today-v18" class="win" style="left:7100px;top:0px;width:608px;height:1080px;clip-path:inset(50% 50% 50% 50%)"><video id="today-v18m" class="clip" data-start="10.99" data-duration="5.97" data-media-start="0.0" data-playback-rate="1.0" muted playsinline src="assets/clips/bench_hands.mp4" style="object-position:50% 50%"></video></div>
     <div id="today-d19" class="disp" style="left:7800px;top:330px;font-size:84px;font-style:italic;font-weight:500;"><span class="w" style="display:inline-block;margin-right:.24em">One</span><span class="w" style="display:inline-block;margin-right:.24em">more</span><span class="w" style="display:inline-block;margin-right:.24em">ingredient…</span></div>
     <div id="today-d20" class="disp" style="left:7800px;top:450px;font-size:170px;"><span class="w" style="display:inline-block;margin-right:.24em">the</span><span class="w hot" style="display:inline-block;margin-right:.24em">hands</span></div>
     <div id="today-d21" class="disp" style="left:7810px;top:640px;font-size:96px;"><span class="w" style="display:inline-block;margin-right:.24em">of</span><span class="w" style="display:inline-block;margin-right:.24em">the</span><span class="w" style="display:inline-block;margin-right:.24em">glassmaker.</span></div>
   </div>
-  
+  <div id="today-wi" class="wipe" style="transform:translateX(-540px)"></div><div id="today-wo" class="wipe"></div>
   <div class="vign"></div><div class="noise"></div>
 </div>
 <script>
@@ -103,6 +106,8 @@ background-size:200px 200px,200px 200px,40px 40px,40px 40px;}
   tl.fromTo("#today-d19 .w",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.2,ease:"expo.out",stagger:0.08},13.26);
   tl.fromTo("#today-d20 .w",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.2,ease:"expo.out",stagger:0.08},14.84);
   tl.fromTo("#today-d21 .w",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.2,ease:"expo.out",stagger:0.08},15.74);
+  tl.fromTo("#today-wi",{x:-540},{x:-3000,duration:0.45,ease:"power2.in"},0.02);
+  tl.fromTo("#today-wo",{x:1920},{x:-540,duration:0.45,ease:"power2.out"},15.89);
   window.__timelines = window.__timelines || {};
   window.__timelines["today"] = tl;
 })();

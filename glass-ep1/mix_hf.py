@@ -94,6 +94,8 @@ for t, kind in CUE["events"]:
         place(fx, t, fade(S["sizzle"], 0.005, 0.15), 0.6)
     elif kind == "breath":
         place(fx, t - 0.1, fade(S["breath"], 0.05, 0.4), 0.8)
+    elif kind == "wipe":       # molten-glass chapter wipe
+        place(fx, t - 0.1, fade(rate(S["whoosh_b"], 0.9)[: int(0.9 * SR)], 0.02, 0.3), 0.6); place(fx, t + 0.15, fade(S["sizzle"], 0.005, 0.2), 0.35)
     elif kind == "shimmer":
         place(fx, t, fade(S["shimmer"], 0.01, 0.4), 0.7)
 

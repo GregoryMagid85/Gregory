@@ -20,30 +20,38 @@ def T(word, n=0):
     if n >= len(hits): raise SystemExit(f"cue not in narration: {word}#{n}")
     return hits[n]
 
-C = dict(ink="#EAF2FA", ink2="#9CC3E6", paper="#16395C", grid="#2A5B86", grid2="#3B6E9C", hot="#FF8A1F", hot2="#FFD27A")
+C = dict(ink="#2A190C", ink2="#6B4A2C", paper="#E6D3A8", land="#D6BC86", red="#8E2216", hot="#8E2216", gold="#B98A35", cream="#F4E8CC",
+         molten="#FF7A12", molten2="#FFD27A", dark="#0E0703")
+EP = dict(n=1, title="The Invention of Glassblowing")     # series opener + end card read from here
 FONT = """@font-face{font-family:'Cormorant Garamond';font-weight:700;src:url('assets/fonts/cormorant-garamond-latin-700-normal.woff2') format('woff2');}
 @font-face{font-family:'Cormorant Garamond';font-weight:600;src:url('assets/fonts/cormorant-garamond-latin-600-normal.woff2') format('woff2');}
-@font-face{font-family:'Cormorant Garamond';font-style:italic;font-weight:500;src:url('assets/fonts/cormorant-garamond-latin-500-italic.woff2') format('woff2');}"""
-PAPER = f"""background-color:{C['paper']};
-background-image:linear-gradient({C['grid2']}66 1.5px,transparent 1.5px),linear-gradient(90deg,{C['grid2']}66 1.5px,transparent 1.5px),
-linear-gradient({C['grid']}55 1px,transparent 1px),linear-gradient(90deg,{C['grid']}55 1px,transparent 1px);
-background-size:200px 200px,200px 200px,40px 40px,40px 40px;"""
+@font-face{font-family:'Cormorant Garamond';font-style:italic;font-weight:500;src:url('assets/fonts/cormorant-garamond-latin-500-italic.woff2') format('woff2');}
+@font-face{font-family:'IM Fell English';font-weight:400;src:url('assets/fonts/im-fell-english-latin-400-normal.woff2') format('woff2');}
+@font-face{font-family:'IM Fell English';font-style:italic;font-weight:400;src:url('assets/fonts/im-fell-english-latin-400-italic.woff2') format('woff2');}"""
+PAPER = f"""background-color:{C['paper']};background-image:url('assets/art/papyrus.jpg');background-size:1024px 1024px;"""
 BASE_CSS = f"""
 #root{{position:absolute;inset:0;overflow:hidden;{PAPER}}}
 #root .world{{position:absolute;left:0;top:0;transform-origin:0 0;will-change:transform}}
 #root .paper{{position:absolute;{PAPER}}}
-#root .vign{{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 45%,transparent 55%,rgba(6,18,32,.55) 100%)}}
-#root .noise{{position:absolute;inset:0;pointer-events:none;opacity:.05;mix-blend-mode:overlay;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' seed='4'/></filter><rect width='300' height='300' filter='url(%23n)'/></svg>")}}
+#root .vign{{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 46%,transparent 52%,rgba(92,48,14,.28) 78%,rgba(34,15,4,.78) 100%)}}
+#root .noise{{position:absolute;inset:0;pointer-events:none;opacity:.10;mix-blend-mode:multiply;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' seed='4'/></filter><rect width='300' height='300' filter='url(%23n)'/></svg>")}}
 #root .disp{{position:absolute;font-family:'Cormorant Garamond',serif;font-weight:700;color:{C['ink']};line-height:1.0;letter-spacing:-0.01em;white-space:nowrap}}
-#root .lab{{position:absolute;font-family:Inter,sans-serif;font-weight:700;color:{C['ink']};font-size:34px;white-space:nowrap}}
+#root .lab{{position:absolute;font-family:'IM Fell English',serif;font-style:italic;color:{C['ink']};font-size:34px;white-space:nowrap}}
 #root .hot{{color:{C['hot']}}}
-#root .win{{position:absolute;overflow:hidden;background:#000;box-shadow:0 0 0 3px {C['ink']},0 24px 60px rgba(4,12,22,.6)}}
+#root .ondark .hot{{color:{C['molten']};text-shadow:0 0 24px rgba(255,122,18,.5)}}
+#root .win{{position:absolute;overflow:hidden;background:#000;box-shadow:0 0 0 12px {C['cream']},0 0 0 14px #8A6A44,0 26px 50px rgba(50,24,6,.5)}}
 #root .win video{{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover}}
-#root .plate{{position:absolute;overflow:hidden;box-shadow:0 0 0 3px {C['ink']},0 26px 60px rgba(4,12,22,.55)}}
+#root .plate{{position:absolute;overflow:hidden;box-shadow:0 0 0 14px {C['cream']},0 0 0 16px #8A6A44,0 30px 60px rgba(50,24,6,.5)}}
+#root .rib{{position:absolute;padding:14px 46px 16px 40px;background:linear-gradient(180deg,#B3301F,#8E2116);color:{C['cream']};font-family:'Cormorant Garamond',serif;font-weight:700;font-size:54px;line-height:1;white-space:nowrap;
+  clip-path:polygon(0 0,100% 0,calc(100% - 26px) 50%,100% 100%,0 100%);box-shadow:0 10px 24px rgba(50,20,5,.4)}}
+#root .rib small{{display:block;font-family:'IM Fell English',serif;font-style:italic;font-weight:400;font-size:30px;margin-top:6px;color:#F6DFAF}}
+#root .ember{{position:absolute;width:6px;height:6px;border-radius:50%;background:radial-gradient(circle,#FFE6A8,#FF8A1F 55%,rgba(255,90,0,0) 72%)}}
+#root .wipe{{position:absolute;left:0;top:0;width:3000px;height:1080px;transform:translateX(1920px);
+  background:linear-gradient(90deg,rgba(255,210,122,0) 0px,#FFD27A 120px,#FF7A12 220px,#9E2A05 300px,#2A0D03 420px,#140602 1500px,#2A0D03 2580px,#9E2A05 2700px,#FF7A12 2780px,#FFD27A 2880px,rgba(255,210,122,0) 3000px)}}
 #root .plate .pi{{position:absolute;left:0;top:0;width:100%;height:100%;will-change:transform}}
 #root .plate img{{width:100%;height:100%;object-fit:cover;display:block}}
 #root svg{{position:absolute;overflow:visible}}
-#root .stk{{fill:none;stroke:{C['ink']};stroke-width:4;stroke-linecap:round;stroke-linejoin:round}}
+#root .stk{{fill:none;stroke:{C['ink']};stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round}}
 #root .stk2{{fill:none;stroke:{C['ink2']};stroke-width:3;stroke-linecap:round;stroke-dasharray:2 12}}
 #root .hotf{{fill:{C['hot']}}}
 """
@@ -66,7 +74,7 @@ class Scene:
         spans = "".join(f'<span class="w{(" hot" if k in hot else "")}" style="display:inline-block;margin-right:.24em">{html.escape(w)}</span>' for k, w in enumerate(words))
         style = f"left:{x}px;top:{y}px;font-size:{size}px;" + ("font-style:italic;font-weight:500;" if italic else "") + (f"color:{color};" if color else "")
         if align == "center": style = style.replace(f"left:{x}px;", f"left:{x - 960}px;width:1920px;") + "text-align:center;"
-        self.html.append(f'<div id="{i}" class="disp" style="{style}">{spans}</div>')
+        self.html.append(f'<div id="{i}" class="disp{" ondark" if color == C["cream"] else ""}" style="{style}">{spans}</div>')
         self.js.append(f'tl.fromTo("#{i} .w",{{opacity:0,filter:"blur(8px)"}},{{opacity:1,filter:"blur(0px)",duration:0.2,ease:"expo.out",stagger:0.08}},{self.L(t)});')
         if out: self.js.append(f'tl.to("#{i} .w",{{opacity:0,filter:"blur(6px)",duration:0.15,ease:"power3.in",stagger:0.03}},{self.L(out)});')
         return i
@@ -95,32 +103,65 @@ class Scene:
                          f'data-playback-rate="{rate}" muted playsinline src="assets/clips/{name}.mp4" style="object-position:{pos}"></video></div>')
         self.js.append(f'tl.fromTo("#{i}",{{clipPath:"inset(50% 50% 50% 50%)"}},{{clipPath:"inset(0% 0% 0% 0%)",duration:{appear},ease:"expo.out"}},{self.L(s)});')
         return i
-    def plate(self, name, x, y, w, h, t_in, t0, t1, fx0=0.3, fx1=0.7, z0=1.35, z1=1.0, rot=0):
+    def plate(self, name, x, y, w, h, t_in, t0, t1, fx0=0.3, fx1=0.7, z0=1.35, z1=1.0, rot=0, cap=None):
         """an era image pinned to the sheet; inside, the camera pans left->right and pulls back (t0..t1)"""
         i = self.id("p"); EV.append((round(t_in, 3), "paper"))
         self.html.append(f'<div id="{i}" class="plate" style="left:{x}px;top:{y}px;width:{w}px;height:{h}px;rotate:{rot}deg;opacity:0">'
                          f'<div class="pi"><img src="assets/art/{name}.png" alt=""></div></div>')
-        self.js.append(f'tl.fromTo("#{i}",{{opacity:0,scale:0.92}},{{opacity:1,scale:1,duration:0.6,ease:"expo.out"}},{self.L(t_in)});')
+        self.js.append(f'tl.fromTo("#{i}",{{opacity:0,rotationY:-70,transformPerspective:1800,transformOrigin:"0% 50%"}},{{opacity:1,rotationY:0,duration:0.9,ease:"expo.out"}},{self.L(t_in)});')
+        if cap:
+            r = self.id("rib")
+            self.html.append(f'<div id="{r}" class="rib" style="left:{x - 40}px;top:{y - 50}px">{html.escape(cap[0])}<small>{html.escape(cap[1])}</small></div>')
+            self.js.append(f'tl.fromTo("#{r}",{{clipPath:"polygon(0 0,0% 0,0% 50%,0% 100%,0 100%)"}},{{clipPath:"polygon(0 0,100% 0,calc(100% - 26px) 50%,100% 100%,0 100%)",duration:0.6,ease:"expo.out"}},{self.L(t_in + 0.35)});')
         # pan: xPercent from left-weighted to right-weighted, zoom out (scale z0 -> z1)
         dx0, dx1 = (0.5 - fx0) * 100 * (z0 - 1) * 1.4, (0.5 - fx1) * 100 * (z1 - 1) * 1.4
         self.js.append(f'tl.fromTo("#{i} .pi",{{scale:{z0},xPercent:{dx0:.1f}}},{{scale:{z1},xPercent:{dx1:.1f},duration:{round(t1 - t0, 3)},ease:"power1.inOut"}},{self.L(t0)});')
         return i
-    def pin(self, x, y, t, color=None):
-        i = self.id("pin"); col = color or C["hot"]; EV.append((round(t, 3), "pin"))
-        self.html.append(f'<svg id="{i}" style="left:{x - 40}px;top:{y - 40}px" width="80" height="80"><circle cx="40" cy="40" r="30" fill="none" stroke="{col}" stroke-width="4" class="ring"/><circle cx="40" cy="40" r="10" fill="{col}"/></svg>')
+    def pin(self, x, y, t, color=None, k=1.0):
+        i = self.id("pin"); col = color or C["red"]; EV.append((round(t, 3), "pin"))
+        self.html.append(f'<svg id="{i}" style="left:{x - 40 * k}px;top:{y - 40 * k}px" width="{80 * k}" height="{80 * k}" viewBox="0 0 80 80"><path d="M40 8 C56 9 70 20 72 38 C74 56 60 72 40 72 C22 72 7 58 8 40 C9 22 24 8 40 8Z" fill="{col}" stroke="#5E140C" stroke-width="2"/>'
+                         f'<circle cx="40" cy="40" r="17" fill="none" stroke="#6E1A10" stroke-width="3"/><circle cx="40" cy="40" r="5" fill="#6E1A10"/></svg>')
         self.js.append(f'tl.fromTo("#{i}",{{scale:0,transformOrigin:"50% 50%"}},{{scale:1,duration:0.5,ease:"back.out(2)"}},{self.L(t)});')
         return i
+    def embers(self, t0, t1, n=40, seed=1, x0=0, x1=1920, y0=700, y1=1100):
+        """deterministic rising embers (seeded LCG): no Math.random"""
+        st = seed * 9301 + 49297
+        def rnd():
+            nonlocal st; st = (st * 1103515245 + 12345) % 2147483648; return st / 2147483648
+        for k in range(n):
+            i = self.id("em"); x = x0 + rnd() * (x1 - x0); y = y0 + rnd() * (y1 - y0); sz = 3 + rnd() * 7
+            d = 1.8 + rnd() * 2.2; st0 = t0 + rnd() * max(0.1, (t1 - t0 - d)); rise = 300 + rnd() * 500; dx = (rnd() - 0.5) * 160
+            self.html.append(f'<div id="{i}" class="ember" style="left:{x:.0f}px;top:{y:.0f}px;width:{sz:.1f}px;height:{sz:.1f}px;opacity:0"></div>')
+            self.js.append(f'tl.fromTo("#{i}",{{opacity:0,x:0,y:0}},{{keyframes:[{{opacity:1,duration:{d*0.2:.2f}}},{{opacity:0.7,duration:{d*0.5:.2f}}},{{opacity:0,duration:{d*0.3:.2f}}}],x:{dx:.0f},y:{-rise:.0f},duration:{d:.2f},ease:"none"}},{self.L(st0) if st0 >= self.a else round(st0, 3)});')
+    def compass(self, x, y, t, r=170):
+        pts = []
+        for k in range(8):
+            import math
+            a = k * math.pi / 4; L = r if k % 2 == 0 else r * 0.55
+            ax, ay = math.cos(a) * L, math.sin(a) * L; bx, by = math.cos(a + 0.35) * r * 0.16, math.sin(a + 0.35) * r * 0.16
+            cx_, cy_ = math.cos(a - 0.35) * r * 0.16, math.sin(a - 0.35) * r * 0.16
+            pts.append(f"M{r + bx:.0f} {r + by:.0f} L{r + ax:.0f} {r + ay:.0f} L{r + cx_:.0f} {r + cy_:.0f}")
+        ring = [f"M{r} {r} m-{r * 0.8:.0f} 0 a{r * 0.8:.0f} {r * 0.8:.0f} 0 1 0 {r * 1.6:.0f} 0 a{r * 0.8:.0f} {r * 0.8:.0f} 0 1 0 -{r * 1.6:.0f} 0"]
+        self.sketch(ring + pts, t, dur=0.5, stagger=0.06, x=x - r, y=y - r, w=2 * r, h=2 * r)
+        self.lab("N", x - 16, y - r - 80, t + 0.4, size=64)
     def raw(self, h, js=""):
         self.html.append(h)
         if js: self.js.append(js)
     # ------------------------------------------------------------ output
-    def file(self, world_w, world_h, bg=None, extra_css="", after_world="", head_js="", module=""):
+    def file(self, world_w, world_h, bg=None, extra_css="", after_world="", head_js="", module="", wipe_in=False, wipe_out=False):
         cam = sorted(self.cam) or [(0, 960, 540, 1.0)]
         for k0, k1 in zip(cam[:-1], cam[1:]):
             if (k0[1], k0[2], k0[3]) != (k1[1], k1[2], k1[3]):
                 travel = min(1.0, max(0.01, 0.5 * (k1[0] - k0[0])))
                 EV.append((round(self.a + k1[0] - travel, 3), "dive" if k1[3] / k0[3] > 4 else "whoosh"))
         dur = round(self.b - self.a, 3)
+        if wipe_in:
+            after_world += f'<div id="{self.cid}-wi" class="wipe" style="transform:translateX(-540px)"></div>'
+            self.js.append(f'tl.fromTo("#{self.cid}-wi",{{x:-540}},{{x:-3000,duration:0.45,ease:"power2.in"}},0.02);')
+        if wipe_out:
+            after_world += f'<div id="{self.cid}-wo" class="wipe"></div>'
+            self.js.append(f'tl.fromTo("#{self.cid}-wo",{{x:1920}},{{x:-540,duration:0.45,ease:"power2.out"}},{round(dur - 0.47, 3)});')
+            EV.append((round(self.b - 0.45, 3), "wipe"))
         return f"""<template>
 <style>{FONT}{BASE_CSS}{extra_css}
 #{self.cid}-world{{width:{world_w}px;height:{world_h}px}}
@@ -188,18 +229,19 @@ for (txt, t0, t1, y) in [("ONE BREATH.", 0.15, 1.5, 300), ("ONE IDEA.", 1.6, 2.9
 s.disp("OF GLASS.", 120, 420, 150, 3.25, hot=(1,), out=4.45)
 s.key(0, 960, 540, 1.0)
 # the OR monogram on black, chrome shine pass, then the episode title
-s.raw(f'<div id="hook-black" style="position:absolute;left:0;top:0;width:1920px;height:1080px;background:#050505;opacity:0"></div>'
+s.raw(f'<div id="hook-black" style="position:absolute;left:0;top:0;width:1920px;height:1080px;background:radial-gradient(ellipse at 50% 60%,#2A1206,{C["dark"]} 70%);opacity:0"></div>'
       f'<img id="hook-logo" src="assets/art/olga_logo_cut.png" style="position:absolute;left:660px;top:120px;width:600px;opacity:0" alt="">'
       f'<div id="hook-shine" style="position:absolute;left:660px;top:120px;width:600px;height:400px;opacity:0;mix-blend-mode:screen;'
       f'background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.9) 50%,transparent 65%);-webkit-mask:url(assets/art/olga_logo_cut.png) center/contain no-repeat;mask:url(assets/art/olga_logo_cut.png) center/contain no-repeat"></div>'
-      f'<div id="hook-t1" class="lab" style="left:0;width:1920px;text-align:center;top:620px;font-size:30px;letter-spacing:.32em;color:#BFC6CE;opacity:0">GLASS STORIES · EPISODE 1</div>'
-      f'<div id="hook-t2" class="disp" style="left:0;width:1920px;text-align:center;top:680px;font-size:112px;color:#F2F4F6;opacity:0">The Invention of Glassblowing</div>',
+      f'<div id="hook-t1" class="lab" style="left:0;width:1920px;text-align:center;top:620px;font-size:34px;font-style:normal;letter-spacing:.32em;color:{C["gold"]};opacity:0">GLASS STORIES · EPISODE {EP["n"]}</div>'
+      f'<div id="hook-t2" class="disp" style="left:0;width:1920px;text-align:center;top:680px;font-size:112px;color:{C["cream"]};text-shadow:0 0 30px rgba(255,122,18,.55),0 0 80px rgba(255,90,0,.3);opacity:0">{EP["title"]}</div>',
       'tl.fromTo("#hook-black",{opacity:0},{opacity:1,duration:0.25,ease:"power2.in"},4.3);'
       'tl.fromTo("#hook-logo",{opacity:0,scale:1.15,filter:"blur(10px)"},{opacity:1,scale:1,filter:"blur(0px)",duration:0.9,ease:"expo.out"},4.55);'
       'tl.fromTo("#hook-shine",{opacity:0,backgroundPosition:"-600px 0"},{opacity:1,backgroundPosition:"600px 0",duration:1.0,ease:"power2.inOut"},5.0);'
       'tl.fromTo("#hook-t1",{opacity:0,scale:1.08},{opacity:1,scale:1,duration:0.8,ease:"expo.out"},5.3);'
       'tl.fromTo("#hook-t2",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.5,ease:"expo.out"},5.6);'
       'tl.to(["#hook-logo","#hook-t1","#hook-t2"],{opacity:0,duration:0.3,ease:"power3.in"},7.25);')
+s.embers(4.5, 7.5, n=46, seed=3)
 SCENES.append((s.cid, s.a, s.b, s.file(1920, 1080)))
 
 # ================================================================ 1. SHEET 1 — luxury, first glass, the problem, the timeline (7.4 - 33.0)
@@ -218,7 +260,7 @@ s.key(HOOK, 960, 540, 1.0)
 # station B (2200..5200, 0..1900): the map of the first glass
 MX, MY = 2200, 0
 s.raw(f'<svg id="sheet1-map" style="left:{MX}px;top:{MY}px" width="{MAP["W"]}" height="{MAP["H"]}" viewBox="0 0 {MAP["W"]} {MAP["H"]}">'
-      f'<path class="stk mp" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="{MAP["d"]}" style="stroke-width:3;fill:#1D4670"/></svg>',
+      f'<path class="stk mp" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="{MAP["d"]}" style="stroke-width:3;fill:{C['land']}"/></svg>',
       f'tl.fromTo("#sheet1-map .mp",{{strokeDashoffset:110,fillOpacity:0}},{{strokeDashoffset:0,fillOpacity:1,duration:1.6,ease:"power2.inOut"}},{s.L(T("now") - 0.2)});')
 P = MAP["pts"]
 s.pin(MX + P["mideast"][0], MY + P["mideast"][1], T("middle"))
@@ -227,8 +269,14 @@ s.pin(MX + P["egypt"][0], MY + P["egypt"][1], T("egypt."))
 s.lab("Egypt", MX + P["egypt"][0] + 40, MY + P["egypt"][1] - 20, T("egypt."), size=40)
 s.disp("The first glass", MX + 1350, MY + 700, 96, T("earliest") - 0.1)
 s.lab("thousands of years ago", MX + 1355, MY + 820, T("earliest") + 0.3, size=52, color=C["ink2"])
-s.plate("mesopotamia", MX + 2480, MY + 860, 520, 520, T("ancient"), T("ancient"), T("but") + 0.3, fx0=0.25, fx1=0.75, rot=2)
-s.plate("egypt", MX + 1600, MY + 1080, 520, 520, T("egypt.") - 0.2, T("egypt.") - 0.2, T("but") + 0.3, fx0=0.25, fx1=0.75, rot=-2)
+s.plate("mesopotamia", MX + 2480, MY + 860, 520, 520, T("ancient"), T("ancient"), T("but") + 0.3, fx0=0.25, fx1=0.75, rot=2, cap=("Mesopotamia", "c. 2500 BCE · beads & inlays"))
+s.plate("egypt", MX + 1600, MY + 1080, 520, 520, T("egypt.") - 0.2, T("egypt.") - 0.2, T("but") + 0.3, fx0=0.25, fx1=0.75, rot=-2, cap=("Egypt", "c. 1500 BCE · core-formed"))
+# beads beside Mesopotamia, an amphoriskos beside Egypt (drawn in ink as they appear)
+s.sketch([f"M{40 + k * 70} 60 m-24 0 a24 24 0 1 0 48 0 a24 24 0 1 0 -48 0" for k in range(5)] + ["M10 60 L380 60"], T("ancient") + 0.5, dur=0.3, stagger=0.08, x=MX + 2560, y=MY + 1420, w=420, h=140)
+s.sketch(["M90 20 L130 20", "M98 20 L98 60 C30 90 20 200 60 270 C80 300 100 310 110 312 C120 310 140 300 160 270 C200 200 190 90 122 60 L122 20",
+          "M98 70 C60 60 50 40 60 30", "M122 70 C160 60 170 40 160 30", "M50 140 L70 125 L90 140 L110 125 L130 140 L150 125 L170 140", "M45 190 L65 175 L85 190 L105 175 L125 190 L145 175 L170 190"],
+         T("egypt.") + 0.3, dur=0.45, stagger=0.1, x=MX + 1340, y=MY + 1250, w=230, h=330)
+s.compass(MX + 520, MY + 1500, T("now") + 0.4)
 s.key(T("now") + 0.6, MX + 2100, MY + 1150, 0.62)
 s.key(T("egypt.") - 0.2, MX + 2150, MY + 1250, 0.72)
 # station C (5600..7500, 0..1300): the problem — a core-formed vessel drafted, a stopwatch
@@ -254,7 +302,7 @@ for k, (fr, d1, d2) in enumerate([(0.0, "c. 2500 BCE", "first glass objects"), (
     s.lab(d1, x - 20, TY + 50, T("then") + fr * 1.2, size=64, color=C["hot"] if k == 2 else None)
     if d2: s.lab(d2, x - 20, TY + 135, T("then") + fr * 1.2 + 0.1, size=50, color=C["ink2"])
 DX = TX + int(2600 * 0.94)
-s.raw(f'<div id="sheet1-dot" style="position:absolute;left:{DX - 30}px;top:{TY - 30}px;width:60px;height:60px;border-radius:50%;background:radial-gradient(circle,{C["hot2"]},{C["hot"]} 60%,#C24E0A);opacity:0"></div>',
+s.raw(f'<div id="sheet1-dot" style="position:absolute;left:{DX - 30}px;top:{TY - 30}px;width:60px;height:60px;border-radius:50%;background:radial-gradient(circle,{C["molten2"]},{C["molten"]} 60%,#C24E0A);opacity:0"></div>',
       f'tl.fromTo("#sheet1-dot",{{opacity:0,scale:0.2}},{{opacity:1,scale:1,duration:0.4,ease:"back.out(2)"}},{s.L(T("century") - 0.1)});')
 s.disp("something remarkable happened.", TX + 300, TY - 260, 96, T("something"), italic=True)
 s.key(T("then") + 0.2, TX + 1450, TY + 60, 0.62)
@@ -264,7 +312,7 @@ SCENES.append((s.cid, s.a, s.b, s.file(11200, 2200)))
 # ================================================================ 2. FURNACE — glassblowing was invented (33.0 - 36.8)
 a, b = T("glassblowing") - 0.05, T("now", 1) - 0.25
 s = Scene("furnace", a, b)
-s.raw(f'<div id="furnace-flood" style="position:absolute;left:0;top:0;width:1920px;height:1080px;background:radial-gradient(circle at 50% 50%,{C["hot2"]},{C["hot"]} 55%,#B5450A)"></div>',
+s.raw(f'<div id="furnace-flood" style="position:absolute;left:0;top:0;width:1920px;height:1080px;background:radial-gradient(circle at 50% 50%,{C["molten2"]},{C["molten"]} 55%,#B5450A)"></div>',
       f'tl.fromTo("#furnace-flood",{{opacity:1}},{{opacity:0,duration:0.45,ease:"power2.in"}},0.25);')
 s.video("glory_gather", 1160, 0, 608, 1080, a + 0.05, T("changed") - 0.2, media=0.0, appear=0.4)
 s.video("red_bubble", 1160, 0, 608, 1080, T("changed") - 0.25, b)
@@ -273,7 +321,8 @@ s.disp("was invented.", 130, 520, 96, T("invented."), italic=True)
 s.disp("And that changed", 130, 700, 84, T("changed") - 0.5)
 s.disp("everything.", 130, 800, 120, T("everything.", 0))
 s.key(a, 960, 540, 1.0)
-SCENES.append((s.cid, s.a, s.b, s.file(1920, 1080)))
+s.embers(a + 0.2, b, n=34, seed=5, x0=1000, x1=1920)
+SCENES.append((s.cid, s.a, s.b, s.file(1920, 1080, wipe_out=True)))
 
 # ================================================================ 3. SHEET 2 — where it began, the clay core, the blowpipe (36.8 - 56.2)
 a, b = T("now", 1) - 0.25, T("blow") - 0.25
@@ -281,16 +330,16 @@ s = Scene("sheet2", a, b)
 # station E: Levant zoom on the same map
 s.raw(f'<svg id="sheet2-map" style="left:0px;top:0px" width="{MAP["W"]}" height="{MAP["H"]}" viewBox="0 0 {MAP["W"]} {MAP["H"]}">'
       f'<defs><pattern id="hatch" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="14" stroke="{C["hot"]}" stroke-width="4"/></pattern></defs>'
-      f'<path class="stk" d="{MAP["d"]}" style="stroke-width:2;fill:#1D4670"/></svg>')
+      f'<path class="stk" d="{MAP["d"]}" style="stroke-width:2;fill:{C['land']}"/></svg>')
 lx, ly = P["levant"]
 s.raw(f'<svg id="sheet2-reg" style="left:{lx - 60}px;top:{ly - 140}px" width="120" height="300"><path d="M50 10 C80 40 90 120 80 170 C70 220 50 260 30 290 C20 250 15 200 22 150 C30 100 30 50 50 10 Z" fill="url(#hatch)" stroke="{C["hot"]}" stroke-width="3" class="reg"/></svg>',
       f'tl.fromTo("#sheet2-reg",{{opacity:0,scale:0.4,transformOrigin:"50% 50%"}},{{opacity:1,scale:1,duration:0.6,ease:"expo.out"}},{s.L(T("syro-palestinian") - 0.2)});')
 jx, jy = P["jerusalem"]
-s.pin(jx, jy, T("region.") + 0.1, color=C["ink"])
-s.lab("Jerusalem · earliest evidence, c. 50 BCE", jx + 40, jy + 10, T("region.") + 0.2, size=15, color=C["ink"])
+s.pin(jx, jy, T("syro-palestinian") + 0.3, k=0.3)
+s.lab("Jerusalem · earliest evidence, c. 50 BCE", jx + 16, jy - 8, T("syro-palestinian") + 0.4, size=12, color=C["ink"])
 s.lab("Syro-Palestinian region", lx + 45, ly - 120, T("most"), size=13, color=C["hot"])
 s.key(a, 1500, 950, 0.5)
-s.key(T("technique") + 0.6, lx - 40, ly - 30, 3.2)
+s.key(T("technique") + 0.6, lx - 10, ly + 30, 3.0)
 # station F (3600..): the clay-core infographic, toured part by part
 FX, FY = 3600, 200
 s.raw(f'<div id="sheet2-cc" class="plate" style="left:{FX}px;top:{FY}px;width:1672px;height:941px;opacity:0"><img src="assets/art/claycore.png" alt="" style="width:100%;height:100%"></div>',
@@ -305,14 +354,14 @@ pipe = ["M0 290 L1500 290", "M0 340 L1500 340", "M0 290 C-40 290 -40 340 0 340",
 s.sketch(pipe, T("blowpipe,") - 0.2, dur=0.7, stagger=0.1, x=GX + 100, y=GY, w=2200, h=800)
 s.sketch(["M100 380 L100 420 L800 420 L800 380", "M1200 250 L1260 180 L1500 180"], T("blowpipe,") + 0.5, dur=0.4, x=GX + 100, y=GY, w=2200, h=800, cls="stk2")
 s.lab("hollow steel blowpipe", GX + 330, GY + 440, T("blowpipe,") + 0.6, color=C["ink2"])
-s.raw(f'<div id="sheet2-gather" style="position:absolute;left:{GX + 1560}px;top:{GY + 220}px;width:200px;height:180px;border-radius:48% 52% 50% 50%;background:radial-gradient(circle at 40% 40%,{C["hot2"]},{C["hot"]} 55%,#C24E0A);box-shadow:0 0 50px {C["hot"]}88;opacity:0"></div>',
+s.raw(f'<div id="sheet2-gather" style="position:absolute;left:{GX + 1560}px;top:{GY + 220}px;width:200px;height:180px;border-radius:48% 52% 50% 50%;background:radial-gradient(circle at 40% 40%,{C["molten2"]},{C["molten"]} 55%,#C24E0A);box-shadow:0 0 50px {C["molten"]}88;opacity:0"></div>',
       f'tl.fromTo("#sheet2-gather",{{opacity:0,scale:0.2,transformOrigin:"0% 50%"}},{{opacity:1,scale:1,duration:0.7,ease:"expo.out"}},{s.L(T("gather") - 0.1)});')
 s.lab("a gather of molten glass", GX + 1370, GY + 140, T("gather") + 0.2, color=C["hot"])
 s.disp("gather…", GX + 300, GY - 140, 130, T("gather"), italic=True)
-s.plate("levant", GX + 2100, GY - 60, 1150, 647, T("glass", 4) - 0.6, T("glass", 4) - 0.6, b, fx0=0.3, fx1=0.42, z0=1.5, z1=1.25)
+s.plate("levant", GX + 2100, GY - 60, 1150, 647, T("glass", 4) - 0.6, T("glass", 4) - 0.6, b, fx0=0.3, fx1=0.42, z0=1.5, z1=1.25, cap=("The Levant", "c. 50 BCE · the first blowpipe"))
 s.key(T("blowpipe,") - 0.2, GX + 1000, GY + 300, 1.0)
 s.key(b - 0.1, GX + 2600, GY + 260, 1.35)    # the camera arrives on the ancient breath
-SCENES.append((s.cid, s.a, s.b, s.file(9600, 2000)))
+SCENES.append((s.cid, s.a, s.b, s.file(9600, 2000, wipe_in=True)))
 
 # ================================================================ 4. BREATH — Olga blows, a hollow 3-D bubble (56.2 - 60.5)
 a, b = T("blow") - 0.25, T("now", 2) - 0.2
@@ -331,21 +380,28 @@ const canvas = document.getElementById("breath-gl");
 const r = new THREE.WebGLRenderer({{ canvas, antialias: true, preserveDrawingBuffer: true, alpha: false }});
 r.setPixelRatio(1); r.setSize(1920, 1080, false); r.outputColorSpace = THREE.SRGBColorSpace;
 const scene = new THREE.Scene();
-// the blueprint sheet itself is the backdrop, so the glass refracts the drafting grid
+// the manuscript page itself is the backdrop, so the glass refracts the papyrus and its ink
 const c = document.createElement("canvas"); c.width = 2048; c.height = 1152; const g = c.getContext("2d");
-g.fillStyle = "{C['paper']}"; g.fillRect(0, 0, c.width, c.height);
-for (let x = 0; x <= c.width; x += 43) {{ g.strokeStyle = x % 215 < 1 ? "{C['grid2']}" : "{C['grid']}"; g.lineWidth = x % 215 < 1 ? 2 : 1; g.beginPath(); g.moveTo(x, 0); g.lineTo(x, c.height); g.stroke(); }}
-for (let y = 0; y <= c.height; y += 43) {{ g.strokeStyle = y % 215 < 1 ? "{C['grid2']}" : "{C['grid']}"; g.lineWidth = y % 215 < 1 ? 2 : 1; g.beginPath(); g.moveTo(0, y); g.lineTo(c.width, y); g.stroke(); }}
+const pap = new Image(); pap.src = "assets/art/papyrus.jpg"; await pap.decode();
+for (let x = 0; x < c.width; x += 1024) for (let y = 0; y < c.height; y += 1024) g.drawImage(pap, x, y);
+// faint ink: a manuscript page of vessel studies behind the bubble
+g.strokeStyle = "rgba(42,25,12,.55)"; g.lineWidth = 4; g.lineCap = "round";
+const vase = (x, y, s) => {{ g.beginPath(); g.moveTo(x - 20 * s, y); g.lineTo(x - 20 * s, y + 40 * s); g.bezierCurveTo(x - 110 * s, y + 80 * s, x - 100 * s, y + 230 * s, x, y + 260 * s);
+  g.bezierCurveTo(x + 100 * s, y + 230 * s, x + 110 * s, y + 80 * s, x + 20 * s, y + 40 * s); g.lineTo(x + 20 * s, y); g.stroke(); }};
+[[260, 180, 1.6], [620, 640, 1.2], [1500, 200, 1.4], [1820, 620, 1.1], [1080, 760, 0.9], [980, 120, 0.8]].forEach(([x, y, s]) => vase(x, y, s));
+g.strokeStyle = "rgba(42,25,12,.25)"; g.lineWidth = 2;
+for (let y = 90; y < c.height; y += 64) {{ g.beginPath(); g.moveTo(80, y); g.lineTo(c.width - 80, y); g.stroke(); }}
+const vg = g.createRadialGradient(1024, 560, 300, 1024, 576, 1250); vg.addColorStop(0, "rgba(0,0,0,0)"); vg.addColorStop(1, "rgba(40,18,4,.7)"); g.fillStyle = vg; g.fillRect(0, 0, c.width, c.height);
 const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace;
 const cam = new THREE.PerspectiveCamera(30, 1920 / 1080, 0.1, 100); cam.position.set(0, 0, 10);
 const ph = 2 * Math.tan(THREE.MathUtils.degToRad(15)) * 14;
 const back = new THREE.Mesh(new THREE.PlaneGeometry(ph * 16 / 9, ph), new THREE.MeshBasicMaterial({{ map: tex }})); back.position.z = -4; scene.add(back);
-const pm = new THREE.PMREMGenerator(r); const studio = new THREE.Scene(); studio.background = new THREE.Color(0.05, 0.07, 0.1);
+const pm = new THREE.PMREMGenerator(r); const studio = new THREE.Scene(); studio.background = new THREE.Color(0.09, 0.06, 0.04);
 const box = (w, h, x, y, z, l) => {{ const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({{ color: new THREE.Color(l, l, l), side: THREE.DoubleSide }})); m.position.set(x, y, z); m.lookAt(0, 0, 0); studio.add(m); }};
 box(8, 3, -2, 6, 3, 3); box(1.2, 9, -7, 0, -1, 4); box(1.2, 9, 7, 0, 1, 2); box(6, 1, 0, -5, 3, 1.5);
 scene.environment = pm.fromScene(studio, 0.02).texture;
 const glassMat = new THREE.MeshPhysicalMaterial({{ color: 0xffffff, transmission: 1, thickness: 0.25, ior: 1.5, roughness: 0.02, dispersion: 0.4,
-  attenuationColor: new THREE.Color("#d8ecff"), attenuationDistance: 3, clearcoat: 1, clearcoatRoughness: 0.03, specularIntensity: 1 }});
+  attenuationColor: new THREE.Color("#e6f4ea"), attenuationDistance: 3, clearcoat: 1, clearcoatRoughness: 0.03, specularIntensity: 1 }});
 const bubble = new THREE.Mesh(new THREE.SphereGeometry(1, 128, 96), glassMat); scene.add(bubble);
 const pipe = new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.07, 9, 32), new THREE.MeshStandardMaterial({{ color: 0x8a8f96, metalness: 0.9, roughness: 0.3 }}));
 pipe.rotation.z = Math.PI / 2; scene.add(pipe);
@@ -366,7 +422,7 @@ window.__render_breath = (t) => {{
 window.__render_breath(0);
 done();
 </script>"""
-SCENES.append((s.cid, s.a, s.b, s.file(1920, 1080, module=BUBBLE)))
+SCENES.append((s.cid, s.a, s.b, s.file(1920, 1080, module=BUBBLE, wipe_out=True)))
 
 # ================================================================ 5. SHEET 3 — what it meant, Rome, 2,000 years later (60.5 - 87.0)
 a, b = T("now", 2) - 0.2, T("heat") - 0.3
@@ -394,12 +450,12 @@ s.key(a, 960, 540, 1.0)
 s.key(T("thinner,") - 0.5, 1250, 540, 1.0)
 s.key(T("variety") - 0.6, 2050, 520, 1.0)
 # station I (3300..): the Roman glassblower, panning
-s.plate("rome", 3300, 120, 1600, 900, T("romans") - 0.5, T("romans") - 0.5, T("adopted") + 0.2, fx0=0.25, fx1=0.75, z0=1.5, z1=1.05)
+s.plate("rome", 3300, 120, 1600, 900, T("romans") - 0.5, T("romans") - 0.5, T("adopted") + 0.2, fx0=0.25, fx1=0.75, z0=1.5, z1=1.05, cap=("Rome", "1st century CE · glass for everyone"))
 s.disp("The Romans", 3360, 1060, 110, T("romans"))
 s.key(T("romans") - 0.6, 4100, 640, 0.95)
 # station J (5200..): the routes across the empire on the map
 RX, RY = 5200, 0
-s.raw(f'<svg id="sheet3-map" style="left:{RX}px;top:{RY}px" width="{MAP["W"]}" height="{MAP["H"]}" viewBox="0 0 {MAP["W"]} {MAP["H"]}"><path class="stk" d="{MAP["d"]}" style="stroke-width:3;fill:#1D4670"/></svg>')
+s.raw(f'<svg id="sheet3-map" style="left:{RX}px;top:{RY}px" width="{MAP["W"]}" height="{MAP["H"]}" viewBox="0 0 {MAP["W"]} {MAP["H"]}"><path class="stk" d="{MAP["d"]}" style="stroke-width:3;fill:{C['land']}"/></svg>')
 src = P["sidon"]
 for k, city in enumerate(["alexandria", "rome", "aquileia", "cologne"]):
     cx, cy = P[city]; mx, my = (cx + src[0]) / 2, min(cy, src[1]) - 260
@@ -410,16 +466,17 @@ for k, city in enumerate(["alexandria", "rome", "aquileia", "cologne"]):
 s.pin(RX + src[0], RY + src[1], T("adopted"))
 s.lab("Sidon", RX + src[0] + 40, RY + src[1] - 90, T("adopted"), size=62)
 s.disp("across the Roman Empire", RX + 300, RY + 1500, 110, T("across"), hot=(2, 3))
+s.compass(RX + 2620, RY + 1500, T("spread"), r=150)
 s.key(T("adopted") - 0.4, RX + 1500, RY + 1000, 0.55)
 # station K (8600..): the modern glassblower + the 2,000-year counter
-s.plate("modern", 8600, 120, 1600, 900, T("but", 2) - 0.4, T("but", 2) - 0.4, b, fx0=0.25, fx1=0.7, z0=1.5, z1=1.08)
+s.plate("modern", 8600, 120, 1600, 900, T("but", 2) - 0.4, T("but", 2) - 0.4, b, fx0=0.25, fx1=0.7, z0=1.5, z1=1.08, cap=("Today", "the same breath, 2,000 years on"))
 s.raw('<div id="sheet3-count" class="disp" style="left:8640px;top:1060px;font-size:150px"><span id="sheet3-num">0</span>+ years later</div>',
       f'tl.fromTo("#sheet3-count",{{opacity:0,filter:"blur(8px)"}},{{opacity:1,filter:"blur(0px)",duration:0.2}},{s.L(T("more") - 0.1)});'
       f'(function(){{const o={{v:0}};tl.fromTo(o,{{v:0}},{{v:2000,duration:1.3,ease:"power2.out",onUpdate:()=>{{document.getElementById("sheet3-num").textContent=Math.round(o.v).toLocaleString("en-US");}}}},{s.L(T("more"))});}})();')
 s.disp("the same principles.", 8660, 1230, 96, T("same"), italic=True, hot=(1,))
 s.key(T("but", 2) + 0.6, 9400, 640, 0.95)
-s.key(T("more") - 0.2, 9400, 900, 0.8)
-SCENES.append((s.cid, s.a, s.b, s.file(11000, 2200)))
+s.key(T("more") - 0.2, 9400, 900, 0.68)
+SCENES.append((s.cid, s.a, s.b, s.file(11000, 2200, wipe_in=True, wipe_out=True)))
 
 # ================================================================ 6. TODAY — heat, air, control over Olga's footage; the hands (87.0 - 103.4)
 a, b = T("heat") - 0.3, T("i'm") - 0.3
@@ -445,14 +502,15 @@ s.disp("One more ingredient…", 7800, 330, 84, T("ingredient.") - 0.4, italic=T
 s.disp("the hands", 7800, 450, 170, T("hands"), hot=(1,))
 s.disp("of the glassmaker.", 7810, 640, 96, T("maker!", 1))
 s.key(T("course", 1) - 0.5, 7100 + 860, 540, 1.0)
-SCENES.append((s.cid, s.a, s.b, s.file(9000, 1080)))
+SCENES.append((s.cid, s.a, s.b, s.file(9000, 1080, wipe_in=True, wipe_out=True)))
 
 # ================================================================ 7. OLGA — name + OR monogram, the craft, Instagram, the question (103.4 - 130.3)
 a, b = T("i'm") - 0.3, T("i'd", 1) - 0.25
 s = Scene("olga", a, b)
 s.video("olga_blow", 1180, 0, 608, 1080, a + 0.02, T("connected") - 0.4, media=1.8, rate=0.9, pos="50% 35%")
-s.raw('<img id="olga-logo" src="assets/art/olga_logo_cut.png" alt="" style="position:absolute;left:150px;top:170px;width:560px;opacity:0">',
-      f'tl.fromTo("#olga-logo",{{opacity:0,scale:1.1,filter:"blur(8px)"}},{{opacity:1,scale:1,filter:"blur(0px)",duration:0.8,ease:"expo.out"}},{s.L(T("olga") - 0.2)});')
+s.raw(f'<div id="olga-plq" style="position:absolute;left:130px;top:120px;width:600px;height:440px;border-radius:22px;background:radial-gradient(ellipse at 50% 40%,#2A1608,{C["dark"]} 75%);box-shadow:0 0 0 4px {C["gold"]},0 0 0 10px {C["dark"]},0 30px 60px rgba(40,18,4,.55);opacity:0">'
+      '<img id="olga-logo" src="assets/art/olga_logo_cut.png" alt="" style="position:absolute;left:40px;top:40px;width:520px"></div>',
+      f'tl.fromTo("#olga-plq",{{opacity:0,rotationY:80,transformPerspective:1600}},{{opacity:1,rotationY:0,duration:1.0,ease:"expo.out"}},{s.L(T("olga") - 0.3)});')
 s.disp("Olga Rozin", 160, 600, 150, T("olga"))
 s.lab("Glass artist", 168, 770, T("artist."), size=44, color=C["hot"])
 s.key(a, 960, 540, 1.0)
@@ -468,7 +526,7 @@ s.key(T("history") - 0.6, 5180, 620, 0.9)
 # Instagram
 IX = 6600
 s.raw(f'<svg id="olga-ig" style="left:{IX + 140}px;top:330px" width="220" height="220" viewBox="0 0 64 64"><rect class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" x="6" y="6" width="52" height="52" rx="15"/><circle class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" cx="32" cy="32" r="12"/><circle cx="46" cy="18" r="3" fill="{C["ink"]}"/></svg>',
-      f'tl.fromTo("#olga-ig .p",{{strokeDashoffset:110}},{{strokeDashoffset:0,duration:0.6,stagger:0.1,ease:"power2.inOut"}},{s.L(T("follow") - 0.2)});')
+      f'tl.fromTo("#olga-ig .p",{{strokeDashoffset:110}},{{strokeDashoffset:0,duration:0.6,stagger:0.1,ease:"power2.inOut"}},{s.L(T("follow") - 0.45)});')
 s.disp("Follow me on Instagram", IX + 420, 360, 84, T("follow"))
 s.disp("@olga_rozin", IX + 420, 470, 170, T("@olga_rozin"), hot=(0,))
 s.lab("for more stories about glassmaking", IX + 430, 680, T("stories"), size=40, color=C["ink2"])
@@ -476,31 +534,32 @@ s.key(T("follow") - 0.4, IX + 960, 540, 1.0)
 # the question
 QX = 9000
 s.raw(f'<svg id="olga-q" style="left:{QX + 120}px;top:260px" width="260" height="220" viewBox="0 0 64 54"><path class="stk p" pathLength="100" stroke-dasharray="100 120" stroke-dashoffset="110" d="M6 6 h52 v30 h-30 l-12 12 v-12 h-10 z"/></svg>',
-      f'tl.fromTo("#olga-q .p",{{strokeDashoffset:110}},{{strokeDashoffset:0,duration:0.6,ease:"power2.inOut"}},{s.L(T("comments,") - 0.4)});')
+      f'tl.fromTo("#olga-q .p",{{strokeDashoffset:110}},{{strokeDashoffset:0,duration:0.6,ease:"power2.inOut"}},{s.L(T("comments,") - 0.6)});')
 s.disp("Tell me in the comments:", QX + 430, 300, 84, T("comments,") - 0.3, italic=True)
 s.disp("Would you like to learn", QX + 160, 520, 120, T("would"))
 s.disp("how glass is made?", QX + 160, 660, 150, T("how", 1), hot=(1,))
-s.key(T("comments,") - 0.2, QX + 960, 540, 1.0)
-SCENES.append((s.cid, s.a, s.b, s.file(11000, 1080)))
+s.key(T("comments,") - 0.6, QX + 960, 540, 1.0)
+SCENES.append((s.cid, s.a, s.b, s.file(11000, 1080, wipe_in=True)))
 
 # ================================================================ 8. OUTRO — goodbye + OR end card (130.3 - end)
 a, b = T("i'd", 1) - 0.25, DUR
 s = Scene("outro", a, b)
 s.plate("modern", 0, 0, 1920, 1080, a, a, a + 6.0, fx0=0.32, fx1=0.3, z0=2.1, z1=1.85)
-s.raw('<div id="outro-shade" style="position:absolute;left:0;top:0;width:1920px;height:1080px;background:linear-gradient(90deg,rgba(5,5,5,0) 30%,rgba(5,5,5,.92) 62%)"></div>')
-s.disp("I'd love to hear", 1080, 240, 110, T("i'd", 1), italic=True)
-s.disp("what you think!", 1080, 360, 110, T("think!", 1), italic=True, hot=(1,))
+s.raw('<div id="outro-shade" style="position:absolute;left:0;top:0;width:1920px;height:1080px;background:linear-gradient(90deg,rgba(14,7,3,0) 30%,rgba(14,7,3,.93) 62%)"></div>')
+s.disp("I'd love to hear", 1080, 240, 110, T("i'd", 1), italic=True, color=C["cream"])
+s.disp("what you think!", 1080, 360, 110, T("think!", 1), italic=True, hot=(1,), color=C["cream"])
 s.raw('<img id="outro-logo" src="assets/art/olga_logo_cut.png" alt="" style="position:absolute;left:1240px;top:520px;width:420px;opacity:0">'
       '<div id="outro-shine" style="position:absolute;left:1240px;top:520px;width:420px;height:280px;opacity:0;mix-blend-mode:screen;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.9) 50%,transparent 65%);'
       '-webkit-mask:url(assets/art/olga_logo_cut.png) center/contain no-repeat;mask:url(assets/art/olga_logo_cut.png) center/contain no-repeat"></div>',
       f'tl.fromTo("#outro-logo",{{opacity:0,scale:1.1,filter:"blur(10px)"}},{{opacity:1,scale:1,filter:"blur(0px)",duration:0.9,ease:"expo.out"}},{s.L(LAST + 0.5)});'
       f'tl.fromTo("#outro-shine",{{opacity:0,backgroundPosition:"-420px 0"}},{{opacity:1,backgroundPosition:"420px 0",duration:1.0,ease:"power2.inOut"}},{s.L(LAST + 1.4)});'
       f'tl.fromTo("#outro-shine",{{backgroundPosition:"-420px 0"}},{{immediateRender:false,backgroundPosition:"420px 0",duration:1.2,ease:"power2.inOut"}},{s.L(LAST + 4.6)});')
-s.lab("GLASS STORIES · EPISODE 1", 1170, 830, LAST + 1.2, size=30, color="#BFC6CE")
-s.lab("Next time: how is glass made?", 1170, 880, LAST + 2.6, size=40)
-s.lab("Follow @olga_rozin", 1170, 945, LAST + 3.8, size=44, color=C["hot"])
+s.lab(f"GLASS STORIES · EPISODE {EP['n']}", 1170, 830, LAST + 1.2, size=32, color=C["gold"])
+s.lab("Next time: how is glass made?", 1170, 880, LAST + 2.6, size=42, color=C["cream"])
+s.lab("Follow @olga_rozin", 1170, 945, LAST + 3.8, size=46, color=C["molten"])
+s.embers(LAST + 0.3, DUR, n=40, seed=9, x0=1000, x1=1920)
 s.key(a, 960, 540, 1.0)
-SCENES.append((s.cid, s.a, s.b, s.file(1920, 1080, bg="#050505")))
+SCENES.append((s.cid, s.a, s.b, s.file(1920, 1080, bg=C["dark"])))
 
 # ================================================================ captions: every word, orange on a black box, word by word
 groups, cur = [], []
@@ -517,7 +576,7 @@ for gi, g in enumerate(groups):
     cap_html.append(f'<div class="cg" id="cg{gi}"><div class="box">{words}</div></div>')
     cap_js.append(f'tl.set("#cg{gi}",{{opacity:1,visibility:"visible"}},{st});')
     for k, w in enumerate(g):
-        cap_js.append(f'tl.fromTo("#cw{gi}_{k}",{{opacity:0,display:"none"}},{{opacity:1,display:"inline-block",duration:0.08}},{round(w["start"] - 0.04, 3)});')
+        cap_js.append(f'tl.fromTo("#cw{gi}_{k}",{{opacity:0,display:"none"}},{{opacity:1,display:"inline-block",duration:0.08}},{round(st if k == 0 else w["start"] - 0.04, 3)});')
         cap_js.append(f'tl.to("#cw{gi}_{k}",{{color:"#FFB060",duration:0.05}},{round(w["start"] - 0.04, 3)});tl.to("#cw{gi}_{k}",{{color:"#FF8A1F",duration:0.08}},{round(w["end"] + 0.04, 3)});')
     cap_js.append(f'tl.to("#cg{gi}",{{opacity:0,duration:0.1,ease:"power2.in"}},{round(en - 0.1, 3)});tl.set("#cg{gi}",{{opacity:0,visibility:"hidden"}},{round(en, 3)});')
 CAPTIONS = f"""<template>

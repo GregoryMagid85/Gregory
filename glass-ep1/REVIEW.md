@@ -1,9 +1,20 @@
-# REVIEW — Glass Stories Ep. 1, HyperFrames rebuild ("The Blueprint of a Breath")
+# REVIEW — Glass Stories Ep. 1, HyperFrames rebuild ("The Glassmaker's Codex")
 
 1920×1080, 30 fps, 138.1 s. Olga's own English narration; her studio reels; the series era art and clay-core
 infographic; the OR monogram.
 
-## Creative calls
+## Restyle (v2, after feedback "no blue PowerPoint look, make it historic and premium")
+- The blueprint became an aged papyrus manuscript: sepia ink, red rubric, gold titles, burnt vignette, IM Fell
+  annotations. Same timing, camera and narration cues.
+- The GPT era portraits are the heroes: cream-mounted leaves flipping in in 3D with red ribbon cartouches
+  (Mesopotamia c. 2500 BCE, Egypt c. 1500 BCE, The Levant c. 50 BCE, Rome 1st c. CE, Today), with ink sketches
+  around them (beads, an amphoriskos, compass roses, wax-seal pins, an old-map style coastline).
+- Molten-glass wipes between chapters, embers on the sting / furnace / end card; the 3D bubble now refracts a
+  manuscript page of vessel studies; Olga's OR sits on a gold-rimmed dark plaque.
+- Series template: the opener and end card read `EP = dict(n, title)` in build.py, so the next episode keeps
+  the same sting.
+
+## Creative calls (v1)
 - **One continuous take across a cyanotype blueprint.** Each chapter is one huge drafting sheet, and the camera
   never cuts inside it. It travels between stations (eased power2.inOut, with a slow drift while you read), and the
   technical sketches draw themselves in time with the words.
